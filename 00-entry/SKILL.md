@@ -19,11 +19,11 @@ author: Arthur
 
 ### 🥇 入门三件套（10 分钟）
 1. **🏗️ 分层模型 (001)** — 理解「什么是什么」。这是所有系统思维的起点。
-   → `[`001-layered-architecture`](001-layered-architecture/SKILL.md)`
+   → `[`001-layered-architecture`](../001-layered-architecture/SKILL.md)`
 2. **🔁 迭代思维 (007)** — 理解「如何改进」。最实用的日常模型。
-   → `[`007-iterative-thinking`](007-iterative-thinking/SKILL.md)`
+   → `[`007-iterative-thinking`](../007-iterative-thinking/SKILL.md)`
 3. **🧘 元认知 (019)** — 理解「自己怎么想」。所有认知提升的杠杆。
-   → `[`019-meta-cognition`](019-meta-cognition/SKILL.md)`
+   → `[`019-meta-cognition`](../019-meta-cognition/SKILL.md)`
 
 ### 🥈 进阶路径（选兴趣方向）
 | 你的兴趣 | 下一个模型 |
@@ -38,9 +38,13 @@ author: Arthur
 - 遇到现实问题 → 浏览「🎯 场景推荐」找到组合
 - 想深度实践 → 每个模型末尾的「实战练习」就是你的作业
 - 想贡献/优化 → 每个模型都接受版本更新，发现问题就提出来
-- **⚡ 想要系统化分析问题？加载使能层** → `[`enabled`](enabled/SKILL.md)`
+- **⚡ 想要系统化分析问题？加载使能层** → `[`archon`](../archon/SKILL.md)`
 
 ### 🧭 快速导航
+
+- 核心层入口：`[`xuan-master`](../xuan-master/SKILL.md)`
+- 使能层入口：`[`archon`](../archon/SKILL.md)`
+- 专家层入口：`[`prism`](../prism/SKILL.md)`
 
 
 ---
@@ -205,44 +209,56 @@ author: Arthur
 │              应用层 (Application Layer)                      │
 │   具体问题 → 具体产出 (分析报告 / 设计文档 / 决策框架 / ...)   │
 ├─────────────────────────────────────────────────────────────┤
-│              ⚡ 使能层 (Enabled Layer)                        │
-│   问题诊断 → 模型选择 → 并行/管道执行 → 多模型合成 → 结构化产出 │
-│   [`enabled`](enabled/SKILL.md)                    │
+│              🔷 Prism 专家层 (Specialist Layer)              │
+│   领域路由 → 专项映射 → 更深更专的领域化工作                  │
+│   当前为架构层，逐步沉淀为领域化资产                           │
 ├─────────────────────────────────────────────────────────────┤
-│              🎙️ 采访层 (Interview Layer)  ← NEW             │
-│   三阶段对谈 → 校准真实问题 → 收集全维度信息 → Interview Summary │
-│   [`interview`](interview/SKILL.md)                  │
+│              ⚡ Archon 使能层 (Enabler Layer)                │
+│   校准 → 编排 → 动作执行 → 文档/PDF生成 → 多模型合成输出      │
+│   [`interview`](../interview/SKILL.md) + [`enabled`](../enabled/SKILL.md) │
 ├─────────────────────────────────────────────────────────────┤
-│            🧠 认知内核层 (Cognitive Kernel)                   │
+│            🧠 Xuan Master 核心层 (Meta-Cognition Core)       │
 │   27 个深层认知模型 (思辨10 / 方法10 / 系统7)                 │
 └─────────────────────────────────────────────────────────────┘
 ```
 
+### 命名说明
+
+- **Xuan Master**：核心认知层，提供元认知与 27 个深层模型
+- **Archon**：使能层，承接采访、编排、动作、生成等能力
+- **Prism**：专家层，负责把问题映射到更深的领域化路径和专门化工作
+- `optimization/` 是横切式自优化环，不属于这三层中的任意一层
+
 ### 文件结构
 
 ```
-cognition/
-├── 00-entry/                               ← 入口路由
-├── 00-entry-interview/                     ← 🎙️ 采访层 (v1.0.0)
-│   └── SKILL.md                                ← 三阶段采访协议 + Interview Summary 模板
-├── 00-entry-enabled/                       ← ⚡ 使能层 (v1.2.0, 接入采访层)
-├── 思辨类:  00-entry-{004|005|006|008|009|010|012|016|019|027}-.../
-├── 方法类:  00-entry-{007|014|015|017|018|020|021|022|023|024}-.../
-└── 系统类:  00-entry-{001|002|003|011|013|025|026}-.../
-```
-├── 00-entry-enabled/                       ← ⚡ 使能层 (v1.1.0, Unix哲学驱动)
-│   ├── SKILL.md                                ← 5-phase协议 + 设计哲学
+meta-engine/
+├── AGENTS.md                               ← 通用入口与分层说明
+├── xuan-master/
+│   └── SKILL.md                            ← Xuan Master 层入口
+├── archon/
+│   └── SKILL.md                            ← Archon 层入口
+├── prism/
+│   ├── SKILL.md                            ← Prism 层入口
+│   └── domains/                            ← 未来专家域资产
+├── 00-entry/
+│   └── SKILL.md                            ← Xuan Master 核心目录 + 场景路由
+├── 001-layered-architecture/
+├── 002-flow-model/
+├── ...
+├── 027-ai-native-mindset/                  ← 27 个核心模型目录
+├── interview/
+│   └── SKILL.md                            ← Archon 校准协议实现
+├── enabled/
+│   ├── SKILL.md                            ← Archon 编排/动作/生成引擎实现
 │   ├── references/
-│   │   ├── problem-diagnosis-guide.md           ← 问题→模型映射表
-│   │   ├── synthesis-strategies.md              ← 4类合成策略(并行+管道)
-│   │   ├── output-templates.md                  ← 5种产出模板
-│   │   └── unix-design-philosophy-mapping.md    ← Unix原则×Xuan Master映射
+│   ├── templates/
 │   └── scripts/
-│       └── model-selector.py                    ← 自动化模型选择器
-│
-├── 思辨类:  00-entry-{004|005|006|008|009|010|012|016|019|027}-.../
-├── 方法类:  00-entry-{007|014|015|017|018|020|021|022|023|024}-.../
-└── 系统类:  00-entry-{001|002|003|011|013|025|026}-.../
+├── optimization/
+│   ├── SKILL.md                            ← 横切式自优化环
+│   ├── references/
+│   └── scripts/
+└── .aries_harness/                         ← 治理、架构与追踪工件
 ```
 
 ---

@@ -1,24 +1,24 @@
 ---
 name: interview
-description: "Xuan Master 采访层 — 在使能层之前的深度对谈引擎。通过结构化多轮采访，将用户模糊的问题陈述转化为精准、全面、可被后续模型管道高效处理的输入文档。"
+description: "Archon 采访协议 — 在使能层动作编排之前的深度对谈引擎。通过结构化多轮采访，将用户模糊的问题陈述转化为精准、全面、可被后续模型管道高效处理的输入文档。"
 version: 1.0.0
 author: Arthur
 ---
 
-# 🎙️ Xuan Master 采访层（Interview Layer）
+# 🎙️ Archon 采访协议（Interview Protocol）
 
 > **版本**: 1.0.0 | **定位**: 使能层之前的问题发现与校准引擎
 
 ## 定位
 
-采访层是 Xuan Master 家族的最前端——在启用模型管道进行深度分析之前，先用结构化对谈把**真正的问题**从**最初的陈述**中提炼出来。
+采访协议是 Archon 的最前端校准入口——在启用模型管道与动作能力之前，先用结构化对谈把**真正的问题**从**最初的陈述**中提炼出来。
 
 ```
-采访层 (Interview)     →  发现问题 + 校准问题 + 收集全维度信息
+Archon 校准入口        →  发现问题 + 校准问题 + 收集全维度信息
   ↓ Interview Summary（结构化采访纪要）
-使能层 (Enabled)       →  模型选择 + 管道执行 + 合成产出
+Archon 执行引擎        →  模型选择 + 管道执行 + 动作调用 + 合成产出
   ↓
-认知内核层 (Kernel)    →  27 个深层认知模型
+Xuan Master 核心       →  27 个深层认知模型
 ```
 
 ### 为什么需要采访层？
@@ -173,7 +173,7 @@ Interview Summary 生成后，自动传递给使能层：
             Phase 2-5: 管道执行
 ```
 
-Agent 在加载 `00-entry-enabled` 后，Phase 1 应该：
+Agent 在加载 `archon/SKILL.md` 或 `enabled/SKILL.md` 后，Phase 1 应该：
 1. 首先检查是否有 Interview Summary 可用
 2. 如果有：基于 Interview Summary 直接进入模型选择
 3. 如果没有：按照原有流程（简要诊断 + Policy/Mechanism 确认）
@@ -197,7 +197,9 @@ Agent 应在以下情况自动触发采访层：
 ## 快速导航
 
 ```sh
-[`interview`](interview/SKILL.md)                    # 本文件
-[`enabled`](enabled/SKILL.md)                       # 使能层——采访层的下游
-[`00-entry`](00-entry/SKILL.md)                               # 认知内核入口
+[`archon`](../archon/SKILL.md)                   # Archon 层入口
+[`interview`](SKILL.md)                          # 本文件
+[`enabled`](../enabled/SKILL.md)                 # 使能层——采访层的下游
+[`xuan-master`](../xuan-master/SKILL.md)         # 核心层入口
+[`00-entry`](../00-entry/SKILL.md)               # 核心目录
 ```

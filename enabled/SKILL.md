@@ -1,24 +1,24 @@
 ---
 name: enabled
-description: "Xuan Master 使能层 — 认知内核层之上的行动引擎。前置采访层校准问题，后置 consumer/expert 双呈现模式 + Web Slides 输出。Unix设计哲学驱动。自动诊断问题、选择模型、驱动并行/管道执行、合成多模型产出。"
+description: "Archon 使能层 — Xuan Master 认知内核层之上的行动引擎。前置采访层校准问题，后置 consumer/expert 双呈现模式 + Web Slides 输出。Unix设计哲学驱动。自动诊断问题、选择模型、驱动并行/管道执行、合成多模型产出，并承载文档/PDF等动作能力。"
 version: 1.3.0
 author: Arthur
 ---
 
-# ⚡ Xuan Master 使能层 (Enabled Layer)
+# ⚡ Archon 使能层 (Enabler Layer)
 
 > **版本**: 1.3.0 | **基于**: 认知内核层 v4.5.0 (27 模型) | **设计**: 仿生脑(026) + 分层(001)
 
 ## 定位
 
-使能层是采访层和认知内核层之间的**执行力外壳**。它接收经过采访校准的精准问题，选择最合适的模型管道，驱动分析执行并产出结构化成果。
+Archon 是采访层和 Xuan Master 认知内核层之间的**执行力外壳**。它接收经过采访校准的精准问题，选择最合适的模型管道，驱动分析执行、动作调用与结构化产出。
 
 ```
-采访层 (Interview)     →  发现问题 + 校准问题 + 收集全维度信息
+Archon 校准入口        →  发现问题 + 校准问题 + 收集全维度信息
   ↓ Interview Summary
-使能层 (Enabled)       →  模型选择 + 管道执行 + 合成产出
+Archon 执行引擎        →  模型选择 + 管道执行 + 动作调用 + 合成产出
   ↓
-认知内核层 (Kernel)    →  27 个深层认知模型
+Xuan Master 核心       →  27 个深层认知模型
 ```
 
 ## 设计哲学 — Unix 原则驱动的执行引擎
@@ -62,7 +62,7 @@ author: Arthur
 - 涉及多人但未说明谁的意见优先
 - 有明显的情绪信号但原因不明
 
-**如果触发**：加载 `[`interview`](interview/SKILL.md)`，执行三阶段采访，产出 Interview Summary，然后基于 Summary 继续 Phase 1。
+**如果触发**：加载 `[`interview`](../interview/SKILL.md)`，执行三阶段采访，产出 Interview Summary，然后基于 Summary 继续 Phase 1。
 
 **如果不触发**：直接进入 Phase 1。
 
@@ -94,7 +94,7 @@ author: Arthur
 - 涉及多人但未说明谁的意见优先
 - 有明显的情绪信号但原因不明
 
-**如果触发**：加载 `[`interview`](interview/SKILL.md)`，执行三阶段采访，产出 Interview Summary，然后基于 Summary 继续 Phase 1。
+**如果触发**：加载 `[`interview`](../interview/SKILL.md)`，执行三阶段采访，产出 Interview Summary，然后基于 Summary 继续 Phase 1。
 
 **如果不触发**：直接进入 Phase 1。
 
@@ -166,7 +166,7 @@ author: Arthur
 模型各自独立分析同一个原始问题，互不依赖。
 
 步骤：
-1. 加载第一个模型：`[`NNN-...`](NNN-.../SKILL.md)`
+1. 加载第一个模型：`[`NNN-...`](../NNN-.../SKILL.md)`
 2. 按模型结构展开：
    - **核心定义** → 框定分析边界
    - **核心原则** → 作为分析检查项逐条对照
@@ -222,7 +222,7 @@ author: Arthur
 | **对立平衡** | 两个模型得出矛盾结论 | 揭示 trade-off——为什么会有矛盾 |
 | **递归套用** | 一个模型审视另一个 | 元认知(019)观察 SECI(021) → 找到转化瓶颈 |
 
-**参考文件**：`[`enabled`](enabled/SKILL.md) → `references/synthesis-strategies.md``
+**参考文件**：`[`enabled`](SKILL.md) → `references/synthesis-strategies.md``
 
 ### Phase 4: 结构化产出
 
@@ -267,7 +267,7 @@ author: Arthur
 
 > 产出多格式交付时，飞书文档末尾追加资源链接（PDF + Web Slides URL）。详见 `feishu-doc-writer` skill。
 
-**参考文件**：`[`enabled`](enabled/SKILL.md) → `references/output-templates.md``
+**参考文件**：`[`enabled`](SKILL.md) → `references/output-templates.md``
 
 ### 🎞️ Web Slides 输出（新增）
 
@@ -278,7 +278,7 @@ author: Arthur
 3. 通过 Cloudflare Tunnel 打通公网访问
 4. 在飞书文档末尾追加资源链接（PDF + Slides URL）
 
-详细步骤见：`[`enabled`](enabled/SKILL.md) → `references/web-slides-pipeline.md``
+详细步骤见：`[`enabled`](SKILL.md) → `references/web-slides-pipeline.md``
 
 ### Phase 5: 反馈记录
 
@@ -298,7 +298,7 @@ Agent 加载使能层 → 用户提交问题 → Phase 1~5 全流程完成
 
 ```
 user: "我们团队开发效率很低，帮我分析一下"
-agent: 加载 00-entry-enabled → Phase 1 诊断 → 展示模型栈 → 
+agent: 加载 archon/SKILL.md → Phase 1 诊断 → 展示模型栈 → 
        Phase 2 逐个执行 → Phase 3 合成 → Phase 4 产出报告
 ```
 
@@ -307,7 +307,7 @@ agent: 加载 00-entry-enabled → Phase 1 诊断 → 展示模型栈 →
 
 ```
 user: "快速看看这个应该用什么模型？"
-agent: 加载 00-entry-enabled → 仅 Phase 1 → "建议用 002+011+016 分析"
+agent: 加载 enabled/SKILL.md → 仅 Phase 1 → "建议用 002+011+016 分析"
 ```
 
 ### 方式 C：单模型深度
@@ -315,7 +315,7 @@ agent: 加载 00-entry-enabled → 仅 Phase 1 → "建议用 002+011+016 分析
 
 ```
 user: "只用流动模型分析我的流程"
-agent: 加载 00-entry-enabled → Phase 1+2 only → 单模型深度产出
+agent: 加载 enabled/SKILL.md → Phase 1+2 only → 单模型深度产出
 ```
 
 ---
@@ -358,13 +358,14 @@ agent: 加载 00-entry-enabled → Phase 1+2 only → 单模型深度产出
 ## 快速导航
 
 ```sh
-[`enabled`](enabled/SKILL.md)                                    # 本文件
-[`enabled`](enabled/SKILL.md) → `references/problem-diagnosis-guide.md`
-[`enabled`](enabled/SKILL.md) → `references/synthesis-strategies.md`
-[`enabled`](enabled/SKILL.md) → `references/output-templates.md`
-[`enabled`](enabled/SKILL.md) → `references/unix-design-philosophy-mapping.md`
-[`enabled`](enabled/SKILL.md) → `references/web-slides-pipeline.md`
-[`enabled`](enabled/SKILL.md) → `templates/slides-template.html`
+[`archon`](../archon/SKILL.md)                                   # Archon 层入口
+[`enabled`](SKILL.md)                                            # 本文件
+[`enabled`](SKILL.md) → `references/problem-diagnosis-guide.md`
+[`enabled`](SKILL.md) → `references/synthesis-strategies.md`
+[`enabled`](SKILL.md) → `references/output-templates.md`
+[`enabled`](SKILL.md) → `references/unix-design-philosophy-mapping.md`
+[`enabled`](SKILL.md) → `references/web-slides-pipeline.md`
+[`enabled`](SKILL.md) → `templates/slides-template.html`
 ```
 
 ---
@@ -419,7 +420,7 @@ agent: 加载 00-entry-enabled → Phase 1+2 only → 单模型深度产出
 
 | Skill | 关系 |
 |-------|------|
-| `00-entry-interview` | 🎙️ 采访层 — 使能层的上游：先校准问题，再管道分析 |
-| `00-entry` | 认知内核入口路由 — 所有模型的总目录 |
-| `00-entry-{001..027}` | 27 个认知模型 — 使能层的"原材料" |
-| `00-entry-optimization` | 优化流程 — 模型维护的标准化流程 |
+| `archon` | Archon 层入口 — 校准、编排、动作、生成的总入口 |
+| `interview` | 🎙️ 采访协议 — 使能层的上游：先校准问题，再管道分析 |
+| `xuan-master` | 核心层入口 — 所有认知模型的总入口 |
+| `optimization` | 优化流程 — 模型维护的标准化流程 |

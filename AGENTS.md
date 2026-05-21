@@ -8,11 +8,27 @@ Meta-Engine is a family of **27 deep cognitive models** distilled into structure
 
 Originally built as the "Xuan Master" (璇玑) skill family for Hermes Agent, Meta-Engine has been generalized to work across **any AI coding agent**: Claude Code, Codex, Cursor, OpenClaw, Hermes, and more.
 
+## Layered Skills Architecture
+
+The current canonical layer names are:
+
+- **Xuan Master**: the core meta-cognition layer and 27-model knowledge kernel
+- **Archon**: the enabler layer for calibration, orchestration, actions, and generation workflows such as document and PDF outputs
+- **Prism**: the specialist layer for routing and mapping work into deeper domain-specific execution
+
+In the current repository layout:
+
+- `xuan-master/SKILL.md` is the loadable entrypoint for **Xuan Master**, backed by `00-entry/` and `001`-`027`
+- `archon/SKILL.md` is the loadable entrypoint for **Archon**, backed by `interview/` and `enabled/`
+- `prism/SKILL.md` is the loadable entrypoint for **Prism**, with future specialist assets accumulating under `prism/domains/`
+- `optimization/` remains a cross-cutting self-improvement loop across all layers
+
 ## How Agents Use It
 
 ### For any agent, the pattern is the same:
 
 1. **Scan the catalog** (`00-entry/SKILL.md`) to find relevant models for the problem
+   Or load `xuan-master/SKILL.md` as the core layer entrypoint first.
 2. **Load the model files** by reading their SKILL.md
 3. **Apply the frameworks** — principles, cross-domain mappings, case studies, practice exercises
 4. **Combine models** using scene recommendations for multi-dimensional analysis
@@ -109,30 +125,40 @@ Originally built as the "Xuan Master" (璇玑) skill family for Hermes Agent, Me
 
 ```
 Application Layer    → Specific problems → specific outputs
-Enabled Layer        → Problem diagnosis → model selection → pipeline execution → synthesis
-Interview Layer      → Three-stage dialogue → calibrate problems → collect full-dimension info
-Cognitive Kernel     → 27 deep cognitive models (10 Speculative / 10 Method / 7 System)
+Prism Layer          → Domain routing → specialized mapping → deeper expert work
+Archon Layer         → Calibration → orchestration → actions → generation → synthesis
+Xuan Master Core     → 27 deep cognitive models (10 Speculative / 10 Method / 7 System)
+Optimization Loop    → Audit → recovery → self-improvement across all layers
 ```
 
-- **Enabled Layer**: [`enabled/SKILL.md`](enabled/SKILL.md) — The execution engine
-- **Interview Layer**: [`interview/SKILL.md`](interview/SKILL.md) — Problem calibration protocol
+- **Xuan Master Core**: [`xuan-master/SKILL.md`](xuan-master/SKILL.md) backed by [`00-entry/SKILL.md`](00-entry/SKILL.md) plus the `001`-`027` model directories
+- **Archon Layer**: [`archon/SKILL.md`](archon/SKILL.md) backed by [`interview/SKILL.md`](interview/SKILL.md) and [`enabled/SKILL.md`](enabled/SKILL.md)
+- **Prism Layer**: [`prism/SKILL.md`](prism/SKILL.md) — specialist routing and specialization guidance
+- **Optimization Loop**: [`optimization/SKILL.md`](optimization/SKILL.md) — self-improvement and corpus maintenance
 
 ## File Structure
 
 ```
 meta-engine/
 ├── AGENTS.md                     ← This file (universal entry point)
-├── 00-entry/SKILL.md             ← Full catalog + 53 scene combos
+├── xuan-master/                  ← Xuan Master layer entrypoint
+│   └── SKILL.md
+├── archon/                       ← Archon layer entrypoint
+│   └── SKILL.md
+├── prism/                        ← Prism layer entrypoint + future specialist packs
+│   ├── SKILL.md
+│   └── domains/
+├── 00-entry/SKILL.md             ← Xuan Master core catalog + 53 scene combos
 ├── 001-layered-architecture/
 │   └── SKILL.md                  ← Model content
 ├── 002-flow-model/SKILL.md
 ├── ...
 ├── 027-ai-native-mindset/SKILL.md
-├── enabled/                      ← Execution engine
+├── enabled/                      ← Archon execution engine implementation
 │   ├── SKILL.md
 │   ├── references/
 │   └── scripts/
-├── interview/                    ← Problem calibration
+├── interview/                    ← Archon calibration protocol implementation
 │   └── SKILL.md
 └── optimization/                 ← Self-improvement
     ├── SKILL.md
