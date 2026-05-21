@@ -34,7 +34,7 @@
   - AI coding agent or LLM loading the skills as context
   - downstream integrator wiring the repository into an agent environment
 - Key flows:
-  - agent or operator starts at `AGENTS.md` or `00-entry/SKILL.md`
+  - agent or operator starts at `AGENTS.md` or `xuan-master/00-entry/SKILL.md`
   - `Xuan Master` catalog or scene recommendations route the user to one or more model `SKILL.md` files
   - `Archon` can calibrate ambiguous problems through `interview/SKILL.md`
   - `Archon` can orchestrate structured execution, actions, and generation through `enabled/SKILL.md` and its helper references/scripts
@@ -65,7 +65,9 @@
   - do not let a helper script become the only place where routing logic or corpus policy is knowable
 - Touched surfaces:
   - `AGENTS.md`
-  - `00-entry/SKILL.md`
+  - `xuan-master/SKILL.md`
+  - `xuan-master/00-entry/SKILL.md`
+  - `xuan-master/001-layered-architecture/SKILL.md`
   - `enabled/SKILL.md`
   - `enabled/scripts/model-selector.py`
   - `interview/SKILL.md`

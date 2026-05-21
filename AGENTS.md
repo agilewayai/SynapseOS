@@ -18,7 +18,7 @@ The current canonical layer names are:
 
 In the current repository layout:
 
-- `xuan-master/SKILL.md` is the loadable entrypoint for **Xuan Master**, backed by `00-entry/` and `001`-`027`
+- `xuan-master/SKILL.md` is the loadable entrypoint for **Xuan Master**, backed by `xuan-master/00-entry/` plus the `xuan-master/001-*` through `xuan-master/027-*` model directories
 - `archon/SKILL.md` is the loadable entrypoint for **Archon**, backed by `interview/` and `enabled/`
 - `prism/SKILL.md` is the loadable entrypoint for **Prism**, with future specialist assets accumulating under `prism/domains/`
 - `optimization/` remains a cross-cutting self-improvement loop across all layers
@@ -27,7 +27,7 @@ In the current repository layout:
 
 ### For any agent, the pattern is the same:
 
-1. **Scan the catalog** (`00-entry/SKILL.md`) to find relevant models for the problem
+1. **Scan the catalog** (`xuan-master/00-entry/SKILL.md`) to find relevant models for the problem
    Or load `xuan-master/SKILL.md` as the core layer entrypoint first.
 2. **Load the model files** by reading their SKILL.md
 3. **Apply the frameworks** — principles, cross-domain mappings, case studies, practice exercises
@@ -47,9 +47,9 @@ In the current repository layout:
 ### Quick Start (10 minutes):
 
 ```
-1. Read 001-layered-architecture/SKILL.md — How to decompose any system
-2. Read 007-iterative-thinking/SKILL.md — How to improve anything
-3. Read 019-meta-cognition/SKILL.md — How to think about your thinking
+1. Read xuan-master/001-layered-architecture/SKILL.md — How to decompose any system
+2. Read xuan-master/007-iterative-thinking/SKILL.md — How to improve anything
+3. Read xuan-master/019-meta-cognition/SKILL.md — How to think about your thinking
 ```
 
 ## Model Catalog
@@ -59,45 +59,45 @@ In the current repository layout:
 
 | # | Model | Read |
 |---|-------|------|
-| 004 | Pareto Distribution (80/20) | [SKILL.md](004-pareto-distribution/SKILL.md) |
-| 005 | Reverse Thinking | [SKILL.md](005-reverse-thinking/SKILL.md) |
-| 006 | First Principles | [SKILL.md](006-first-principles/SKILL.md) |
-| 008 | Entropy Management | [SKILL.md](008-entropy-management/SKILL.md) |
-| 009 | Path of Least Resistance | [SKILL.md](009-path-of-least-resistance/SKILL.md) |
-| 010 | Occam's Razor | [SKILL.md](010-occams-razor/SKILL.md) |
-| 012 | Game Theory | [SKILL.md](012-game-theory/SKILL.md) |
-| 016 | Dual Process Theory | [SKILL.md](016-dual-process-theory/SKILL.md) |
-| 019 | Meta-Cognition | [SKILL.md](019-meta-cognition/SKILL.md) |
-| 027 | AI-Native Mindset | [SKILL.md](027-ai-native-mindset/SKILL.md) |
+| 004 | Pareto Distribution (80/20) | [SKILL.md](xuan-master/004-pareto-distribution/SKILL.md) |
+| 005 | Reverse Thinking | [SKILL.md](xuan-master/005-reverse-thinking/SKILL.md) |
+| 006 | First Principles | [SKILL.md](xuan-master/006-first-principles/SKILL.md) |
+| 008 | Entropy Management | [SKILL.md](xuan-master/008-entropy-management/SKILL.md) |
+| 009 | Path of Least Resistance | [SKILL.md](xuan-master/009-path-of-least-resistance/SKILL.md) |
+| 010 | Occam's Razor | [SKILL.md](xuan-master/010-occams-razor/SKILL.md) |
+| 012 | Game Theory | [SKILL.md](xuan-master/012-game-theory/SKILL.md) |
+| 016 | Dual Process Theory | [SKILL.md](xuan-master/016-dual-process-theory/SKILL.md) |
+| 019 | Meta-Cognition | [SKILL.md](xuan-master/019-meta-cognition/SKILL.md) |
+| 027 | AI-Native Mindset | [SKILL.md](xuan-master/027-ai-native-mindset/SKILL.md) |
 
 ### Method (Execution & Process) — 10 models
 > Structured operations, workflows, frameworks — the "how" layer
 
 | # | Model | Read |
 |---|-------|------|
-| 007 | Iterative Thinking | [SKILL.md](007-iterative-thinking/SKILL.md) |
-| 014 | 5W2H Analysis | [SKILL.md](014-5w2h/SKILL.md) |
-| 015 | Lean Thinking | [SKILL.md](015-lean-thinking/SKILL.md) |
-| 017 | BFS vs DFS Search | [SKILL.md](017-bfs-dfs/SKILL.md) |
-| 018 | SWOT Analysis | [SKILL.md](018-swot/SKILL.md) |
-| 020 | Six Thinking Hats | [SKILL.md](020-six-thinking-hats/SKILL.md) |
-| 021 | SECI Knowledge Mgmt | [SKILL.md](021-seci-knowledge-management/SKILL.md) |
-| 022 | McKinsey Method | [SKILL.md](022-mckinsey-method/SKILL.md) |
-| 023 | OGSM Goal Management | [SKILL.md](023-ogsm-goal-management/SKILL.md) |
-| 024 | RICE Diagnosis | [SKILL.md](024-rice-diagnosis/SKILL.md) |
+| 007 | Iterative Thinking | [SKILL.md](xuan-master/007-iterative-thinking/SKILL.md) |
+| 014 | 5W2H Analysis | [SKILL.md](xuan-master/014-5w2h/SKILL.md) |
+| 015 | Lean Thinking | [SKILL.md](xuan-master/015-lean-thinking/SKILL.md) |
+| 017 | BFS vs DFS Search | [SKILL.md](xuan-master/017-bfs-dfs/SKILL.md) |
+| 018 | SWOT Analysis | [SKILL.md](xuan-master/018-swot/SKILL.md) |
+| 020 | Six Thinking Hats | [SKILL.md](xuan-master/020-six-thinking-hats/SKILL.md) |
+| 021 | SECI Knowledge Mgmt | [SKILL.md](xuan-master/021-seci-knowledge-management/SKILL.md) |
+| 022 | McKinsey Method | [SKILL.md](xuan-master/022-mckinsey-method/SKILL.md) |
+| 023 | OGSM Goal Management | [SKILL.md](xuan-master/023-ogsm-goal-management/SKILL.md) |
+| 024 | RICE Diagnosis | [SKILL.md](xuan-master/024-rice-diagnosis/SKILL.md) |
 
 ### System (Engineering & Design) — 7 models
 > Dynamic interaction, structural resilience, emergent behavior — the "organize" layer
 
 | # | Model | Read |
 |---|-------|------|
-| 001 | Layered Architecture | [SKILL.md](001-layered-architecture/SKILL.md) |
-| 002 | Flow Model | [SKILL.md](002-flow-model/SKILL.md) |
-| 003 | State Machine | [SKILL.md](003-state-machine/SKILL.md) |
-| 011 | Feedback Loop | [SKILL.md](011-feedback-loop/SKILL.md) |
-| 013 | Network Effects | [SKILL.md](013-network-effects/SKILL.md) |
-| 025 | High Availability Design | [SKILL.md](025-high-availability/SKILL.md) |
-| 026 | Bio-Brain Architecture | [SKILL.md](026-bio-brain/SKILL.md) |
+| 001 | Layered Architecture | [SKILL.md](xuan-master/001-layered-architecture/SKILL.md) |
+| 002 | Flow Model | [SKILL.md](xuan-master/002-flow-model/SKILL.md) |
+| 003 | State Machine | [SKILL.md](xuan-master/003-state-machine/SKILL.md) |
+| 011 | Feedback Loop | [SKILL.md](xuan-master/011-feedback-loop/SKILL.md) |
+| 013 | Network Effects | [SKILL.md](xuan-master/013-network-effects/SKILL.md) |
+| 025 | High Availability Design | [SKILL.md](xuan-master/025-high-availability/SKILL.md) |
+| 026 | Bio-Brain Architecture | [SKILL.md](xuan-master/026-bio-brain/SKILL.md) |
 
 ## Scene Recommendations (Top 15)
 
@@ -119,7 +119,7 @@ In the current repository layout:
 | Code Quality Improvement | 011 + 007 + 005 + 010 |
 | Career/Growth Planning | 026 + 019 + 011 + 021 |
 
-*See `00-entry/SKILL.md` for all 53 scene combinations.*
+*See `xuan-master/00-entry/SKILL.md` for all 53 scene combinations.*
 
 ## System Layers
 
@@ -131,7 +131,7 @@ Xuan Master Core     → 27 deep cognitive models (10 Speculative / 10 Method / 
 Optimization Loop    → Audit → recovery → self-improvement across all layers
 ```
 
-- **Xuan Master Core**: [`xuan-master/SKILL.md`](xuan-master/SKILL.md) backed by [`00-entry/SKILL.md`](00-entry/SKILL.md) plus the `001`-`027` model directories
+- **Xuan Master Core**: [`xuan-master/SKILL.md`](xuan-master/SKILL.md) backed by [`xuan-master/00-entry/SKILL.md`](xuan-master/00-entry/SKILL.md) plus the `xuan-master/001-*` through `xuan-master/027-*` model directories
 - **Archon Layer**: [`archon/SKILL.md`](archon/SKILL.md) backed by [`interview/SKILL.md`](interview/SKILL.md) and [`enabled/SKILL.md`](enabled/SKILL.md)
 - **Prism Layer**: [`prism/SKILL.md`](prism/SKILL.md) — specialist routing and specialization guidance
 - **Optimization Loop**: [`optimization/SKILL.md`](optimization/SKILL.md) — self-improvement and corpus maintenance
@@ -142,18 +142,19 @@ Optimization Loop    → Audit → recovery → self-improvement across all laye
 meta-engine/
 ├── AGENTS.md                     ← This file (universal entry point)
 ├── xuan-master/                  ← Xuan Master layer entrypoint
-│   └── SKILL.md
+│   ├── SKILL.md
+│   ├── 00-entry/
+│   │   └── SKILL.md             ← Xuan Master core catalog + 53 scene combos
+│   ├── 001-layered-architecture/
+│   │   └── SKILL.md             ← Model content
+│   ├── 002-flow-model/
+│   ├── ...
+│   └── 027-ai-native-mindset/SKILL.md
 ├── archon/                       ← Archon layer entrypoint
 │   └── SKILL.md
 ├── prism/                        ← Prism layer entrypoint + future specialist packs
 │   ├── SKILL.md
 │   └── domains/
-├── 00-entry/SKILL.md             ← Xuan Master core catalog + 53 scene combos
-├── 001-layered-architecture/
-│   └── SKILL.md                  ← Model content
-├── 002-flow-model/SKILL.md
-├── ...
-├── 027-ai-native-mindset/SKILL.md
 ├── enabled/                      ← Archon execution engine implementation
 │   ├── SKILL.md
 │   ├── references/

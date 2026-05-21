@@ -32,6 +32,8 @@
 - Request, spec, story, architecture, traceability, and audit artifacts now exist under `.aries_harness/`
 - Canonical layer naming is now clarified as `Xuan Master` core, `Archon` enabler, and `Prism` specialist
 - The three canonical layers now have dedicated top-level entrypoints: `xuan-master/`, `archon/`, and `prism/`
+- The `Xuan Master` catalog and all 27 model directories now live physically under `xuan-master/`
+- Harness artifacts and entry docs now reference the nested `xuan-master/` core layout consistently
 - No generated history surface exists yet
 
 ## Working Assumptions
@@ -42,4 +44,4 @@
 
 ## Next Safe Action
 
-Choose the next repository-shaping task from `TASK_STACK.md`, most likely naming alignment or helper-script hardening, and keep the request-to-architecture artifacts synchronized while doing it.
+Choose the next repository-shaping task from `TASK_STACK.md`, most likely helper-script hardening or public-facing README positioning, and keep the request-to-architecture artifacts synchronized while doing it.

@@ -35,12 +35,13 @@
 
 - Artifacts reviewed:
   - `AGENTS.md`
-  - `00-entry/SKILL.md`
+  - `xuan-master/SKILL.md`
+  - `xuan-master/00-entry/SKILL.md`
   - `enabled/SKILL.md`
   - `interview/SKILL.md`
   - `optimization/SKILL.md`
   - `.aries_harness/` request/spec/story/architecture artifacts
-- Runtime evidence reviewed: `repository tree and path-coupling scan`
+- Runtime evidence reviewed: `repository tree, git rename set, and path-coupling scan`
 - Verification evidence reviewed: `file-content inspection and link-target sanity checks for the remediated surfaces`
 - Policy evidence reviewed: `n/a for this local structural cleanup`
 

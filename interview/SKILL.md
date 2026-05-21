@@ -201,5 +201,5 @@ Agent 应在以下情况自动触发采访层：
 [`interview`](SKILL.md)                          # 本文件
 [`enabled`](../enabled/SKILL.md)                 # 使能层——采访层的下游
 [`xuan-master`](../xuan-master/SKILL.md)         # 核心层入口
-[`00-entry`](../00-entry/SKILL.md)               # 核心目录
+[`00-entry`](../xuan-master/00-entry/SKILL.md)  # 核心目录
 ```

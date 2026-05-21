@@ -30,9 +30,10 @@
 - The files describe this specific repository rather than generic template text
 - Request-to-architecture artifacts exist for the current repository baseline
 - The canonical layers have dedicated loadable skill entrypoints
+- The `Xuan Master` catalog and 27-model kernel are nested under `xuan-master/` and referenced consistently
 
 ## Current Result
 
 - Acceptance status: `pass`
-- Verification method: `directory inspection and file-content review`
+- Verification method: `git rename inspection, stale-path scan, and file-content review`
 - Remaining gaps: `no generated history yet; no automated validation yet; no formal domain package yet; optimization docs still have some Hermes-era examples`

@@ -16,7 +16,7 @@
 ## Belongs Here
 
 - Request source: operator request to apply `aries-harness-request-to-architecture` and distill the current project spec and architecture
-- Problem statement: the repository already communicates its purpose and system shape, but that truth is spread across `AGENTS.md`, `00-entry/SKILL.md`, `enabled/`, `interview/`, `optimization/`, and a few helper scripts; canonical layer names also needed to be made explicit
+- Problem statement: the repository already communicates its purpose and system shape, but that truth is spread across `AGENTS.md`, `xuan-master/00-entry/SKILL.md`, `enabled/`, `interview/`, `optimization/`, and a few helper scripts; canonical layer names and their physical repo mapping also needed to be made explicit
 - Current pain or anti-pattern:
   - no single canonical request/spec/architecture pack exists
   - public identity and internal layer naming were previously conflated
@@ -39,7 +39,7 @@
   - preserve the current corpus and layering as the baseline
   - mixed English and Chinese source material must remain understandable as-is
   - the repository is documentation-first, with only small helper scripts
-  - `Prism` is currently an architectural layer more than a dedicated directory
+  - `Prism` now has a dedicated entrypoint, but its deeper domain assets are still intentionally sparse
 - Non-goals:
   - rewriting all user-facing documentation
   - adding new cognitive models, scenes, or runtime features

@@ -26,7 +26,7 @@
 - Repository root: `/home/ubuntu/work/harenss/Skills/Cogna`
 - Remote: `git@github.com:agilewayai/SynapseOS.git`
 - Current branch: `main`
-- Primary content: 27 cognitive model skill directories plus `enabled/`, `interview/`, and `optimization/`
+- Primary content: `xuan-master/00-entry/` plus the `xuan-master/001-*` through `xuan-master/027-*` model directories, alongside `enabled/`, `interview/`, and `optimization/`
 - Aries Harness root: `.aries_harness/`
 - Canonical layer naming:
   - `Xuan Master`: core meta-cognition and 27-model kernel
@@ -51,3 +51,4 @@
 - Preserve the repository as a layered docs-first knowledge architecture
 - Use `Xuan Master`, `Archon`, and `Prism` as the canonical internal layer names
 - Materialize canonical layers as dedicated loadable entrypoints when the repo is meant for agent reuse
+- Physically nest the `Xuan Master` catalog and 27-model kernel under `xuan-master/` to align the file layout with the layered architecture

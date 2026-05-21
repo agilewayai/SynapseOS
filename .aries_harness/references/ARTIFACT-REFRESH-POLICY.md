@@ -38,7 +38,7 @@ Keep request, spec, story, architecture, and ADR artifacts aligned as the reposi
 ## Source-Of-Truth Rules
 
 - `history/` and `runs/` are evidence or projections, not the canonical product/design source
-- `AGENTS.md`, `00-entry/SKILL.md`, and the layer directories remain the primary product corpus
+- `AGENTS.md`, `xuan-master/00-entry/SKILL.md`, and the layer directories remain the primary product corpus
 - `.aries_harness/` design artifacts describe and govern that corpus; they do not replace it
 
 ## Review Cadence

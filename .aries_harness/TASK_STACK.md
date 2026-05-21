@@ -23,7 +23,7 @@
 
 ## Active
 
-- No active slice is locked after the bootstrap; pick the next item from `Ready Next`
+- No active slice is locked after the `xuan-master` core refactor; pick the next item from `Ready Next`
 
 ## Ready Next
 
@@ -44,3 +44,4 @@
 - Bootstrapped `.aries_harness/` on `2026-05-21`
 - Distilled the current project into request-to-architecture artifacts on `2026-05-21`
 - Added dedicated `xuan-master/`, `archon/`, and `prism/` layer entrypoints and refreshed the related skill definitions on `2026-05-21`
+- Moved the `Xuan Master` catalog and 27-model kernel under `xuan-master/` and refreshed the linked architecture artifacts on `2026-05-21`

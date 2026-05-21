@@ -8,7 +8,7 @@
 - owner: `Arthur`
 - canonical path: `.aries_harness/MISSION.md`
 - source of truth: `this file`
-- upstream links: `AGENTS.md`, `00-entry/SKILL.md`
+- upstream links: `AGENTS.md`, `xuan-master/00-entry/SKILL.md`
 - downstream links: `TASK_STACK.md`, `STATE.md`, `EVAL.md`, `RUNBOOK.md`
 - verification state: `initialized`
 - last reviewed: `2026-05-21`
@@ -31,7 +31,7 @@ Maintain a reusable, agent-agnostic skills stack inside the `SynapseOS` reposito
 
 ## Scope
 
-- Keep the 27-model knowledge base coherent, navigable, and publishable
+- Keep the 27-model knowledge base under `xuan-master/` coherent, navigable, and publishable
 - Maintain execution-layer assets such as `enabled/`, `interview/`, and `optimization/`
 - Improve repository structure, documentation quality, automation, and release readiness
 - Preserve compatibility across coding-agent environments

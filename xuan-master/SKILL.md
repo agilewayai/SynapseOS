@@ -17,12 +17,12 @@ Xuan Master is the core of the skills stack. It provides the meta-cognition laye
 
 ## Current Surfaces
 
-- [`../00-entry/SKILL.md`](../00-entry/SKILL.md): catalog, scene combinations, and model routing
-- `../001-layered-architecture/` through `../027-ai-native-mindset/`: the 27 model directories
+- [`00-entry/SKILL.md`](00-entry/SKILL.md): catalog, scene combinations, and model routing
+- `001-layered-architecture/` through `027-ai-native-mindset/`: the 27 model directories
 
 ## Load Pattern
 
-1. Start with [`../00-entry/SKILL.md`](../00-entry/SKILL.md).
+1. Start with [`00-entry/SKILL.md`](00-entry/SKILL.md).
 2. Load the relevant model `SKILL.md` files from the numbered directories.
 3. If the problem needs orchestration, actions, or structured generation, hand off to [`../archon/SKILL.md`](../archon/SKILL.md).
 4. If the work needs deeper domain-specific routing, hand off to [`../prism/SKILL.md`](../prism/SKILL.md).

@@ -38,13 +38,13 @@ author: Arthur
 - 遇到现实问题 → 浏览「🎯 场景推荐」找到组合
 - 想深度实践 → 每个模型末尾的「实战练习」就是你的作业
 - 想贡献/优化 → 每个模型都接受版本更新，发现问题就提出来
-- **⚡ 想要系统化分析问题？加载使能层** → `[`archon`](../archon/SKILL.md)`
+- **⚡ 想要系统化分析问题？加载使能层** → `[`archon`](../../archon/SKILL.md)`
 
 ### 🧭 快速导航
 
-- 核心层入口：`[`xuan-master`](../xuan-master/SKILL.md)`
-- 使能层入口：`[`archon`](../archon/SKILL.md)`
-- 专家层入口：`[`prism`](../prism/SKILL.md)`
+- 核心层入口：`[`xuan-master`](../SKILL.md)`
+- 使能层入口：`[`archon`](../../archon/SKILL.md)`
+- 专家层入口：`[`prism`](../../prism/SKILL.md)`
 
 
 ---
@@ -215,7 +215,7 @@ author: Arthur
 ├─────────────────────────────────────────────────────────────┤
 │              ⚡ Archon 使能层 (Enabler Layer)                │
 │   校准 → 编排 → 动作执行 → 文档/PDF生成 → 多模型合成输出      │
-│   [`interview`](../interview/SKILL.md) + [`enabled`](../enabled/SKILL.md) │
+│   [`interview`](../../interview/SKILL.md) + [`enabled`](../../enabled/SKILL.md) │
 ├─────────────────────────────────────────────────────────────┤
 │            🧠 Xuan Master 核心层 (Meta-Cognition Core)       │
 │   27 个深层认知模型 (思辨10 / 方法10 / 系统7)                 │
@@ -235,18 +235,18 @@ author: Arthur
 meta-engine/
 ├── AGENTS.md                               ← 通用入口与分层说明
 ├── xuan-master/
-│   └── SKILL.md                            ← Xuan Master 层入口
+│   ├── SKILL.md                            ← Xuan Master 层入口
+│   ├── 00-entry/
+│   │   └── SKILL.md                        ← Xuan Master 核心目录 + 场景路由
+│   ├── 001-layered-architecture/
+│   ├── 002-flow-model/
+│   ├── ...
+│   └── 027-ai-native-mindset/              ← 27 个核心模型目录
 ├── archon/
 │   └── SKILL.md                            ← Archon 层入口
 ├── prism/
 │   ├── SKILL.md                            ← Prism 层入口
 │   └── domains/                            ← 未来专家域资产
-├── 00-entry/
-│   └── SKILL.md                            ← Xuan Master 核心目录 + 场景路由
-├── 001-layered-architecture/
-├── 002-flow-model/
-├── ...
-├── 027-ai-native-mindset/                  ← 27 个核心模型目录
 ├── interview/
 │   └── SKILL.md                            ← Archon 校准协议实现
 ├── enabled/

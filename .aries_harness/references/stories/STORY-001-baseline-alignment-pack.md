@@ -64,9 +64,9 @@
 - Slice type: `alignment`
 - Why this slice matters now: the layer naming model is now explicit and should be reflected in the canonical docs immediately
 - Acceptance criteria:
-  - `AGENTS.md`, `00-entry/SKILL.md`, and the architecture artifacts use `Xuan Master`, `Archon`, and `Prism` consistently
+  - `AGENTS.md`, `xuan-master/00-entry/SKILL.md`, and the architecture artifacts use `Xuan Master`, `Archon`, and `Prism` consistently
   - the mapping from conceptual layers to current repo surfaces is explicit
-- Verification plan: inspect `AGENTS.md`, `00-entry/SKILL.md`, `enabled/SKILL.md`, `interview/SKILL.md`, and the request/spec/architecture artifacts for layer-name consistency
+- Verification plan: inspect `AGENTS.md`, `xuan-master/SKILL.md`, `xuan-master/00-entry/SKILL.md`, `enabled/SKILL.md`, `interview/SKILL.md`, and the request/spec/architecture artifacts for layer-name and path consistency
 - Before or after evidence expectation: before/after documentation diff
 - Domain artifacts touched: `pending`
 - Architecture artifacts touched: `ARCH-001`

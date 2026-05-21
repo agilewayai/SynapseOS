@@ -32,22 +32,22 @@
 - Current state summary:
   - `AGENTS.md` and the harness now treat the repo as a layered skills stack
   - `xuan-master/SKILL.md` is the dedicated entrypoint for `Xuan Master`
-  - `00-entry/SKILL.md` is the catalog and routing surface of that core
-  - `001` through `027` form the 27-model `Xuan Master` kernel
+  - `xuan-master/00-entry/SKILL.md` is the catalog and routing surface of that core
+  - `xuan-master/001` through `xuan-master/027` form the 27-model `Xuan Master` kernel
   - `archon/SKILL.md` is the dedicated entrypoint for `Archon`
   - `interview/` and `enabled/` are the main current implementation surfaces of `Archon`
   - `prism/SKILL.md` is the dedicated entrypoint for `Prism`
   - `prism/domains/` is the placeholder surface for future specialist-domain assets
   - `optimization/` adds self-audit and recovery procedures as a cross-cutting loop
   - `.aries_harness/` now adds a governed recovery and design surface
-- Target state summary: preserve the runtime/content layers above, keep the layer entrypoints explicit, and make the request/spec/story/architecture truth explicit under `.aries_harness/` so future changes have one auditable upstream baseline
+- Target state summary: preserve the runtime/content layers above, keep the layer entrypoints explicit, keep the full `Xuan Master` corpus physically nested under `xuan-master/`, and make the request/spec/story/architecture truth explicit under `.aries_harness/` so future changes have one auditable upstream baseline
 - Why the change is needed: without a canonical design baseline, the repository’s intent and seams remain distributed across multiple docs and scripts, which raises drift and resume cost
 
 ## Boundaries
 
 - Domain links: no formal domain package exists yet; working concepts implied by the repo are `cognitive_model`, `scene_combination`, `execution_pipeline`, `specialist_domain_mapping`, `agent_integration`, and `corpus_optimization`
 - Component or module boundaries:
-  - `Xuan Master core`: `xuan-master/SKILL.md`, `AGENTS.md`, `00-entry/SKILL.md`, `001-layered-architecture/` through `027-ai-native-mindset/`
+  - `Xuan Master core`: `xuan-master/SKILL.md`, `AGENTS.md`, `xuan-master/00-entry/SKILL.md`, `xuan-master/001-layered-architecture/` through `xuan-master/027-ai-native-mindset/`
   - `Archon calibration surface`: `archon/SKILL.md`, `interview/SKILL.md`
   - `Archon execution surface`: `enabled/SKILL.md`, `enabled/references/`, `enabled/templates/`, `enabled/scripts/model-selector.py`
   - `Prism specialist layer`: `prism/SKILL.md` plus `prism/domains/` for future domain-specialization assets
