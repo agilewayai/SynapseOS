@@ -32,11 +32,11 @@ Use the following canonical internal layer names:
 2. `Archon`
    - the enabler layer
    - calibration, orchestration, actions, document generation, PDF generation, and similar execution abilities
-   - currently implemented primarily through `interview/` and `enabled/`
+   - currently implemented primarily through `archon/interview/` and `archon/enabled/`
 3. `Prism`
    - the specialist layer
    - routing and mapping into deeper domain-specific and specialized work
-   - currently an architectural layer rather than a dedicated top-level directory
+   - currently exposed through `prism/SKILL.md` with future domain assets under `prism/domains/`
 
 Treat `optimization/` as a cross-cutting improvement loop rather than part of the named three-layer stack.
 
@@ -50,8 +50,8 @@ Treat `optimization/` as a cross-cutting improvement loop rather than part of th
 
 ### Negative
 
-- Conceptual layer names no longer map one-to-one to current directory names
-- `Prism` still needs deeper specialist-domain assets beyond its new minimal repo surface
+- Layer entrypoints and their nested subtree surfaces still need explicit mapping in docs
+- `Prism` still needs deeper specialist-domain assets beyond its current minimal repo surface
 
 ### Follow-Up
 

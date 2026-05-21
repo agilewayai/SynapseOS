@@ -16,7 +16,7 @@
 ## Belongs Here
 
 - Request source: operator request to apply `aries-harness-request-to-architecture` and distill the current project spec and architecture
-- Problem statement: the repository already communicates its purpose and system shape, but that truth is spread across `AGENTS.md`, `xuan-master/00-entry/SKILL.md`, `enabled/`, `interview/`, `optimization/`, and a few helper scripts; canonical layer names and their physical repo mapping also needed to be made explicit
+- Problem statement: the repository already communicates its purpose and system shape, but that truth is spread across `AGENTS.md`, `xuan-master/00-entry/SKILL.md`, `archon/enabled/`, `archon/interview/`, `optimization/`, and a few helper scripts; canonical layer names and their physical repo mapping also needed to be made explicit
 - Current pain or anti-pattern:
   - no single canonical request/spec/architecture pack exists
   - public identity and internal layer naming were previously conflated
@@ -31,6 +31,8 @@
 - Success signals:
   - a linked request/spec/story/architecture artifact set exists under `.aries_harness/`
   - the artifact set names the current system layers and primary files correctly
+  - a GitHub-facing `README.md` and getting-started guide describe the project without relying on chat history
+  - the project license is explicit and current
   - future slices can point to these artifacts instead of rebuilding intent from scratch
   - the canonical internal layer names are explicitly recorded
 - Target quality attributes: `inspectability`, `traceability`, `agent-agnostic clarity`, `low ceremony`, `refreshability`

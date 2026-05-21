@@ -307,7 +307,7 @@ agent: 加载 archon/SKILL.md → Phase 1 诊断 → 展示模型栈 →
 
 ```
 user: "快速看看这个应该用什么模型？"
-agent: 加载 enabled/SKILL.md → 仅 Phase 1 → "建议用 002+011+016 分析"
+agent: 加载 archon/enabled/SKILL.md → 仅 Phase 1 → "建议用 002+011+016 分析"
 ```
 
 ### 方式 C：单模型深度
@@ -315,7 +315,7 @@ agent: 加载 enabled/SKILL.md → 仅 Phase 1 → "建议用 002+011+016 分析
 
 ```
 user: "只用流动模型分析我的流程"
-agent: 加载 enabled/SKILL.md → Phase 1+2 only → 单模型深度产出
+agent: 加载 archon/enabled/SKILL.md → Phase 1+2 only → 单模型深度产出
 ```
 
 ---
@@ -358,7 +358,7 @@ agent: 加载 enabled/SKILL.md → Phase 1+2 only → 单模型深度产出
 ## 快速导航
 
 ```sh
-[`archon`](../archon/SKILL.md)                                   # Archon 层入口
+[`archon`](../SKILL.md)                                          # Archon 层入口
 [`enabled`](SKILL.md)                                            # 本文件
 [`enabled`](SKILL.md) → `references/problem-diagnosis-guide.md`
 [`enabled`](SKILL.md) → `references/synthesis-strategies.md`

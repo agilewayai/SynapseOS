@@ -35,7 +35,7 @@
   - `xuan-master/00-entry/SKILL.md` is the catalog and routing surface of that core
   - `xuan-master/001` through `xuan-master/027` form the 27-model `Xuan Master` kernel
   - `archon/SKILL.md` is the dedicated entrypoint for `Archon`
-  - `interview/` and `enabled/` are the main current implementation surfaces of `Archon`
+  - `archon/interview/` and `archon/enabled/` are the main current implementation surfaces of `Archon`
   - `prism/SKILL.md` is the dedicated entrypoint for `Prism`
   - `prism/domains/` is the placeholder surface for future specialist-domain assets
   - `optimization/` adds self-audit and recovery procedures as a cross-cutting loop
@@ -48,8 +48,8 @@
 - Domain links: no formal domain package exists yet; working concepts implied by the repo are `cognitive_model`, `scene_combination`, `execution_pipeline`, `specialist_domain_mapping`, `agent_integration`, and `corpus_optimization`
 - Component or module boundaries:
   - `Xuan Master core`: `xuan-master/SKILL.md`, `AGENTS.md`, `xuan-master/00-entry/SKILL.md`, `xuan-master/001-layered-architecture/` through `xuan-master/027-ai-native-mindset/`
-  - `Archon calibration surface`: `archon/SKILL.md`, `interview/SKILL.md`
-  - `Archon execution surface`: `enabled/SKILL.md`, `enabled/references/`, `enabled/templates/`, `enabled/scripts/model-selector.py`
+  - `Archon calibration surface`: `archon/SKILL.md`, `archon/interview/SKILL.md`
+  - `Archon execution surface`: `archon/enabled/SKILL.md`, `archon/enabled/references/`, `archon/enabled/templates/`, `archon/enabled/scripts/model-selector.py`
   - `Prism specialist layer`: `prism/SKILL.md` plus `prism/domains/` for future domain-specialization assets
   - `optimization loop`: `optimization/SKILL.md`, `optimization/references/`, `optimization/scripts/`
   - `governance layer`: `.aries_harness/`

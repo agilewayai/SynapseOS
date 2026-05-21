@@ -23,12 +23,13 @@
 
 ## Active
 
-- No active slice is locked after the `xuan-master` core refactor; pick the next item from `Ready Next`
+- No active slice is locked after the `xuan-master` and `archon` structural refactors; pick the next item from `Ready Next`
 
 ## Ready Next
 
+- Implement `STORY-002B`: create the first `synapse-cli` skeleton with help, command parsing, `doctor`, `list-agents`, and `--json` shape
+- Implement `STORY-002C`: add read-only prerequisite runtime diagnosis and remediation hints
 - Decide and document the public product identity relative to the internal layer names `Xuan Master`, `Archon`, and `Prism`
-- Add or refine a top-level project `README.md` for GitHub-facing positioning
 - Define lightweight verification rules for docs and helper scripts
 - Run a focused cleanup on `optimization/` to replace the remaining Hermes-era environment assumptions with repo-local guidance
 
@@ -45,3 +46,6 @@
 - Distilled the current project into request-to-architecture artifacts on `2026-05-21`
 - Added dedicated `xuan-master/`, `archon/`, and `prism/` layer entrypoints and refreshed the related skill definitions on `2026-05-21`
 - Moved the `Xuan Master` catalog and 27-model kernel under `xuan-master/` and refreshed the linked architecture artifacts on `2026-05-21`
+- Moved the `Archon` interview and enabled components under `archon/` and refreshed the linked architecture artifacts on `2026-05-21`
+- Added the `REQ-002` / `SPEC-002` / `STORY-002` / `ARCH-002` / `ADR-0004` initialization-layer specification package on `2026-05-21`
+- Added the public `README.md`, `docs/GETTING_STARTED.md`, and Apache-2.0 `LICENSE` baseline on `2026-05-21`

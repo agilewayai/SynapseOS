@@ -173,7 +173,7 @@ Interview Summary 生成后，自动传递给使能层：
             Phase 2-5: 管道执行
 ```
 
-Agent 在加载 `archon/SKILL.md` 或 `enabled/SKILL.md` 后，Phase 1 应该：
+Agent 在加载 `archon/SKILL.md` 或 `archon/enabled/SKILL.md` 后，Phase 1 应该：
 1. 首先检查是否有 Interview Summary 可用
 2. 如果有：基于 Interview Summary 直接进入模型选择
 3. 如果没有：按照原有流程（简要诊断 + Policy/Mechanism 确认）
@@ -197,9 +197,9 @@ Agent 应在以下情况自动触发采访层：
 ## 快速导航
 
 ```sh
-[`archon`](../archon/SKILL.md)                   # Archon 层入口
+[`archon`](../SKILL.md)                         # Archon 层入口
 [`interview`](SKILL.md)                          # 本文件
 [`enabled`](../enabled/SKILL.md)                 # 使能层——采访层的下游
-[`xuan-master`](../xuan-master/SKILL.md)         # 核心层入口
-[`00-entry`](../xuan-master/00-entry/SKILL.md)  # 核心目录
+[`xuan-master`](../../xuan-master/SKILL.md)      # 核心层入口
+[`00-entry`](../../xuan-master/00-entry/SKILL.md) # 核心目录
 ```

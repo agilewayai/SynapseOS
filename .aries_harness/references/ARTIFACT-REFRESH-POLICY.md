@@ -19,6 +19,7 @@ Keep request, spec, story, architecture, and ADR artifacts aligned as the reposi
 - If `SPEC-001` changes, refresh impacted story details, `ARCH-001` if boundaries or quality attributes moved, then update `TRACE-001`, `REG-001`, and `AUDIT-001`
 - If a story status or scope changes, refresh `STORY-001`, `TRACE-001`, `REG-001`, and `AUDIT-001`
 - If architecture boundaries, layer names, layer mapping, or helper-script responsibilities change, refresh `ARCH-001`, any impacted ADR, then update `SPEC-001`, `TRACE-001`, `REG-001`, and `AUDIT-001`
+- If initialization layer scope, `synapse-cli` command behavior, supported host adapters, or prerequisite policy changes, refresh `REQ-002`, `SPEC-002`, `STORY-002`, `ARCH-002`, `ADR-0004`, `TRACE-001`, `REG-001`, and `AUDIT-001`
 - If an ADR meaning changes, update `ADR.md` and any affected request/spec/story/architecture links in the same pass
 
 ## Artifact-Specific Triggers
@@ -34,6 +35,11 @@ Keep request, spec, story, architecture, and ADR artifacts aligned as the reposi
 | `REVIEW-001` | review findings close, reopen, or gain new evidence | `TASK_STACK.md`, `REG-001`, `AUDIT-001` |
 | `TRACE-001` | artifact links or delivery evidence changes | `REG-001`, `AUDIT-001` |
 | `REG-001` | any artifact is added, retired, or materially re-scoped | `AUDIT-001` |
+| `REQ-002` | initialization-layer purpose, supported hosts, CLI contract, or prerequisite policy changes | `SPEC-002`, `STORY-002`, `ARCH-002`, `ADR-0004`, `TRACE-001`, `REG-001`, `AUDIT-001` |
+| `SPEC-002` | `synapse-cli` commands, adapter contract, prerequisite behavior, or install verification rules change | `STORY-002`, `ARCH-002`, `TRACE-001`, `REG-001`, `AUDIT-001` |
+| `STORY-002` | initialization implementation slice status or acceptance changes | `TRACE-001`, `REG-001`, `AUDIT-001` |
+| `ARCH-002` | initialization layer shape, adapter model, install evidence, or CLI architecture changes | `ADR-0004`, `SPEC-002`, `TRACE-001`, `REG-001`, `AUDIT-001` |
+| `ADR-0004` | initialization layer decision or `synapse-cli` contract changes materially | `ADR.md`, `ARCH-002`, `SPEC-002`, `TRACE-001`, `REG-001`, `AUDIT-001` |
 
 ## Source-Of-Truth Rules
 

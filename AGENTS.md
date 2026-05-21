@@ -19,7 +19,7 @@ The current canonical layer names are:
 In the current repository layout:
 
 - `xuan-master/SKILL.md` is the loadable entrypoint for **Xuan Master**, backed by `xuan-master/00-entry/` plus the `xuan-master/001-*` through `xuan-master/027-*` model directories
-- `archon/SKILL.md` is the loadable entrypoint for **Archon**, backed by `interview/` and `enabled/`
+- `archon/SKILL.md` is the loadable entrypoint for **Archon**, backed by `archon/interview/` and `archon/enabled/`
 - `prism/SKILL.md` is the loadable entrypoint for **Prism**, with future specialist assets accumulating under `prism/domains/`
 - `optimization/` remains a cross-cutting self-improvement loop across all layers
 
@@ -132,7 +132,7 @@ Optimization Loop    → Audit → recovery → self-improvement across all laye
 ```
 
 - **Xuan Master Core**: [`xuan-master/SKILL.md`](xuan-master/SKILL.md) backed by [`xuan-master/00-entry/SKILL.md`](xuan-master/00-entry/SKILL.md) plus the `xuan-master/001-*` through `xuan-master/027-*` model directories
-- **Archon Layer**: [`archon/SKILL.md`](archon/SKILL.md) backed by [`interview/SKILL.md`](interview/SKILL.md) and [`enabled/SKILL.md`](enabled/SKILL.md)
+- **Archon Layer**: [`archon/SKILL.md`](archon/SKILL.md) backed by [`archon/interview/SKILL.md`](archon/interview/SKILL.md) and [`archon/enabled/SKILL.md`](archon/enabled/SKILL.md)
 - **Prism Layer**: [`prism/SKILL.md`](prism/SKILL.md) — specialist routing and specialization guidance
 - **Optimization Loop**: [`optimization/SKILL.md`](optimization/SKILL.md) — self-improvement and corpus maintenance
 
@@ -151,16 +151,17 @@ meta-engine/
 │   ├── ...
 │   └── 027-ai-native-mindset/SKILL.md
 ├── archon/                       ← Archon layer entrypoint
-│   └── SKILL.md
+│   ├── SKILL.md
+│   ├── interview/
+│   │   └── SKILL.md             ← Archon calibration protocol implementation
+│   └── enabled/
+│       ├── SKILL.md             ← Archon execution engine implementation
+│       ├── references/
+│       ├── templates/
+│       └── scripts/
 ├── prism/                        ← Prism layer entrypoint + future specialist packs
 │   ├── SKILL.md
 │   └── domains/
-├── enabled/                      ← Archon execution engine implementation
-│   ├── SKILL.md
-│   ├── references/
-│   └── scripts/
-├── interview/                    ← Archon calibration protocol implementation
-│   └── SKILL.md
 └── optimization/                 ← Self-improvement
     ├── SKILL.md
     └── scripts/
@@ -176,4 +177,4 @@ meta-engine/
 
 ---
 
-*Version: 4.6.1 · Author: Arthur · License: MIT*
+*Version: 4.6.1 · Author: Arthur · License: Apache-2.0*

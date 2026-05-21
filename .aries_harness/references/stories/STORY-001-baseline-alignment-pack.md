@@ -66,7 +66,8 @@
 - Acceptance criteria:
   - `AGENTS.md`, `xuan-master/00-entry/SKILL.md`, and the architecture artifacts use `Xuan Master`, `Archon`, and `Prism` consistently
   - the mapping from conceptual layers to current repo surfaces is explicit
-- Verification plan: inspect `AGENTS.md`, `xuan-master/SKILL.md`, `xuan-master/00-entry/SKILL.md`, `enabled/SKILL.md`, `interview/SKILL.md`, and the request/spec/architecture artifacts for layer-name and path consistency
+  - `README.md` and `docs/GETTING_STARTED.md` expose the current public entrypoints and license
+- Verification plan: inspect `README.md`, `docs/GETTING_STARTED.md`, `LICENSE`, `AGENTS.md`, `xuan-master/SKILL.md`, `xuan-master/00-entry/SKILL.md`, `archon/enabled/SKILL.md`, `archon/interview/SKILL.md`, and the request/spec/architecture artifacts for layer-name, license, and path consistency
 - Before or after evidence expectation: before/after documentation diff
 - Domain artifacts touched: `pending`
 - Architecture artifacts touched: `ARCH-001`
@@ -85,7 +86,7 @@
   - helper-script path assumptions are reviewed and made explicit
   - repo-local verification rules are written down
   - any remaining legacy assumptions are tracked as intentional debt
-- Verification plan: inspect `enabled/scripts/` and `optimization/scripts/`, then run the relevant lightweight checks if scripts are changed
+- Verification plan: inspect `archon/enabled/scripts/` and `optimization/scripts/`, then run the relevant lightweight checks if scripts are changed
 - Before or after evidence expectation: script review plus any local command output from future hardening work
 - Domain artifacts touched: `none`
 - Architecture artifacts touched: `ARCH-001`

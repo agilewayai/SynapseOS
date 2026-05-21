@@ -28,11 +28,13 @@ Maintain a reusable, agent-agnostic skills stack inside the `SynapseOS` reposito
 - `Xuan Master` as the meta-cognition core
 - `Archon` as the enabler layer for orchestration and actions
 - `Prism` as the specialist layer for deeper domain routing and mapping
+- an initialization layer for prerequisite checks, setup, installation, and verification
 
 ## Scope
 
 - Keep the 27-model knowledge base under `xuan-master/` coherent, navigable, and publishable
-- Maintain execution-layer assets such as `enabled/`, `interview/`, and `optimization/`
+- Maintain execution-layer assets such as `archon/enabled/`, `archon/interview/`, and `optimization/`
+- Define and maintain installation-layer assets such as future `synapse-cli`, prerequisite checks, and agent host adapters
 - Improve repository structure, documentation quality, automation, and release readiness
 - Preserve compatibility across coding-agent environments
 

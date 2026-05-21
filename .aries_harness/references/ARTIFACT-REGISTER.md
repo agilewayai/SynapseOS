@@ -8,7 +8,7 @@
 - Owner: `Arthur`
 - Canonical path: `.aries_harness/references/ARTIFACT-REGISTER.md`
 - Source of truth: `this file`
-- Upstream links: `REQ-001`, `SPEC-001`, `STORY-001`, `ARCH-001`, `ADR-0003`
+- Upstream links: `REQ-001`, `SPEC-001`, `STORY-001`, `ARCH-001`, `ADR-0003`, `REQ-002`, `SPEC-002`, `STORY-002`, `ARCH-002`, `ADR-0004`
 - Downstream links: `TRACE-001`, `POL-001`, `AUDIT-001`, `REVIEW-001`
 - Verification state: `initialized`
 - Last reviewed: `2026-05-21`
@@ -36,3 +36,8 @@
 | `TRACE-001` | `value-traceability-matrix` | `.aries_harness/references/VALUE-TRACEABILITY-MATRIX.md` | `Arthur` | `governance` | `active` | `initialized` | `2026-05-21` | `that file` | `artifact links or delivery evidence changes` | `AUDIT-001` | `REQ-001; SPEC-001; STORY-001; ARCH-001` | `future runs and history` |
 | `AUDIT-001` | `artifact-audit-log` | `.aries_harness/references/ARTIFACT-AUDIT-LOG.md` | `Arthur` | `governance` | `active` | `initialized` | `2026-05-21` | `that file` | `meaningful artifact change occurs` | `n/a` | `REG-001` | `future review and history` |
 | `REVIEW-001` | `harness-audit` | `.aries_harness/references/reviews/REVIEW-001-skill-layer-structure.md` | `Arthur` | `review` | `active` | `reviewed and partially remediated` | `2026-05-21` | `that file` | `after the next structure or operability-hardening pass` | `TRACE-001; AUDIT-001` | `REQ-001; SPEC-001; ARCH-001` | `STORY-001C` |
+| `REQ-002` | `request` | `.aries_harness/references/requests/REQ-002-synapseos-initialization-layer.md` | `Arthur` | `intake` | `active` | `shaped from operator request` | `2026-05-21` | `that file` | `initialization layer scope, supported hosts, or CLI contract changes` | `TRACE-001; AUDIT-001` | `MISSION.md; REQ-001` | `SPEC-002; STORY-002; ARCH-002; ADR-0004` |
+| `SPEC-002` | `spec` | `.aries_harness/references/specs/SPEC-002-synapseos-initialization-layer.md` | `Arthur` | `shaping` | `active` | `installation contract defined` | `2026-05-21` | `that file` | `synapse-cli commands, prerequisite policy, adapter contract, or acceptance changes` | `TRACE-001; AUDIT-001` | `REQ-002` | `STORY-002; ARCH-002; ADR-0004` |
+| `STORY-002` | `story-pack` | `.aries_harness/references/stories/STORY-002-initialization-layer-pack.md` | `Arthur` | `slice-planning` | `active` | `initialization slices defined` | `2026-05-21` | `that file` | `implementation slice status, scope, or verification changes` | `TRACE-001; AUDIT-001` | `REQ-002; SPEC-002` | `ARCH-002; ADR-0004` |
+| `ARCH-002` | `architecture` | `.aries_harness/decisions/architecture/ARCH-002-synapseos-initialization-layer.md` | `Arthur` | `design` | `active` | `initialization architecture defined` | `2026-05-21` | `that file` | `layer shape, CLI surface, adapter model, or installer evidence changes` | `TRACE-001; AUDIT-001` | `REQ-002; SPEC-002` | `ADR-0004; STORY-002` |
+| `ADR-0004` | `adr` | `.aries_harness/decisions/adrs/ADR-0004-synapseos-initialization-layer.md` | `Arthur` | `design` | `accepted` | `accepted by operator request and artifact shaping` | `2026-05-21` | `that file` | `initialization layer decision or CLI contract changes materially` | `AUDIT-001` | `REQ-002; SPEC-002; ARCH-002` | `STORY-002` |

@@ -33,7 +33,13 @@
 - Canonical layer naming is now clarified as `Xuan Master` core, `Archon` enabler, and `Prism` specialist
 - The three canonical layers now have dedicated top-level entrypoints: `xuan-master/`, `archon/`, and `prism/`
 - The `Xuan Master` catalog and all 27 model directories now live physically under `xuan-master/`
+- The `Archon` interview and enabled components now live physically under `archon/`
 - Harness artifacts and entry docs now reference the nested `xuan-master/` core layout consistently
+- Harness artifacts and entry docs now reference the nested `archon/` enabler layout consistently
+- A new initialization-layer artifact family now exists as `REQ-002`, `SPEC-002`, `STORY-002`, `ARCH-002`, and `ADR-0004`
+- The initialization layer is specified but not implemented; `synapse-cli` remains a future coding slice
+- The repository now has a GitHub-facing `README.md` and `docs/GETTING_STARTED.md`
+- The project license is now Apache-2.0 in `LICENSE` and public docs
 - No generated history surface exists yet
 
 ## Working Assumptions
@@ -44,4 +50,4 @@
 
 ## Next Safe Action
 
-Choose the next repository-shaping task from `TASK_STACK.md`, most likely helper-script hardening or public-facing README positioning, and keep the request-to-architecture artifacts synchronized while doing it.
+Choose the next repository-shaping task from `TASK_STACK.md`, most likely `STORY-002B` for the `synapse-cli` skeleton or `STORY-002C` for prerequisite diagnosis, and keep the request-to-architecture artifacts synchronized while doing it.

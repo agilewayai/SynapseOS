@@ -9,3 +9,6 @@
 - Applied the clarified layer naming: `Xuan Master` core, `Archon` enabler, and `Prism` specialist
 - Added dedicated layer entrypoints and a formal review memo for the skill-layer structure cleanup
 - Nested the `Xuan Master` catalog and all 27 cognitive-model directories under `xuan-master/` and refreshed the linked architecture artifacts
+- Nested the `Archon` interview and enabled components under `archon/` and refreshed the linked architecture artifacts
+- Added the SynapseOS initialization-layer spec package covering `synapse-cli`, prerequisite diagnosis, named agent host adapters, generic host installation, and verification
+- Added a public `README.md`, `docs/GETTING_STARTED.md`, and changed the project license to Apache-2.0

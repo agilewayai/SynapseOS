@@ -36,8 +36,8 @@
 - Key flows:
   - agent or operator starts at `AGENTS.md` or `xuan-master/00-entry/SKILL.md`
   - `Xuan Master` catalog or scene recommendations route the user to one or more model `SKILL.md` files
-  - `Archon` can calibrate ambiguous problems through `interview/SKILL.md`
-  - `Archon` can orchestrate structured execution, actions, and generation through `enabled/SKILL.md` and its helper references/scripts
+  - `Archon` can calibrate ambiguous problems through `archon/interview/SKILL.md`
+  - `Archon` can orchestrate structured execution, actions, and generation through `archon/enabled/SKILL.md` and its helper references/scripts
   - `Prism` maps work into deeper, more specialized domain paths
   - corpus quality and recovery work can be handled through `optimization/`
 - Acceptance conditions:
@@ -64,13 +64,16 @@
   - do not move canonical product truth into generated history or run logs
   - do not let a helper script become the only place where routing logic or corpus policy is knowable
 - Touched surfaces:
+  - `README.md`
+  - `docs/GETTING_STARTED.md`
+  - `LICENSE`
   - `AGENTS.md`
   - `xuan-master/SKILL.md`
   - `xuan-master/00-entry/SKILL.md`
   - `xuan-master/001-layered-architecture/SKILL.md`
-  - `enabled/SKILL.md`
-  - `enabled/scripts/model-selector.py`
-  - `interview/SKILL.md`
+  - `archon/enabled/SKILL.md`
+  - `archon/enabled/scripts/model-selector.py`
+  - `archon/interview/SKILL.md`
   - `optimization/SKILL.md`
   - `optimization/scripts/full_audit.py`
   - `optimization/scripts/recover_from_session.py`
@@ -80,7 +83,7 @@
   - public identity is not yet fully aligned across local path, repo remote, and product docs
   - verification is mostly structural today because the product is knowledge-first
 - Rollout or migration concerns:
-  - if the repository is published more broadly, a GitHub-facing `README.md` and naming alignment become release-blocking
+  - the repository now has a GitHub-facing `README.md`; broader publication still needs packaging and any final public naming alignment
   - if helper scripts are expected to run in this repo directly, legacy path assumptions must be fixed before claiming local operability
 
 ## Slice Candidates

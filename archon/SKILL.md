@@ -17,13 +17,13 @@ Archon is the enabler layer of the skills stack. It sits above Xuan Master and t
 
 ## Current Surfaces
 
-- [`../interview/SKILL.md`](../interview/SKILL.md): calibration and structured interview protocol
-- [`../enabled/SKILL.md`](../enabled/SKILL.md): orchestration, synthesis, and generation workflow
+- [`interview/SKILL.md`](interview/SKILL.md): calibration and structured interview protocol
+- [`enabled/SKILL.md`](enabled/SKILL.md): orchestration, synthesis, and generation workflow
 
 ## Load Pattern
 
-1. If the problem is vague or under-specified, start with [`../interview/SKILL.md`](../interview/SKILL.md).
-2. Route clarified work into [`../enabled/SKILL.md`](../enabled/SKILL.md) for orchestration, actions, and output generation.
+1. If the problem is vague or under-specified, start with [`interview/SKILL.md`](interview/SKILL.md).
+2. Route clarified work into [`enabled/SKILL.md`](enabled/SKILL.md) for orchestration, actions, and output generation.
 3. Load [`../xuan-master/SKILL.md`](../xuan-master/SKILL.md) when direct core-model reasoning is needed.
 4. Hand deeper specialist routing to [`../prism/SKILL.md`](../prism/SKILL.md) when the work must branch into domain-specific execution.
 

@@ -79,3 +79,23 @@ Use `Xuan Master` for the meta-cognition core, `Archon` for the enabler layer, a
 - Entry docs and design artifacts should use these names consistently
 - Physical directory names may lag the conceptual architecture and must be mapped explicitly
 - Future work should decide how deeply `Prism` domain assets materialize in the repo beyond its new top-level entrypoint
+
+## ADR-0004: Add A SynapseOS Initialization Layer And synapse-cli Contract
+
+- Date: `2026-05-21`
+- Status: `accepted`
+- Detailed record: `.aries_harness/decisions/adrs/ADR-0004-synapseos-initialization-layer.md`
+
+### Context
+
+SynapseOS needs a first-class installation and host onboarding surface for multi-agent use.
+
+### Decision
+
+Add a dedicated initialization layer with `synapse-cli` as the command interface for prerequisite diagnosis, local initialization, host installation, and verification.
+
+### Consequences
+
+- Installation becomes inspectable and repeatable across supported agent hosts
+- Host-specific installation behavior should live behind adapters
+- Future implementation must keep prerequisite installation and external writes approval-gated
