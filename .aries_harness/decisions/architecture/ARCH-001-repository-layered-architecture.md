@@ -45,7 +45,7 @@
 
 ## Boundaries
 
-- Domain links: no formal domain package exists yet; working concepts implied by the repo are `cognitive_model`, `scene_combination`, `execution_pipeline`, `specialist_domain_mapping`, `agent_integration`, and `corpus_optimization`
+- Domain links: no formal baseline domain package exists yet for `REQ-001`; working concepts implied by the repo are `cognitive_model`, `scene_combination`, `execution_pipeline`, `specialist_domain_mapping`, `agent_integration`, and `corpus_optimization`
 - Component or module boundaries:
   - `Xuan Master core`: `xuan-master/SKILL.md`, `AGENTS.md`, `xuan-master/00-entry/SKILL.md`, `xuan-master/001-layered-architecture/` through `xuan-master/027-ai-native-mindset/`
   - `Archon calibration surface`: `archon/SKILL.md`, `archon/interview/SKILL.md`

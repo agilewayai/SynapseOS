@@ -9,7 +9,7 @@
 - Owner: `Arthur`
 - Related request: `REQ-002`
 - Related spec: `SPEC-002`
-- Child refs: `ADR-0004`
+- Child refs: `ADR-0004`, `DOM-002`
 - Last reviewed: `2026-05-21`
 - Source of truth: `this file`
 
@@ -33,11 +33,12 @@
 
 - Current state summary:
   - SynapseOS has a layered skill corpus with `Xuan Master`, `Archon`, and `Prism`
-  - the repository has no dedicated initialization layer or `synapse-cli` contract yet
-  - installation expectations are implicit and would be hard to verify across agent hosts
+  - the repository has a dedicated initialization layer under `init/`
+  - the local `synapse-cli` executable implements diagnosis, initialization, adapter listing, install planning/application, and verification
+  - installation expectations are explicit through dry-run plans, manifests, tests, and domain artifacts
 - Target state summary:
-  - add a dedicated `Initialization Layer` responsible for first-run setup and host installation
-  - expose setup behavior through `synapse-cli`
+  - keep the dedicated `Initialization Layer` responsible for first-run setup and host installation
+  - expose setup behavior through the repo-local `synapse-cli`
   - separate CLI command parsing, prerequisite diagnosis, install planning, host adapters, filesystem operations, and verification reporting
   - support named host adapters for `claude-code`, `codex`, `cursor`, `opencode`, `openclaw`, and `hermes`
   - support a generic adapter for any other agent host through an explicit target path
@@ -46,7 +47,7 @@
 ## Boundaries
 
 - Component or module boundaries:
-  - `Initialization layer`: future repo surface for installation docs, host registry, prerequisite policy, and CLI behavior
+  - `Initialization layer`: `init/` repo surface for installation docs, host registry, prerequisite policy, and CLI behavior
   - `synapse-cli`: executable interface that exposes diagnosis, init, install, list, and verify commands
   - `Prerequisite checker`: read-only runtime inspection and optional install-plan generation
   - `Install planner`: builds an explicit plan of file operations and config changes before execution
@@ -107,10 +108,18 @@ Supported adapter ids for the first design are:
 | Require dry-run and explicit approval for external writes | Installation can affect user configuration and should be inspectable | Slightly more ceremony for first-time users | `ADR-0004` |
 | Keep a generic adapter | Non-listed hosts should not be second-class users | Generic install cannot offer deep host-specific verification | `ADR-0004` |
 
+## Implementation Evidence
+
+- CLI entrypoint: `synapse-cli`
+- Initialization layer: `init/SKILL.md`, `init/synapse_cli/`
+- Regression tests: `tests/test_synapse_cli.py`
+- Domain model: `.aries_harness/references/domain/DOM-002-synapseos-initialization-domain.md`
+- Verification commands: `python3 -m unittest discover -s tests`, `./synapse-cli --help`, `./synapse-cli doctor --json`, generic dry-run/install/verify smoke checks
+
 ## Delivery Impact
 
 - Affected stories: `STORY-002A`, `STORY-002B`, `STORY-002C`, `STORY-002D`, `STORY-002E`, `STORY-002F`
-- Verification impact: future implementation needs CLI parser checks, doctor output checks, dry-run snapshot checks, adapter-specific path planning tests, and local verification checks
+- Verification impact: baseline implementation has CLI parser checks, doctor output checks, generic dry-run/install/verify checks, and idempotence tests; host-native smoke checks remain future hardening
 - Rollout impact: implementation should start local-only; external package publishing is deferred
 - Observability impact: install manifests and verification reports become the main evidence surfaces
 
@@ -119,7 +128,7 @@ Supported adapter ids for the first design are:
 - Risk: host-specific path conventions can drift, so adapters must be easy to update
 - Risk: automatic prerequisite installation can become too broad unless approval rules stay strict
 - Risk: symlink versus copy behavior may need per-host selection
-- Open question: choose the physical repo name for the initialization layer during the first coding slice
-- Open question: decide whether `synapse-cli` should be a shell entrypoint, Python module entrypoint, Node package command, or a thin wrapper around a repo-local script
+- Resolved: the physical repo name for the initialization layer is `init/`
+- Resolved: `synapse-cli` is a thin repo-local Python executable backed by `init/synapse_cli/`
 - Refresh trigger: any change to supported host ids, command names, prerequisite policy, adapter contract, or install evidence shape
 - Audit log entry: `AUDIT-001`

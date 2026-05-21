@@ -98,4 +98,44 @@ Add a dedicated initialization layer with `synapse-cli` as the command interface
 
 - Installation becomes inspectable and repeatable across supported agent hosts
 - Host-specific installation behavior should live behind adapters
-- Future implementation must keep prerequisite installation and external writes approval-gated
+- Implementation and future hardening must keep prerequisite installation and external writes approval-gated
+
+## ADR-0005: Adopt An OpenClaw-Native Quick Install Path
+
+- Date: `2026-05-21`
+- Status: `accepted`
+- Detailed record: `.aries_harness/decisions/adrs/ADR-0005-openclaw-quick-install.md`
+
+### Context
+
+SynapseOS has an OpenClaw adapter baseline, but OpenClaw users need a smoother installation and first-use learning flow that matches OpenClaw's skill roots and native CLI verification.
+
+### Decision
+
+Keep `synapse-cli install --agent openclaw` as the safe local baseline, define a future one-link installer with dry-run and conflict checks, and treat OpenClaw-native package publication as a separate later slice.
+
+### Consequences
+
+- OpenClaw onboarding gets a dedicated guide and traceable acceptance contract
+- Future one-link automation must prove safety before publication
+- OpenClaw-native verification becomes part of the expected evidence path
+
+## ADR-0006: Adopt A Hermes Direct-SKILL Chatbox Installer
+
+- Date: `2026-05-21`
+- Status: `accepted`
+- Detailed record: `.aries_harness/decisions/adrs/ADR-0006-hermes-chat-install.md`
+
+### Context
+
+Hermes can install a skill directly from an HTTP(S) URL to a `SKILL.md` file, so SynapseOS can provide a Hermes-native installer skill rather than only a filesystem copy guide.
+
+### Decision
+
+Add `install/hermes-chat-install/SKILL.md` as the Hermes direct-link installer skill. Keep `synapse-cli install --agent hermes` as the safe local baseline and defer registry publication to a later packaging slice.
+
+### Consequences
+
+- Hermes users get a native chatbox installation path
+- The installer skill delegates writes and verification to `synapse-cli`
+- Future Hermes-native verification and registry packaging remain follow-on work

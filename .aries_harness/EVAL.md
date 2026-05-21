@@ -32,11 +32,23 @@
 - The canonical layers have dedicated loadable skill entrypoints
 - The `Xuan Master` catalog and 27-model kernel are nested under `xuan-master/` and referenced consistently
 - The `Archon` interview and enabled surfaces are nested under `archon/` and referenced consistently
-- The initialization-layer request/spec/story/architecture/ADR package exists for future `synapse-cli` implementation
+- The initialization-layer request/spec/story/architecture/ADR package exists and is linked to the `synapse-cli` implementation
 - `README.md`, `docs/GETTING_STARTED.md`, and Apache-2.0 `LICENSE` exist for public onboarding
+- `synapse-cli` exists as a repo-local executable with `doctor`, `init`, `list-agents`, `install`, and `verify`
+- `init/` exists as the initialization layer with a loadable `SKILL.md`
+- Host adapters exist for `claude-code`, `codex`, `cursor`, `opencode`, `openclaw`, `hermes`, and `generic`
+- Generic host dry-run, approved install, manifest output, idempotence, and verification are covered by tests
+- `DOM-002` exists as the initialization and host-installation domain package
+- `REQ-003`, `SPEC-003`, `STORY-003`, `ARCH-003`, and `ADR-0005` exist for OpenClaw quick-install shaping
+- `docs/OPENCLAW_INSTALL.md` exists and documents chatbox install mode, safe local install, shell one-link target UX, OpenClaw-native verification, update, and troubleshooting
+- `install/openclaw-chat-install.md` exists as the paste-link OpenClaw chatbox installation prompt
+- `REQ-004`, `SPEC-004`, `STORY-004`, `ARCH-004`, and `ADR-0006` exist for Hermes chatbox installation
+- `docs/HERMES_INSTALL.md` exists and documents Hermes direct-SKILL chatbox install, safe local install, Hermes-native verification, update, and troubleshooting
+- `install/hermes-chat-install/SKILL.md` exists as the Hermes direct-link installer skill
 
 ## Current Result
 
 - Acceptance status: `pass`
-- Verification method: `git rename inspection, stale-path scan, artifact ID search, license scan, markdown diff check, and file-content review`
-- Remaining gaps: `no generated history yet; no automated validation yet; no formal domain package yet; optimization docs still have some Hermes-era examples; synapse-cli is specified but not implemented`
+- Verification method: `unit tests, CLI smoke checks, generic install/verify smoke check, artifact ID search, OpenClaw docs reference check, license scan, markdown diff check, and file-content review`
+- Latest checks: `python3 -m unittest discover -s tests`; `./synapse-cli --help`; `./synapse-cli doctor --json`; generic dry-run/install/verify smoke checks
+- Remaining gaps: `no generated history yet; optimization docs still have some Hermes-era examples; named host adapters need host-native smoke hardening beyond baseline target resolution; optional OpenClaw shell one-link script is specified but not implemented`

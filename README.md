@@ -11,10 +11,11 @@ The repository is documentation-first. The primary runtime contract is a set of 
 | Xuan Master | `xuan-master/` | Meta-cognition core with 27 cognitive models and scene routing |
 | Archon | `archon/` | Enabler layer for problem calibration, orchestration, actions, document generation, and synthesis |
 | Prism | `prism/` | Specialist layer for mapping work into deeper domain-specific paths |
+| Init | `init/` and `synapse-cli` | Initialization layer for prerequisite checks, local metadata, host installation, and verification |
 | Optimization | `optimization/` | Cross-cutting audit, recovery, and corpus improvement guidance |
 | Aries Harness | `.aries_harness/` | Project-local governance, recovery, request/spec/story/architecture, and traceability artifacts |
 
-The next planned product layer is the SynapseOS initialization layer, specified in `.aries_harness/references/specs/SPEC-002-synapseos-initialization-layer.md`. It defines the future `synapse-cli` interface for prerequisite diagnosis, local initialization, agent-host installation, and verification.
+The SynapseOS initialization layer is implemented as a local Python CLI. It provides prerequisite diagnosis, repo-local initialization metadata, supported agent-host detection, dry-run install planning, approved installation, and install verification.
 
 ## Repository Layout
 
@@ -35,6 +36,11 @@ The next planned product layer is the SynapseOS initialization layer, specified 
 ├── prism/
 │   ├── SKILL.md
 │   └── domains/
+├── init/
+│   ├── SKILL.md
+│   └── synapse_cli/
+├── synapse-cli
+├── tests/
 ├── optimization/
 ├── .aries_harness/
 └── LICENSE
@@ -66,11 +72,33 @@ For specialist routing, load Prism:
 prism/SKILL.md
 ```
 
+For local setup and host installation, use:
+
+```sh
+./synapse-cli doctor
+./synapse-cli init
+./synapse-cli list-agents
+./synapse-cli install --agent generic --target /path/to/host --dry-run
+./synapse-cli install --agent generic --target /path/to/host --yes
+./synapse-cli verify --agent generic --target /path/to/host
+```
+
 For a practical walkthrough, see [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
+
+For host-specific setup:
+
+- OpenClaw paste-link chatbox installer: [docs/OPENCLAW_INSTALL.md](docs/OPENCLAW_INSTALL.md)
+- Hermes direct-SKILL chatbox installer: [docs/HERMES_INSTALL.md](docs/HERMES_INSTALL.md)
 
 ## Agent Host Integration
 
-SynapseOS is intentionally host-neutral. Until `synapse-cli` is implemented, install it by cloning the repository and pointing your agent host at the relevant local entrypoints.
+SynapseOS is intentionally host-neutral. The local `synapse-cli` baseline supports these adapter ids:
+
+```text
+claude-code, codex, cursor, opencode, openclaw, hermes, generic
+```
+
+Named adapters resolve a conventional local target with an environment-variable override. The `generic` adapter requires `--target` and is the safest path for non-standard hosts.
 
 | Host | Recommended entrypoint |
 | --- | --- |
@@ -80,7 +108,7 @@ SynapseOS is intentionally host-neutral. Until `synapse-cli` is implemented, ins
 | OpenCode / OpenClaw / Hermes | Load the layer `SKILL.md` files through the host's local skill or context mechanism |
 | Generic LLM host | Read `AGENTS.md`, then load specific layer and model files directly |
 
-Future installation work is tracked under:
+Installation design and delivery evidence are tracked under:
 
 ```text
 .aries_harness/references/stories/STORY-002-initialization-layer-pack.md
@@ -108,8 +136,8 @@ The repository currently provides:
 - 27 cognitive model skills under `xuan-master/`
 - A nested Archon enabler layer under `archon/`
 - A Prism specialist layer scaffold
-- Aries Harness artifacts for architecture, traceability, and future initialization work
-- A planned, not-yet-implemented `synapse-cli` installation interface
+- A local `synapse-cli` initialization and installation baseline
+- Aries Harness artifacts for architecture, traceability, and initialization-layer delivery evidence
 
 ## License
 

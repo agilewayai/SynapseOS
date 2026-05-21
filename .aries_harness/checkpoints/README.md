@@ -9,3 +9,7 @@ Each checkpoint should state:
 - next
 - risks
 - validation status
+
+## Active Checkpoints
+
+- `CHECKPOINT-002`: [Synapse CLI Baseline](CHECKPOINT-002-synapse-cli-baseline.md)

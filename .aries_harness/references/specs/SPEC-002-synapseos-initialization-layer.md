@@ -9,7 +9,7 @@
 - Status: `active`
 - Owner: `Arthur`
 - Parent request: `REQ-002`
-- Child refs: `STORY-002`, `ARCH-002`, `ADR-0004`, `TRACE-001`
+- Child refs: `STORY-002`, `ARCH-002`, `ADR-0004`, `DOM-002`, `TRACE-001`
 - Last reviewed: `2026-05-21`
 - Source of truth: `this file`
 
@@ -50,7 +50,7 @@
   - prerequisite installation is never implicit; actions that install system packages or third-party tools require explicit operator approval or a documented `--yes` mode
   - each named host adapter owns host-specific detection, target resolution, install planning, and verification logic
   - the generic adapter supports explicit `--target <path>` installation without host-specific assumptions
-  - verification confirms at least the expected layer entrypoints are present: `xuan-master`, `archon`, `prism`, and initialization docs or metadata
+  - verification confirms at least the expected layer entrypoints are present: `synapse-cli`, `xuan-master`, `archon`, `prism`, and initialization docs or metadata
   - installation produces a manifest or equivalent evidence record that can be inspected after the run
   - failures produce actionable diagnostics instead of partial silent success
 - NFRs:
@@ -67,9 +67,9 @@
   - do not make a named host adapter required for generic installation
   - do not couple installer implementation to only one agent ecosystem
 - Touched surfaces expected in implementation:
-  - future initialization layer surface, likely `init/` or `installer/`
-  - future `synapse-cli` entrypoint
-  - future host adapter modules
+  - initialization layer surface: `init/`
+  - `synapse-cli` entrypoint
+  - host adapter modules under `init/synapse_cli/`
   - `.aries_harness/` implementation evidence
   - user-facing install docs
 - Operational concerns:
@@ -117,14 +117,14 @@
 
 - Request brief: `.aries_harness/references/requests/REQ-002-synapseos-initialization-layer.md`
 - Story-slice pack: `.aries_harness/references/stories/STORY-002-initialization-layer-pack.md`
-- Domain package: `pending`
+- Domain package: `.aries_harness/references/domain/DOM-002-synapseos-initialization-domain.md`
 - Architecture design pack: `.aries_harness/decisions/architecture/ARCH-002-synapseos-initialization-layer.md`
 - Traceability matrix: `.aries_harness/references/VALUE-TRACEABILITY-MATRIX.md`
 
 ## Open Questions And Risks
 
-- Open question: should the physical layer be named `init/`, `installer/`, or another product-specific name when implementation starts?
-- Open question: should host installs prefer symlinks, copies, or a selectable strategy per adapter?
+- Resolved: the physical initialization layer is `init/`, with `synapse-cli` as the repo-local executable entrypoint
+- Resolved: host installs support selectable `copy` and `symlink` strategies, with `copy` as the safe default
 - Risk: exact install paths and host conventions can drift across agent versions
 - Risk: prerequisite installation can become too invasive unless approval and dry-run rules stay strict
 - Refresh trigger: any change to supported hosts, CLI commands, prerequisite policy, or installer write behavior

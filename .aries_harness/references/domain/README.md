@@ -1,5 +1,9 @@
-# Domain Package
+# Domain Packages
 
-No formal domain package exists yet for this repository.
+## Active Packages
 
-If future work needs bounded contexts, domain language, aggregates, or UML-style design artifacts, apply `aries-harness-spec-to-domain` and store the resulting source artifacts here.
+- `DOM-002`: [SynapseOS initialization and host installation domain](DOM-002-synapseos-initialization-domain.md)
+
+## Notes
+
+Use this directory for bounded contexts, domain language, aggregates, policies, and text-based UML artifacts derived from governed specs or current implementation evidence.

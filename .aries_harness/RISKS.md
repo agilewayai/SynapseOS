@@ -31,9 +31,27 @@ Mitigation: keep the public identity explicit in repo-facing docs and keep the a
 
 ### Verification Thinness
 
-Most repo content is Markdown, and helper scripts do not yet have an explicit verification routine.
+Most repo content is Markdown, and helper scripts beyond the new `synapse-cli` tests do not yet have an explicit verification routine.
 
 Mitigation: define a lightweight validation checklist before broader script changes.
+
+### Host Adapter Drift
+
+The named agent hosts can change command names, configuration paths, or skill loading conventions outside this repository's control.
+
+Mitigation: keep adapter target resolution isolated in `init/synapse_cli/adapters.py`, require explicit overrides, and add host-native smoke checks only where the host exposes a stable local interface.
+
+### Remote Install Prompt Trust
+
+The OpenClaw quick-install target intentionally reduces friction, but remote prompts and shell installers can reduce inspectability if they are published without safety constraints.
+
+Mitigation: keep `synapse-cli install --agent openclaw` as the safe local baseline, require dry-run and target display in the chatbox prompt and any shell one-link script, and document the local review path next to the quick command.
+
+### Hermes Skill Reload Drift
+
+Hermes may install files successfully while the current session does not immediately show newly added skills.
+
+Mitigation: verify payload integrity with `synapse-cli verify --agent hermes`, verify host visibility with `hermes skills list` and `hermes skills check`, and document that a new Hermes session may be required.
 
 ### Harness Staleness
 

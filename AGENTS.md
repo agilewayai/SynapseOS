@@ -15,12 +15,14 @@ The current canonical layer names are:
 - **Xuan Master**: the core meta-cognition layer and 27-model knowledge kernel
 - **Archon**: the enabler layer for calibration, orchestration, actions, and generation workflows such as document and PDF outputs
 - **Prism**: the specialist layer for routing and mapping work into deeper domain-specific execution
+- **Init**: the initialization layer for prerequisite diagnosis, local metadata, host installation, and install verification
 
 In the current repository layout:
 
 - `xuan-master/SKILL.md` is the loadable entrypoint for **Xuan Master**, backed by `xuan-master/00-entry/` plus the `xuan-master/001-*` through `xuan-master/027-*` model directories
 - `archon/SKILL.md` is the loadable entrypoint for **Archon**, backed by `archon/interview/` and `archon/enabled/`
 - `prism/SKILL.md` is the loadable entrypoint for **Prism**, with future specialist assets accumulating under `prism/domains/`
+- `init/SKILL.md` is the loadable entrypoint for **Init**, backed by the local `./synapse-cli` command and `init/synapse_cli/` implementation package
 - `optimization/` remains a cross-cutting self-improvement loop across all layers
 
 ## How Agents Use It
@@ -125,6 +127,7 @@ In the current repository layout:
 
 ```
 Application Layer    → Specific problems → specific outputs
+Init Layer           → Prerequisites → metadata → host install → verification
 Prism Layer          → Domain routing → specialized mapping → deeper expert work
 Archon Layer         → Calibration → orchestration → actions → generation → synthesis
 Xuan Master Core     → 27 deep cognitive models (10 Speculative / 10 Method / 7 System)
@@ -134,6 +137,7 @@ Optimization Loop    → Audit → recovery → self-improvement across all laye
 - **Xuan Master Core**: [`xuan-master/SKILL.md`](xuan-master/SKILL.md) backed by [`xuan-master/00-entry/SKILL.md`](xuan-master/00-entry/SKILL.md) plus the `xuan-master/001-*` through `xuan-master/027-*` model directories
 - **Archon Layer**: [`archon/SKILL.md`](archon/SKILL.md) backed by [`archon/interview/SKILL.md`](archon/interview/SKILL.md) and [`archon/enabled/SKILL.md`](archon/enabled/SKILL.md)
 - **Prism Layer**: [`prism/SKILL.md`](prism/SKILL.md) — specialist routing and specialization guidance
+- **Init Layer**: [`init/SKILL.md`](init/SKILL.md) and [`synapse-cli`](synapse-cli) — local setup and host installation
 - **Optimization Loop**: [`optimization/SKILL.md`](optimization/SKILL.md) — self-improvement and corpus maintenance
 
 ## File Structure
@@ -162,6 +166,11 @@ meta-engine/
 ├── prism/                        ← Prism layer entrypoint + future specialist packs
 │   ├── SKILL.md
 │   └── domains/
+├── init/                         ← Initialization layer + synapse-cli implementation
+│   ├── SKILL.md
+│   └── synapse_cli/
+├── synapse-cli                   ← Local CLI entrypoint
+├── tests/                        ← CLI regression tests
 └── optimization/                 ← Self-improvement
     ├── SKILL.md
     └── scripts/

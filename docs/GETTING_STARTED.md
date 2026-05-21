@@ -1,6 +1,6 @@
 # Getting Started With SynapseOS
 
-This guide shows how to load SynapseOS manually today and how to reason about the planned installer work. It is written for AI coding agents, maintainers, and integrators who want to use the skill stack from a local checkout.
+This guide shows how to load SynapseOS manually and how to use the local `synapse-cli` initialization baseline. It is written for AI coding agents, maintainers, and integrators who want to use the skill stack from a local checkout.
 
 ## 1. Clone Or Open The Repository
 
@@ -24,6 +24,9 @@ If you are already inside this workspace, the current local path is:
 | Full model catalog and scene routing | `xuan-master/00-entry/SKILL.md` |
 | Problem calibration and orchestration | `archon/SKILL.md` |
 | Domain-specialist routing | `prism/SKILL.md` |
+| Initialization and host install | `init/SKILL.md` and `./synapse-cli` |
+| OpenClaw-specific install | `docs/OPENCLAW_INSTALL.md` |
+| Hermes-specific install | `docs/HERMES_INSTALL.md` |
 | Corpus maintenance and recovery | `optimization/SKILL.md` |
 | Project recovery and active plans | `.aries_harness/STATE.md` and `.aries_harness/TASK_STACK.md` |
 
@@ -58,12 +61,47 @@ AGENTS.md -> archon/SKILL.md -> archon/interview/SKILL.md -> archon/enabled/SKIL
 For domain-specialized work:
 
 ```text
-AGENTS.md -> prism/SKILL.md -> relevant domain notes or future domain package -> selected xuan-master and archon surfaces
+AGENTS.md -> prism/SKILL.md -> relevant domain notes or domain package -> selected xuan-master and archon surfaces
 ```
 
-## 5. Integrate With An Agent Host
+## 5. Run The Initialization CLI
 
-Until `synapse-cli` is implemented, use manual context loading:
+Check local readiness:
+
+```sh
+./synapse-cli doctor --json
+```
+
+Create repo-local initialization metadata:
+
+```sh
+./synapse-cli init --json
+```
+
+List supported agent host adapters:
+
+```sh
+./synapse-cli list-agents --json
+```
+
+Plan a generic installation without writing files:
+
+```sh
+./synapse-cli install --agent generic --target /path/to/host --dry-run --json
+```
+
+Apply and verify the generic installation after reviewing the plan:
+
+```sh
+./synapse-cli install --agent generic --target /path/to/host --yes --json
+./synapse-cli verify --agent generic --target /path/to/host --json
+```
+
+The first implementation is local-only and standard-library based. Automatic system package installation is intentionally not implemented; `doctor` reports remediation hints and external writes require explicit `--yes`.
+
+## 6. Integrate With An Agent Host
+
+Use manual context loading or the `synapse-cli` baseline depending on your host:
 
 | Host | Practical setup today |
 | --- | --- |
@@ -71,21 +109,21 @@ Until `synapse-cli` is implemented, use manual context loading:
 | Codex | Work from the repo root so `AGENTS.md` and layer files are available as local context |
 | Cursor | Reference `AGENTS.md` and selected `SKILL.md` files from Cursor rules or project context |
 | OpenCode | Register or load the relevant layer files through OpenCode's local context mechanism |
-| OpenClaw | Use its skill/plugin system to expose the layer entrypoints |
-| Hermes | Load the `SKILL.md` files directly or through native skill loading |
-| Other hosts | Read `AGENTS.md`, then load the relevant local `SKILL.md` files directly |
+| OpenClaw | Paste the prompt from `docs/OPENCLAW_INSTALL.md` into OpenClaw chat, or use the local commands, then verify with `openclaw skills check --json` |
+| Hermes | Install `docs/HERMES_INSTALL.md`'s direct-link installer skill, or use the local commands, then verify with `hermes skills list` |
+| Other hosts | Use `./synapse-cli install --agent generic --target <path>` or read the relevant local `SKILL.md` files directly |
 
-## 6. Track The Planned Installer
+## 7. Track Installer Design
 
-The future installer is specified but not implemented yet. The intended command surface is:
+The implemented command surface is:
 
 ```sh
-synapse-cli doctor
-synapse-cli init
-synapse-cli list-agents
-synapse-cli install --agent <agent>
-synapse-cli install --agent generic --target <path>
-synapse-cli verify --agent <agent>
+./synapse-cli doctor
+./synapse-cli init
+./synapse-cli list-agents
+./synapse-cli install --agent <agent> --dry-run
+./synapse-cli install --agent generic --target <path> --yes
+./synapse-cli verify --agent <agent>
 ```
 
 The design requires dry-run support, explicit approval for external writes, host-specific adapters, and a generic adapter for non-listed hosts.
@@ -96,11 +134,14 @@ Read the governing artifacts:
 .aries_harness/references/requests/REQ-002-synapseos-initialization-layer.md
 .aries_harness/references/specs/SPEC-002-synapseos-initialization-layer.md
 .aries_harness/references/stories/STORY-002-initialization-layer-pack.md
+.aries_harness/references/domain/DOM-002-synapseos-initialization-domain.md
 .aries_harness/decisions/architecture/ARCH-002-synapseos-initialization-layer.md
 .aries_harness/decisions/adrs/ADR-0004-synapseos-initialization-layer.md
+.aries_harness/references/specs/SPEC-003-openclaw-quick-install.md
+.aries_harness/references/specs/SPEC-004-hermes-chat-install.md
 ```
 
-## 7. Resume Project Work
+## 8. Resume Project Work
 
 When continuing development, start here:
 
@@ -110,8 +151,8 @@ When continuing development, start here:
 .aries_harness/MEMORY.md
 ```
 
-These files describe the current state, next safe actions, and durable project facts. The recommended next implementation slices are the `synapse-cli` skeleton and read-only prerequisite diagnosis from `STORY-002`.
+These files describe the current state, next safe actions, and durable project facts. The recommended next implementation work is host-specific hardening beyond the baseline local installer.
 
-## 8. License
+## 9. License
 
 SynapseOS is licensed under the Apache License, Version 2.0. See `LICENSE`.

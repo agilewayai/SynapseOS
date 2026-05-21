@@ -23,12 +23,17 @@
 
 ## Active
 
-- No active slice is locked after the `xuan-master` and `archon` structural refactors; pick the next item from `Ready Next`
+- No active implementation slice is locked after the `synapse-cli` baseline completion
 
 ## Ready Next
 
-- Implement `STORY-002B`: create the first `synapse-cli` skeleton with help, command parsing, `doctor`, `list-agents`, and `--json` shape
-- Implement `STORY-002C`: add read-only prerequisite runtime diagnosis and remediation hints
+- Implement `STORY-003C`: add OpenClaw-native verification evidence to `synapse-cli verify --agent openclaw`
+- Implement `STORY-003F`: add the optional reviewed shell one-link OpenClaw installer script with dry-run, target override, conflict checks, verification, and learning prompt
+- Implement `STORY-004B`: add Hermes-native verification evidence to `synapse-cli verify --agent hermes`
+- Evaluate `STORY-004C`: Hermes registry/native package distribution after the direct-SKILL installer stabilizes
+- Harden named host adapters with host-native smoke checks where available
+- Add uninstall or rollback planning if operator workflow needs a safe removal path
+- Package `synapse-cli` for global invocation after the repo-local baseline is stable
 - Decide and document the public product identity relative to the internal layer names `Xuan Master`, `Archon`, and `Prism`
 - Define lightweight verification rules for docs and helper scripts
 - Run a focused cleanup on `optimization/` to replace the remaining Hermes-era environment assumptions with repo-local guidance
@@ -49,3 +54,7 @@
 - Moved the `Archon` interview and enabled components under `archon/` and refreshed the linked architecture artifacts on `2026-05-21`
 - Added the `REQ-002` / `SPEC-002` / `STORY-002` / `ARCH-002` / `ADR-0004` initialization-layer specification package on `2026-05-21`
 - Added the public `README.md`, `docs/GETTING_STARTED.md`, and Apache-2.0 `LICENSE` baseline on `2026-05-21`
+- Implemented the `synapse-cli` baseline with prerequisite diagnosis, initialization metadata, adapter listing, dry-run/install/verify flows, generic host installation, tests, and `DOM-002` domain analysis on `2026-05-21`
+- Added the OpenClaw quick-install spec package and detailed `docs/OPENCLAW_INSTALL.md` guide on `2026-05-21`
+- Added the OpenClaw chatbox paste-link install prompt at `install/openclaw-chat-install.md` on `2026-05-21`
+- Added the Hermes direct-SKILL chatbox installer at `install/hermes-chat-install/SKILL.md` and detailed `docs/HERMES_INSTALL.md` guide on `2026-05-21`

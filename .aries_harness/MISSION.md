@@ -34,7 +34,7 @@ Maintain a reusable, agent-agnostic skills stack inside the `SynapseOS` reposito
 
 - Keep the 27-model knowledge base under `xuan-master/` coherent, navigable, and publishable
 - Maintain execution-layer assets such as `archon/enabled/`, `archon/interview/`, and `optimization/`
-- Define and maintain installation-layer assets such as future `synapse-cli`, prerequisite checks, and agent host adapters
+- Define and maintain installation-layer assets such as `synapse-cli`, prerequisite checks, and agent host adapters
 - Improve repository structure, documentation quality, automation, and release readiness
 - Preserve compatibility across coding-agent environments
 

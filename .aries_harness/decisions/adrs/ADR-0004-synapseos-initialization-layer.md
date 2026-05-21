@@ -7,14 +7,14 @@
 - Status: `accepted`
 - Owner: `Arthur`
 - Parent refs: `REQ-002`, `SPEC-002`, `ARCH-002`
-- Child refs: `STORY-002`
-- Verification state: `accepted by operator request and artifact shaping`
+- Child refs: `STORY-002`, `DOM-002`
+- Verification state: `accepted and implemented as local baseline`
 - Last reviewed: `2026-05-21`
 - Source of truth: `this file`
 
 ## Context
 
-SynapseOS is becoming a multi-agent skills stack. The current repository explains the skill layers, but it does not yet provide a first-class installation layer or a stable command interface for setting up supported agent hosts.
+SynapseOS is becoming a multi-agent skills stack. The repository explains the skill layers and now provides a first-class initialization layer plus a stable local command interface for setting up supported agent hosts.
 
 The requested installer must cover prerequisite runtime checking and installation planning, plus host-specific installation for Claude Code, Codex, Cursor, OpenCode, OpenClaw, Hermes, and a generic host path.
 
@@ -59,7 +59,7 @@ Supported first-design adapters are:
 
 ## Follow-Up
 
-- Implement the `synapse-cli` skeleton from `STORY-002B`
-- Implement read-only prerequisite diagnosis from `STORY-002C`
-- Add host adapters incrementally after the CLI and safety model are stable
-- Decide the physical repo name for the initialization layer during the first implementation slice
+- Harden named host adapters with host-native smoke checks where each host exposes a reliable local command
+- Consider uninstall or rollback planning as a separate story before adding destructive operations
+- Package `synapse-cli` for global invocation only after the repo-local baseline remains stable
+- Keep `init/` as the physical initialization layer unless a future ADR supersedes it

@@ -12,3 +12,9 @@
 - Nested the `Archon` interview and enabled components under `archon/` and refreshed the linked architecture artifacts
 - Added the SynapseOS initialization-layer spec package covering `synapse-cli`, prerequisite diagnosis, named agent host adapters, generic host installation, and verification
 - Added a public `README.md`, `docs/GETTING_STARTED.md`, and changed the project license to Apache-2.0
+- Implemented the repo-local `synapse-cli` baseline with `doctor`, `init`, `list-agents`, `install`, and `verify`
+- Added `init/` as the initialization layer, `tests/test_synapse_cli.py` as CLI regression coverage, and `DOM-002` as the initialization-domain package
+- Verified the CLI with unit tests, help output, doctor JSON, and generic dry-run/install/verify smoke checks
+- Added the OpenClaw quick-install artifact package (`REQ-003`, `SPEC-003`, `STORY-003`, `ARCH-003`, `ADR-0005`) and detailed `docs/OPENCLAW_INSTALL.md`
+- Added `install/openclaw-chat-install.md` so OpenClaw users can paste one link and one short prompt into an OpenClaw channel chatbox for guided installation
+- Added the Hermes chatbox install artifact package (`REQ-004`, `SPEC-004`, `STORY-004`, `ARCH-004`, `ADR-0006`), direct installer skill, and detailed `docs/HERMES_INSTALL.md`
