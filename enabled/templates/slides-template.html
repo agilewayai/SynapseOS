@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/black.css">
+<style>
+  :root {
+    --r-heading-font: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', sans-serif;
+    --r-main-font: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', sans-serif;
+  }
+  .reveal { font-size: 28px; }
+  .reveal h1 { font-size: 2em; color: #f59e0b; }
+  .reveal h2 { font-size: 1.5em; color: #10b981; }
+  .reveal h3 { font-size: 1.2em; color: #8b5cf6; }
+  .reveal .slides section { text-align: left; padding: 0 40px; }
+  .reveal .slides .center { text-align: center; }
+  .reveal ul { list-style-type: none; }
+  .reveal ul li::before { content: "▸ "; color: #f59e0b; }
+  .reveal ol { list-style-type: none; counter-reset: item; }
+  .reveal ol li { counter-increment: item; }
+  .reveal ol li::before { content: counter(item) ". "; color: #10b981; font-weight: bold; }
+  .model-tag { display: inline-block; background: #8b5cf6; color: #fff; padding: 2px 12px; border-radius: 20px; font-size: 0.6em; }
+  .red { color: #ef4444; }
+  .green { color: #10b981; }
+  .yellow { color: #f59e0b; }
+  .quote { border-left: 4px solid #f59e0b; padding-left: 24px; margin: 20px 0; font-style: italic; color: #d1d5db; }
+  table { font-size: 0.65em; width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th { background: #1f2937; color: #f59e0b; padding: 8px 12px; text-align: left; }
+  td { padding: 6px 12px; border-bottom: 1px solid #374151; }
+  .pipeline { text-align: center; font-size: 0.55em; color: #6b7280; margin-top: 40px; }
+  .danger-zone { background: #7f1d1d; border-radius: 8px; padding: 16px; margin: 12px 0; }
+  .safe-zone { background: #064e3b; border-radius: 8px; padding: 16px; margin: 12px 0; }
+  .checklist li { margin: 6px 0; }
+  .two-col { display: flex; gap: 24px; }
+  .two-col > div { flex: 1; }
+  .state-diagram { font-family: monospace; font-size: 0.55em; line-height: 1.6; white-space: pre; background: #111827; padding: 16px; border-radius: 8px; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+{{SLIDES}}
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    width: 1200,
+    height: 800,
+    margin: 0.1,
+  });
+</script>
+</body>
+</html>
