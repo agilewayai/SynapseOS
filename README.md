@@ -35,7 +35,40 @@ Load SynapseOS. Explain when I should use Xuan Master, Archon, Prism, and Init, 
 
 ## Install
 
-From a local checkout, inspect your environment first:
+Install or update `synapse-cli` with one command on macOS, Linux, or WSL:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/agilewayai/SynapseOS/main/install/synapseos.sh | bash
+```
+
+Then verify:
+
+```sh
+synapse-cli doctor --json
+synapse-cli list-agents --json
+```
+
+The installer writes the launcher to `~/.local/bin/synapse-cli`; use that full path if `~/.local/bin` is not on your `PATH`.
+
+To install the CLI and the skills stack into an agent host in one flow, pass the target adapter to the installer:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/agilewayai/SynapseOS/main/install/synapseos.sh | bash -s -- --agent codex --yes
+```
+
+For a custom target:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/agilewayai/SynapseOS/main/install/synapseos.sh | bash -s -- --agent generic --target /path/to/host --yes
+```
+
+Show all installer options:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/agilewayai/SynapseOS/main/install/synapseos.sh | bash -s -- --help
+```
+
+From a local checkout, the equivalent manual flow is:
 
 ```sh
 ./synapse-cli doctor --json

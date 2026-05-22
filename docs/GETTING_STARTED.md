@@ -2,7 +2,30 @@
 
 This guide shows how to load SynapseOS manually and how to use the local `synapse-cli` initialization baseline. It is written for AI coding agents, maintainers, and integrators who want to use the skill stack from a local checkout.
 
-## 1. Clone Or Open The Repository
+## 1. Install Or Open The Repository
+
+Install or update `synapse-cli` with one command on macOS, Linux, or WSL:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/agilewayai/SynapseOS/main/install/synapseos.sh | bash
+```
+
+To install the CLI and the skills stack into an agent host:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/agilewayai/SynapseOS/main/install/synapseos.sh | bash -s -- --agent codex --yes
+```
+
+For a custom host target:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/agilewayai/SynapseOS/main/install/synapseos.sh | bash -s -- --agent generic --target /path/to/host --yes
+```
+
+The installer creates or updates a managed checkout at `~/.synapseos/SynapseOS` and writes a `synapse-cli` launcher to `~/.local/bin`.
+Use `~/.local/bin/synapse-cli` directly if that directory is not on your `PATH`.
+
+You can also clone manually:
 
 ```sh
 git clone git@github.com:agilewayai/SynapseOS.git
@@ -69,7 +92,7 @@ AGENTS.md -> prism/SKILL.md -> relevant domain notes or domain package -> select
 Check local readiness:
 
 ```sh
-./synapse-cli doctor --json
+synapse-cli doctor --json
 ```
 
 Create repo-local initialization metadata:
@@ -81,7 +104,7 @@ Create repo-local initialization metadata:
 List supported agent host adapters:
 
 ```sh
-./synapse-cli list-agents --json
+synapse-cli list-agents --json
 ```
 
 Plan a generic installation without writing files:
