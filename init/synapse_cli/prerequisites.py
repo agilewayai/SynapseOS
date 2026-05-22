@@ -9,6 +9,10 @@ import sys
 from .adapters import ADAPTERS
 
 
+MIN_PYTHON = (3, 8)
+MIN_PYTHON_TEXT = "3.8"
+
+
 def _check(
     check_id: str,
     required: bool,
@@ -36,9 +40,9 @@ def check_prerequisites(repo_root: Path) -> dict:
     checks.append(_check(
         check_id="python",
         required=True,
-        status="pass" if sys.version_info >= (3, 9) else "fail",
+        status="pass" if sys.version_info >= MIN_PYTHON else "fail",
         detected=platform.python_version(),
-        hint="Use Python 3.9 or newer.",
+        hint=f"Use Python {MIN_PYTHON_TEXT} or newer.",
         installable=False,
     ))
 

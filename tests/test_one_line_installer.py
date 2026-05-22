@@ -91,6 +91,7 @@ class OneLineInstallerTests(unittest.TestCase):
             )
 
             self.assertEqual(0, result.returncode, result.stderr)
+            self.assertIn("Skills stack fetched at", result.stdout)
             self.assertIn("Readiness: pass", result.stdout)
             self.assertIn("Result: CLI installed", result.stdout)
             self.assertNotIn('"checks"', result.stdout)
@@ -111,7 +112,7 @@ if [ "$1" = "-" ]; then
 fi
 if [ "$2" = "doctor" ]; then
     cat <<'JSON'
-{{"status":"fail","checks":[{{"id":"python","category":"runtime","required":true,"status":"fail","detected":"3.8.9","missing":true,"hint":"Use Python 3.9 or newer."}}],"hosts":[]}}
+{{"status":"fail","checks":[{{"id":"python","category":"runtime","required":true,"status":"fail","detected":"3.7.17","missing":true,"hint":"Use Python 3.8 or newer."}}],"hosts":[]}}
 JSON
     exit 1
 fi
@@ -132,8 +133,9 @@ exec "{sys.executable}" "$@"
             )
 
             self.assertEqual(0, result.returncode, result.stderr)
+            self.assertIn("Skills stack fetched at", result.stdout)
             self.assertIn("Readiness: failed", result.stdout)
-            self.assertIn("install Python 3.9 or newer (detected 3.8.9)", result.stdout)
+            self.assertIn("install Python 3.8 or newer (detected 3.7.17)", result.stdout)
             self.assertIn("Result: CLI installed with readiness issues", result.stdout)
             self.assertNotIn('"checks"', result.stdout)
             self.assertNotIn('"hosts"', result.stdout)

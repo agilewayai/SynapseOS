@@ -48,7 +48,7 @@ hermes skills list
 You also need:
 
 - Git available on `PATH`
-- Python 3.9 or newer for `synapse-cli`
+- Python 3.8 or newer for `synapse-cli`
 - Write access to the Hermes skills target
 
 ## Chatbox Install Mode

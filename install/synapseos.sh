@@ -173,6 +173,7 @@ else
 fi
 
 [ -x "$install_dir/synapse-cli" ] || die "synapse-cli was not found in $install_dir"
+log "Skills stack fetched at $install_dir"
 
 mkdir -p "$bin_dir"
 launcher="$bin_dir/synapse-cli"
@@ -245,9 +246,9 @@ else:
         hint = check.get("hint")
         if check_id == "python":
             if detected:
-                log(f"Required action: install Python 3.9 or newer (detected {detected})")
+                log(f"Required action: install Python 3.8 or newer (detected {detected})")
             else:
-                log("Required action: install Python 3.9 or newer")
+                log("Required action: install Python 3.8 or newer")
         elif hint:
             log(f"Required action: {hint}")
         else:
