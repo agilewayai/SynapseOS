@@ -11,20 +11,29 @@ SynapseOS is a grouped multi-skill stack:
 - `prism`: specialist routing layer
 - `init`: setup, installation, and verification layer
 
-The default OpenClaw target is:
+The default OpenClaw skill root is:
+
+```text
+~/.openclaw/skills/
+```
+
+SynapseOS keeps a managed payload copy here:
 
 ```text
 ~/.openclaw/skills/synapseos/
 ```
 
-Inside that group, OpenClaw should see layer folders such as:
+For OpenClaw-native discovery, the installer also writes direct skill entries at the skill root:
 
 ```text
-~/.openclaw/skills/synapseos/xuan-master/SKILL.md
-~/.openclaw/skills/synapseos/archon/SKILL.md
-~/.openclaw/skills/synapseos/prism/SKILL.md
-~/.openclaw/skills/synapseos/init/SKILL.md
+~/.openclaw/skills/xuan-master/SKILL.md      name: xuan_master
+~/.openclaw/skills/archon/SKILL.md           name: archon
+~/.openclaw/skills/prism/SKILL.md            name: prism
+~/.openclaw/skills/init/SKILL.md             name: synapse_init
+~/.openclaw/skills/optimization/SKILL.md     name: optimization
 ```
+
+This keeps the full SynapseOS payload grouped for updates while giving `openclaw skills list` direct child skill directories to enumerate.
 
 ## Prerequisites
 
@@ -68,6 +77,7 @@ OpenClaw should then:
 - apply `./synapse-cli install --agent openclaw --yes --json` when the plan is safe
 - run `./synapse-cli verify --agent openclaw --json`
 - run `openclaw skills check --json` and `openclaw skills list --json`
+- confirm `openclaw skills list --json` includes `xuan_master`, `archon`, `prism`, `synapse_init`, and `optimization`
 - explain how to start using `Xuan Master`, `Archon`, `Prism`, and `Init`
 
 The prompt source lives in this repository at `install/openclaw-chat-install.md`.
@@ -80,7 +90,11 @@ From a local SynapseOS checkout:
 ./synapse-cli install --agent openclaw --dry-run --json
 ```
 
-Review the planned destination. If it is correct:
+Review the planned destination and install state. A fresh install reports `install_mode: install`. A previous install reports `install_mode: update`. The plan also reports `payload_version` and `previous_installation.payload.version_status` so an older installed payload is visible before applying the refresh.
+
+If the dry-run reports `previous_installation.status: legacy_grouped_only`, the installer found the old OpenClaw layout where only `~/.openclaw/skills/synapseos` exists. This is an expected safe update path when the payload markers are present and no direct skill conflicts are reported.
+
+If the plan is correct:
 
 ```sh
 ./synapse-cli install --agent openclaw --yes --json
@@ -99,9 +113,9 @@ openclaw skills check --json
 openclaw skills list --json
 ```
 
-If OpenClaw reports the skills correctly, start a new OpenClaw session or reload the host if your setup requires it.
+If OpenClaw reports `xuan_master`, `archon`, `prism`, `synapse_init`, and `optimization`, start a new OpenClaw session or reload the host if your setup requires it.
 
-OpenClaw's current skill metadata docs define `name` as a required identifier. Treat `openclaw skills check --json` as the authority on whether the installed SynapseOS skill metadata is accepted by your OpenClaw version.
+OpenClaw's current skill metadata docs define `name` as a required identifier, so the direct OpenClaw entries use OpenClaw-safe names such as `xuan_master` and `synapse_init`. Treat `openclaw skills check --json` as the authority on whether the installed SynapseOS skill metadata is accepted by your OpenClaw version.
 
 ## Custom Target
 
@@ -119,6 +133,16 @@ The final install root is:
 /path/to/openclaw/skills/synapseos
 ```
 
+The native OpenClaw skill entries are written beside it:
+
+```text
+/path/to/openclaw/skills/xuan-master
+/path/to/openclaw/skills/archon
+/path/to/openclaw/skills/prism
+/path/to/openclaw/skills/init
+/path/to/openclaw/skills/optimization
+```
+
 ## Shell One-Link Target UX
 
 The optional future shell quick-install command is:
@@ -133,7 +157,7 @@ That shell script is specified but not implemented in the current baseline. Use 
 - show the resolved OpenClaw target before writing
 - refuse to overwrite a non-SynapseOS folder unless `--force` is explicit
 - support `--target <path>`
-- install SynapseOS into an OpenClaw-compatible skill group
+- install the managed SynapseOS payload plus direct OpenClaw skill entries
 - run `synapse-cli verify --agent openclaw`
 - run `openclaw skills check --json` when OpenClaw is available
 - print the first-use learning prompt below
@@ -145,13 +169,13 @@ Use the safe local install path above or the chatbox install mode until the shel
 After installation, ask OpenClaw:
 
 ```text
-Load SynapseOS. Explain when I should use Xuan Master, Archon, Prism, and Init, then recommend the first skill for my current task.
+Use xuan_master. Explain when I should use Xuan Master, Archon, Prism, and Init, then recommend the first SynapseOS skill for my current task.
 ```
 
 For architecture or reasoning tasks, start with:
 
 ```text
-Use xuan-master to choose the right cognitive model pipeline for this problem.
+Use xuan_master to choose the right cognitive model pipeline for this problem.
 ```
 
 For ambiguous requests or tasks that need orchestration:
@@ -176,7 +200,18 @@ git pull
 ./synapse-cli install --agent openclaw --yes --json
 ./synapse-cli verify --agent openclaw --json
 openclaw skills check --json
+openclaw skills list --json
 ```
+
+For an old grouped-only install, the dry-run should show:
+
+```text
+install_mode: update
+previous_installation.status: legacy_grouped_only
+previous_installation.update_required: true
+```
+
+The approved update keeps the managed payload at `~/.openclaw/skills/synapseos` and adds the direct native entries beside it.
 
 ## Troubleshooting
 
@@ -202,7 +237,29 @@ SynapseOS files are present, but OpenClaw does not accept or load them. Check:
 - whether OpenClaw needs a restart or new session
 - whether any `SKILL.md` frontmatter errors are reported
 
-If the error is about metadata naming or frontmatter compatibility, the current source payload is installed but not yet OpenClaw-native for your OpenClaw version. Track the follow-on package/alias work in `.aries_harness/references/stories/STORY-003-openclaw-quick-install.md`.
+If the grouped payload exists under `~/.openclaw/skills/synapseos` but `openclaw skills list --json` does not show the SynapseOS layer skills, check that these direct entries exist:
+
+```text
+~/.openclaw/skills/xuan-master/SKILL.md
+~/.openclaw/skills/archon/SKILL.md
+~/.openclaw/skills/prism/SKILL.md
+~/.openclaw/skills/init/SKILL.md
+~/.openclaw/skills/optimization/SKILL.md
+```
+
+If a direct entry already exists and is not a SynapseOS skill, the installer blocks instead of overwriting it. Move or rename the conflicting directory, then rerun the dry-run before applying the install.
+
+### Old OpenClaw Layout Detected
+
+Older SynapseOS OpenClaw installs may have only this grouped payload:
+
+```text
+~/.openclaw/skills/synapseos
+```
+
+Rerun the current installer. The dry-run should report `previous_installation.status: legacy_grouped_only` and `install_mode: update`, then the approved install writes the missing direct OpenClaw entries.
+
+If the dry-run reports `conflict_existing_payload`, the existing `synapseos` directory does not look like a SynapseOS payload. Inspect or move it before rerunning the installer.
 
 ### Target Already Exists
 

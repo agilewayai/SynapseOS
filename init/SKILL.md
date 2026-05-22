@@ -30,6 +30,9 @@ This layer owns first-run setup and host installation for SynapseOS.
 - `codex`
 - `cursor`
 - `opencode`
+- `gemini`
+- `antigravity`
+- `antigravity-cli`
 - `openclaw`
 - `hermes`
 - `generic`

@@ -36,8 +36,8 @@
 - `README.md`, `docs/GETTING_STARTED.md`, and Apache-2.0 `LICENSE` exist for public onboarding
 - `synapse-cli` exists as a repo-local executable with `doctor`, `init`, `list-agents`, `install`, and `verify`
 - `init/` exists as the initialization layer with a loadable `SKILL.md`
-- Host adapters exist for `claude-code`, `codex`, `cursor`, `opencode`, `openclaw`, `hermes`, and `generic`
-- Generic host dry-run, approved install, manifest output, idempotence, and verification are covered by tests
+- Host adapters exist for `claude-code`, `codex`, `cursor`, `opencode`, `gemini`, `antigravity`, `antigravity-cli`, `openclaw`, `hermes`, and `generic`
+- Grouped host dry-run, approved install, update-mode refresh, conflict blocking, manifest output, and verification are covered by tests
 - `DOM-002` exists as the initialization and host-installation domain package
 - `REQ-003`, `SPEC-003`, `STORY-003`, `ARCH-003`, and `ADR-0005` exist for OpenClaw quick-install shaping
 - `docs/OPENCLAW_INSTALL.md` exists and documents chatbox install mode, safe local install, shell one-link target UX, OpenClaw-native verification, update, and troubleshooting
@@ -50,5 +50,5 @@
 
 - Acceptance status: `pass`
 - Verification method: `unit tests, CLI smoke checks, generic install/verify smoke check, artifact ID search, OpenClaw docs reference check, license scan, markdown diff check, and file-content review`
-- Latest checks: `python3 -m unittest discover -s tests`; `./synapse-cli --help`; `./synapse-cli doctor --json`; generic dry-run/install/verify smoke checks
+- Latest checks: `python3 -m unittest tests/test_synapse_cli.py`; `python3 -m py_compile init/synapse_cli/adapters.py init/synapse_cli/installer.py init/synapse_cli/main.py`; `./synapse-cli list-agents --json`; default adapter dry-run smoke checks; Gemini and Antigravity dry-run smoke checks
 - Remaining gaps: `no generated history yet; optimization docs still have some Hermes-era examples; named host adapters need host-native smoke hardening beyond baseline target resolution; optional OpenClaw shell one-link script is specified but not implemented`

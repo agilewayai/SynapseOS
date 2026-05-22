@@ -1,143 +1,107 @@
 # SynapseOS
 
-SynapseOS is an agent-agnostic cognitive skills stack for AI coding agents and LLM hosts. It packages a 27-model reasoning kernel, an execution and generation layer, a specialist routing layer, and a governed harness surface so agents can load reusable reasoning frameworks instead of relying on one-off prompt memory.
+SynapseOS is an agent-agnostic cognitive skills stack for AI coding agents and LLM hosts. It packages 27 reusable reasoning models plus execution, routing, and initialization layers that can be loaded by Codex, Claude Code, Cursor, OpenCode, Gemini, Antigravity, OpenClaw, Hermes, or any host that can read local Markdown context.
 
-The repository is documentation-first. The primary runtime contract is a set of `SKILL.md` files that can be read directly by Codex, Claude Code, Cursor, OpenCode, OpenClaw, Hermes, or any other agent host that can load local Markdown context.
-
-## What It Includes
-
-| Layer | Path | Purpose |
-| --- | --- | --- |
-| Xuan Master | `xuan-master/` | Meta-cognition core with 27 cognitive models and scene routing |
-| Archon | `archon/` | Enabler layer for problem calibration, orchestration, actions, document generation, and synthesis |
-| Prism | `prism/` | Specialist layer for mapping work into deeper domain-specific paths |
-| Init | `init/` and `synapse-cli` | Initialization layer for prerequisite checks, local metadata, host installation, and verification |
-| Optimization | `optimization/` | Cross-cutting audit, recovery, and corpus improvement guidance |
-| Aries Harness | `.aries_harness/` | Project-local governance, recovery, request/spec/story/architecture, and traceability artifacts |
-
-The SynapseOS initialization layer is implemented as a local Python CLI. It provides prerequisite diagnosis, repo-local initialization metadata, supported agent-host detection, dry-run install planning, approved installation, and install verification.
-
-## Repository Layout
-
-```text
-.
-├── AGENTS.md
-├── README.md
-├── docs/
-│   └── GETTING_STARTED.md
-├── xuan-master/
-│   ├── SKILL.md
-│   ├── 00-entry/
-│   └── 001-layered-architecture/ ... 027-ai-native-mindset/
-├── archon/
-│   ├── SKILL.md
-│   ├── interview/
-│   └── enabled/
-├── prism/
-│   ├── SKILL.md
-│   └── domains/
-├── init/
-│   ├── SKILL.md
-│   └── synapse_cli/
-├── synapse-cli
-├── tests/
-├── optimization/
-├── .aries_harness/
-└── LICENSE
-```
+The main user contract is simple: load the relevant `SKILL.md` files as context, or install the stack into your agent host with `synapse-cli`.
 
 ## Quick Start
 
-Start with the core entrypoint:
+Start with the core reasoning layer:
 
 ```text
 xuan-master/SKILL.md
 ```
 
-For most analysis tasks, load the model catalog next:
+For model selection and scenario routing, load the catalog:
 
 ```text
 xuan-master/00-entry/SKILL.md
 ```
 
-For ambiguous requests or tasks that need orchestration, load Archon:
+Use the other top-level layers when the task needs them:
+
+| Need | Load |
+| --- | --- |
+| Core reasoning models and scene selection | `xuan-master/SKILL.md` |
+| Calibration, orchestration, actions, document generation, synthesis | `archon/SKILL.md` |
+| Specialist routing into deeper domain work | `prism/SKILL.md` |
+| Setup, host installation, and verification | `init/SKILL.md` or `./synapse-cli` |
+
+Example prompt after loading SynapseOS:
 
 ```text
-archon/SKILL.md
+Load SynapseOS. Explain when I should use Xuan Master, Archon, Prism, and Init, then recommend the first skill for my current task.
 ```
 
-For specialist routing, load Prism:
+## Install
 
-```text
-prism/SKILL.md
-```
-
-For local setup and host installation, use:
+From a local checkout, inspect your environment first:
 
 ```sh
-./synapse-cli doctor
-./synapse-cli init
-./synapse-cli list-agents
-./synapse-cli install --agent generic --target /path/to/host --dry-run
-./synapse-cli install --agent generic --target /path/to/host --yes
-./synapse-cli verify --agent generic --target /path/to/host
+./synapse-cli doctor --json
+./synapse-cli list-agents --json
 ```
 
-For a practical walkthrough, see [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
+Then run a dry-run for your target host:
 
-For host-specific setup:
+```sh
+./synapse-cli install --agent <agent> --dry-run --json
+```
 
-- OpenClaw paste-link chatbox installer: [docs/OPENCLAW_INSTALL.md](docs/OPENCLAW_INSTALL.md)
-- Hermes direct-SKILL chatbox installer: [docs/HERMES_INSTALL.md](docs/HERMES_INSTALL.md)
+If the plan is correct, apply and verify:
 
-## Agent Host Integration
+```sh
+./synapse-cli install --agent <agent> --yes --json
+./synapse-cli verify --agent <agent> --json
+```
 
-SynapseOS is intentionally host-neutral. The local `synapse-cli` baseline supports these adapter ids:
+Supported adapter ids:
 
 ```text
-claude-code, codex, cursor, opencode, openclaw, hermes, generic
+claude-code, codex, cursor, opencode, gemini, antigravity, antigravity-cli, openclaw, hermes, generic
 ```
 
-Named adapters resolve a conventional local target with an environment-variable override. The `generic` adapter requires `--target` and is the safest path for non-standard hosts.
+Use `generic` for a custom or unknown host target:
 
-| Host | Recommended entrypoint |
-| --- | --- |
-| Claude Code | Add this repository path and load `AGENTS.md` or `xuan-master/SKILL.md` as project context |
-| Codex | Use `AGENTS.md` as the project instruction surface and load layer `SKILL.md` files as needed |
-| Cursor | Reference `AGENTS.md` or selected layer files from project rules |
-| OpenCode / OpenClaw / Hermes | Load the layer `SKILL.md` files through the host's local skill or context mechanism |
-| Generic LLM host | Read `AGENTS.md`, then load specific layer and model files directly |
-
-Installation design and delivery evidence are tracked under:
-
-```text
-.aries_harness/references/stories/STORY-002-initialization-layer-pack.md
+```sh
+./synapse-cli install --agent generic --target /path/to/host --dry-run --json
+./synapse-cli install --agent generic --target /path/to/host --yes --json
+./synapse-cli verify --agent generic --target /path/to/host --json
 ```
 
-## Working With The Harness
+Repeat installs are treated as updates. Dry-run output reports `install_mode`, `payload_version`, and `previous_installation` so you can see whether the target is fresh, already installed, older than the current payload, or unsafe to overwrite. Existing unrecognized `synapseos/` directories are blocked instead of overwritten.
 
-The `.aries_harness/` directory is the recovery and governance surface for the repository. It records:
+## Host Notes
 
-| Artifact | Purpose |
+| Host | Recommended setup |
 | --- | --- |
-| `MISSION.md` | Current repository mission and scope |
-| `STATE.md` | Current project state and next safe action |
-| `TASK_STACK.md` | Ready, active, later, and completed work |
-| `ADR.md` | Decision index |
-| `references/` | Request, spec, story, traceability, audit, and review artifacts |
-| `decisions/` | Architecture packs and detailed ADR records |
+| Claude Code | Use the `claude-code` adapter or load `AGENTS.md` / `xuan-master/SKILL.md` as project context |
+| Codex | Use the `codex` adapter or work from this repo so `AGENTS.md` and layer files are available |
+| Cursor | Use the `cursor` adapter or reference selected `SKILL.md` files from Cursor rules/context |
+| OpenCode | Use the `opencode` adapter or load layer files through OpenCode context |
+| Gemini | Use the `gemini` adapter for `~/.gemini/skills` or load layer files directly |
+| Antigravity | Use `antigravity` for `~/.gemini/antigravity/skills` or `antigravity-cli` for `~/.gemini/antigravity-cli/skills` |
+| OpenClaw | Use the OpenClaw guide or `./synapse-cli install --agent openclaw --dry-run --json` |
+| Hermes | Use the Hermes guide or `./synapse-cli install --agent hermes --dry-run --json` |
 
-Use these files when you need to resume work without replaying prior chat.
+OpenClaw and Hermes have dedicated guided install paths:
 
-## Current Status
+- [OpenClaw install guide](docs/OPENCLAW_INSTALL.md)
+- [Hermes install guide](docs/HERMES_INSTALL.md)
 
-The repository currently provides:
+## Use The Skills
 
-- 27 cognitive model skills under `xuan-master/`
-- A nested Archon enabler layer under `archon/`
-- A Prism specialist layer scaffold
-- A local `synapse-cli` initialization and installation baseline
-- Aries Harness artifacts for architecture, traceability, and initialization-layer delivery evidence
+For common tasks, start with these entrypoints:
+
+| Task | Suggested layer |
+| --- | --- |
+| Architecture design | `xuan-master/001-layered-architecture/SKILL.md` plus `xuan-master/002-flow-model/SKILL.md` |
+| Debugging or incident diagnosis | `xuan-master/003-state-machine/SKILL.md`, `xuan-master/005-reverse-thinking/SKILL.md`, `xuan-master/024-rice-diagnosis/SKILL.md` |
+| Strategy or product decisions | `xuan-master/006-first-principles/SKILL.md`, `xuan-master/018-swot/SKILL.md`, `xuan-master/022-mckinsey-method/SKILL.md` |
+| Code quality improvement | `xuan-master/011-feedback-loop/SKILL.md`, `xuan-master/007-iterative-thinking/SKILL.md`, `xuan-master/010-occams-razor/SKILL.md` |
+| Long or ambiguous work | `archon/SKILL.md` first, then route into Xuan Master or Prism |
+
+For the full walkthrough, see [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
 
 ## License
 

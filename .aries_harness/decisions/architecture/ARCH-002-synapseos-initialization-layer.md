@@ -40,7 +40,8 @@
   - keep the dedicated `Initialization Layer` responsible for first-run setup and host installation
   - expose setup behavior through the repo-local `synapse-cli`
   - separate CLI command parsing, prerequisite diagnosis, install planning, host adapters, filesystem operations, and verification reporting
-  - support named host adapters for `claude-code`, `codex`, `cursor`, `opencode`, `openclaw`, and `hermes`
+  - support named host adapters for `claude-code`, `codex`, `cursor`, `opencode`, `gemini`, `antigravity`, `antigravity-cli`, `openclaw`, and `hermes`
+  - report install/update state before writes so repeat installs become explicit refreshes
   - support a generic adapter for any other agent host through an explicit target path
 - Why the change is needed: without a first-class initialization layer, multi-agent adoption depends on fragile manual instructions and host-specific assumptions that are difficult to audit or repeat
 
@@ -94,6 +95,9 @@ Supported adapter ids for the first design are:
 - `codex`
 - `cursor`
 - `opencode`
+- `gemini`
+- `antigravity`
+- `antigravity-cli`
 - `openclaw`
 - `hermes`
 - `generic`
@@ -106,6 +110,7 @@ Supported adapter ids for the first design are:
 | Use `synapse-cli` as the installation interface | A stable command contract is easier for agents and operators to call consistently | Requires CLI packaging and validation work later | `ADR-0004` |
 | Keep host behavior in adapters | Agent hosts differ in path conventions and config expectations | Adapter count grows as host support grows | `ADR-0004` |
 | Require dry-run and explicit approval for external writes | Installation can affect user configuration and should be inspectable | Slightly more ceremony for first-time users | `ADR-0004` |
+| Report previous installation state and payload version in install plans | Repeat installs need to distinguish fresh install, old-version refresh, safe refresh, and unsafe overwrite | Adds structured state to install and verify output | `ADR-0004` |
 | Keep a generic adapter | Non-listed hosts should not be second-class users | Generic install cannot offer deep host-specific verification | `ADR-0004` |
 
 ## Implementation Evidence
@@ -114,12 +119,12 @@ Supported adapter ids for the first design are:
 - Initialization layer: `init/SKILL.md`, `init/synapse_cli/`
 - Regression tests: `tests/test_synapse_cli.py`
 - Domain model: `.aries_harness/references/domain/DOM-002-synapseos-initialization-domain.md`
-- Verification commands: `python3 -m unittest discover -s tests`, `./synapse-cli --help`, `./synapse-cli doctor --json`, generic dry-run/install/verify smoke checks
+- Verification commands: `python3 -m unittest discover -s tests`, `./synapse-cli --help`, `./synapse-cli doctor --json`, adapter matrix dry-run/install/update/verify smoke checks
 
 ## Delivery Impact
 
 - Affected stories: `STORY-002A`, `STORY-002B`, `STORY-002C`, `STORY-002D`, `STORY-002E`, `STORY-002F`
-- Verification impact: baseline implementation has CLI parser checks, doctor output checks, generic dry-run/install/verify checks, and idempotence tests; host-native smoke checks remain future hardening
+- Verification impact: baseline implementation has CLI parser checks, doctor output checks, adapter matrix dry-run/install/update/verify checks, conflict-blocking tests, and idempotence tests; host-native smoke checks remain future hardening
 - Rollout impact: implementation should start local-only; external package publishing is deferred
 - Observability impact: install manifests and verification reports become the main evidence surfaces
 

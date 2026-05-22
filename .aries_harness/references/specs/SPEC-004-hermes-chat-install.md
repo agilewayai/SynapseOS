@@ -34,6 +34,7 @@ This spec is grounded in local Hermes Agent v0.14.0 behavior available in this w
   - Hermes-specific installation guide
   - chatbox prompt that tells Hermes to install and run the installer skill
   - current safe baseline using `synapse-cli install --agent hermes`
+  - detection and update of existing grouped SynapseOS Hermes installs
   - Hermes-native verification through `hermes skills list` and `hermes skills check`
   - first-use learning prompt after installation
 - Out of scope:
@@ -73,6 +74,7 @@ Required behavior:
 - clone or update SynapseOS over HTTPS
 - run `./synapse-cli doctor --json`
 - show `./synapse-cli install --agent hermes --dry-run --json`
+- if a previous grouped SynapseOS install exists, report `install_mode: update`, `payload_version`, and `previous_installation.status: existing_grouped_payload`
 - apply `./synapse-cli install --agent hermes --yes --json` only after the target is safe
 - run `./synapse-cli verify --agent hermes --json`
 - run `hermes skills list` and `hermes skills check`
@@ -91,7 +93,9 @@ hermes skills check
 Required behavior:
 
 - dry-run renders writes before applying them
+- dry-run reports `install_mode`, `payload_version`, and `previous_installation` when an existing SynapseOS install is present
 - approved install writes into the Hermes adapter target, defaulting to `~/.hermes/skills/synapseos`
+- approved install updates an existing grouped SynapseOS payload in place
 - SynapseOS verification checks files and manifest
 - Hermes verification checks host skill visibility
 
@@ -110,6 +114,7 @@ Use SynapseOS. Explain when I should use Xuan Master, Archon, Prism, and Init, t
 - The guide uses Hermes-native commands instead of relying only on SynapseOS self-verification.
 - The chatbox flow avoids opaque remote shell and delegates filesystem writes to `synapse-cli` dry-run and approved install.
 - `synapse-cli install --agent hermes --dry-run --json` produces a valid plan.
+- Existing grouped installs are treated as update plans, while unrecognized existing `synapseos/` directories are blocked.
 - `synapse-cli verify --agent hermes --json` remains the payload integrity check.
 - Hermes-native verification includes `hermes skills list` and `hermes skills check`.
 - Failures must distinguish prerequisite, checkout, payload verification, and Hermes skill visibility issues.
@@ -129,6 +134,7 @@ Use SynapseOS. Explain when I should use Xuan Master, Archon, Prism, and Init, t
 - Do not replace the repo-local `synapse-cli` contract with a Hermes-only path.
 - Do not bypass dry-run and target display.
 - Do not rename canonical SynapseOS layers.
+- Do not overwrite an unrecognized existing `synapseos/` directory without explicit operator action outside the installer.
 
 ## Slice Candidates
 

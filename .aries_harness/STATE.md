@@ -39,8 +39,8 @@
 - A new initialization-layer artifact family now exists as `REQ-002`, `SPEC-002`, `STORY-002`, `ARCH-002`, and `ADR-0004`
 - The initialization layer is now implemented under `init/` with the repo-local `synapse-cli` entrypoint
 - `synapse-cli` supports `doctor`, `init`, `list-agents`, `install`, and `verify`
-- Host adapters exist for `claude-code`, `codex`, `cursor`, `opencode`, `openclaw`, `hermes`, and `generic`
-- The generic adapter supports explicit-target dry-run, approved install, manifest output, idempotent copy install, and verification
+- Host adapters exist for `claude-code`, `codex`, `cursor`, `opencode`, `gemini`, `antigravity`, `antigravity-cli`, `openclaw`, `hermes`, and `generic`
+- Grouped adapters support explicit install/update dry-runs, approved install, manifest output, refresh-mode copy install, conflict blocking, and verification
 - Domain package `DOM-002` now captures the initialization and host-installation domain model
 - OpenClaw quick-install shaping now exists as `REQ-003`, `SPEC-003`, `STORY-003`, `ARCH-003`, `ADR-0005`, and `docs/OPENCLAW_INSTALL.md`
 - OpenClaw chatbox install mode now exists as `install/openclaw-chat-install.md` and is linked from `docs/OPENCLAW_INSTALL.md`
@@ -57,4 +57,4 @@
 
 ## Next Safe Action
 
-Optionally commit and push the completed `synapse-cli`, OpenClaw, and Hermes install baselines if requested. The next development slice should implement host-native verification for OpenClaw or Hermes.
+Optionally commit and push the completed `synapse-cli`, OpenClaw, Hermes, Gemini, and Antigravity install/update baselines if requested. The next development slice should implement host-native verification where host CLIs expose reliable checks.

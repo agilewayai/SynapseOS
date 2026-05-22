@@ -24,7 +24,7 @@
 | `init/SKILL.md` | current behavior | initialization layer responsibilities and safety rules |
 | `init/synapse_cli/*.py` | current behavior | parser, adapters, prerequisite checks, install plan/apply, verification |
 | `synapse-cli` | current behavior | local executable entrypoint |
-| `tests/test_synapse_cli.py` | executable evidence | parser, JSON, generic install, idempotence, verification |
+| `tests/test_synapse_cli.py` | executable evidence | parser, JSON, adapter matrix install, update refresh, conflict blocking, verification |
 
 Out of scope for this domain pass: external package publishing, network install, automatic system package installation, uninstall, rollback, and deep host-specific smoke checks.
 
@@ -37,6 +37,7 @@ Out of scope for this domain pass: external package publishing, network install,
 | Generic adapter | Explicit-target adapter for non-standard hosts | `SPEC-002`, `adapters.py` |
 | Runtime prerequisite | Required or optional local condition checked before install | `SPEC-002`, `prerequisites.py` |
 | Install plan | Reviewable list of filesystem operations before external writes | `SPEC-002`, `installer.py` |
+| Previous installation state | Structured evidence that the target is fresh, updateable, current, or unsafe before writes | `installer.py` |
 | Install manifest | Post-apply evidence record written into the install root | `SPEC-002`, `installer.py` |
 | Verification report | Read-only check result proving required entrypoints and manifest are present | `SPEC-002`, `installer.py` |
 | Payload path | Source repo file or directory copied or symlinked into a host target | `installer.py` |
@@ -62,7 +63,7 @@ Out of scope for this domain pass: external package publishing, network install,
 | `HostAdapter` | entity | `init/synapse_cli/adapters.py` | adapter id is stable; generic requires explicit target; env override beats default |
 | `DetectionResult` | value object | `adapters.py` | detection is evidence, not approval to write |
 | `PrerequisiteReport` | aggregate | `prerequisites.py` dictionary result | required checks determine pass/fail; remediation is advisory |
-| `InstallPlan` | aggregate | `installer.build_plan()` dictionary result | no writes occur during planning; missing sources make the plan error |
+| `InstallPlan` | aggregate | `installer.build_plan()` dictionary result | no writes occur during planning; missing sources and unsafe existing payloads make the plan error |
 | `InstallOperation` | entity | `installer.py` dataclass | action is explicit; source and destination are inspectable |
 | `InstallManifest` | aggregate | `synapseos-install-manifest.json` | manifest records source repo, adapter, strategy, payload paths, and applied operations |
 | `VerificationReport` | aggregate | `installer.verify_install()` dictionary result | status is pass only when all required files and manifest checks pass |
@@ -96,6 +97,7 @@ Out of scope for this domain pass: external package publishing, network install,
 - `generic` install and verify require an explicit `--target`.
 - Named host adapters must own target resolution and allow operator override.
 - Install planning must report missing payload sources instead of silently skipping them.
+- Install planning must distinguish fresh installs, safe updates, current installs, and unsafe existing payload conflicts.
 - Install verification must check `synapse-cli`, `xuan-master`, `archon`, `prism`, `init`, and the manifest.
 - Basic installation must not depend on network access or third-party Python packages.
 
@@ -165,7 +167,10 @@ class InstallPlan {
   status
   adapter
   strategy
+  payload_version
   install_root
+  install_mode
+  previous_installation
   operations
 }
 
@@ -182,6 +187,9 @@ class InstallManifest {
   source_repo
   adapter
   strategy
+  payload_version
+  install_mode
+  previous_installation
   payload_paths
   operations
 }
@@ -200,6 +208,7 @@ InstallManifest o-- InstallOperation
 | `SPEC-002` safety: dry-run before writes | Install Planning is separate from Install Execution | `build_plan()`, `apply_plan()`, blocked install test |
 | `SPEC-002` safety: no implicit prerequisite install | Prerequisite Diagnosis is advisory | `check_prerequisites()`, `install_missing_supported: false` |
 | `SPEC-002` hosts: named plus generic adapters | Host Adapter Registry is a bounded context | `ADAPTERS` in `adapters.py` |
+| `SPEC-002` repeat-install safety | Previous Installation State, Payload Version, and Version Status are part of Install Planning | adapter matrix update/conflict tests |
 | `SPEC-002` generic target route | Generic adapter is explicit-target only | `requires_explicit_target=True`, generic tests |
 | `SPEC-002` manifest evidence | Install Manifest is a domain aggregate | `synapseos-install-manifest.json` writer |
 | `SPEC-002` verification | Verification Report is a read-only evidence surface | `verify_install()`, install-and-verify test |

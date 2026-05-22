@@ -32,7 +32,8 @@ This spec is grounded in the current OpenClaw public documentation:
   - paste-link chatbox installation prompt for OpenClaw
   - optional future shell one-link quick install UX
   - OpenClaw skill-root and skill-interface compatibility expectations
-  - OpenClaw-native verification using `openclaw skills list` and `openclaw skills check`
+- OpenClaw-native verification using `openclaw skills list` and `openclaw skills check`
+- detection and update of old grouped-only SynapseOS OpenClaw installs
   - first-use learning prompt and entrypoint guidance after installation
   - safety policy for remote one-link installers
 - Out of scope:
@@ -54,7 +55,7 @@ This spec is grounded in the current OpenClaw public documentation:
 - OpenClaw checks skill state through `openclaw skills list`, `openclaw skills info`, and `openclaw skills check`.
 - OpenClaw supports CLI-based skill installation from known sources, local paths, GitHub repositories, or managed sources depending on package shape.
 - OpenClaw's current skill metadata reference documents `name` as a required unique identifier using snake_case; any OpenClaw-specific package or overlay must pass `openclaw skills check --json` rather than assuming SynapseOS source names are sufficient.
-- SynapseOS is a multi-skill stack, so the OpenClaw install target should behave like a managed group containing `xuan-master`, `archon`, `prism`, and `init`, not like a single flat skill.
+- SynapseOS is a multi-skill stack, so the OpenClaw install target should expose `xuan_master`, `archon`, `prism`, and `synapse_init` as discoverable skills, not as one opaque flat skill. The installer keeps a managed payload under `synapseos/` and also writes direct skill-root copies with OpenClaw-safe names for OpenClaw versions that enumerate direct child skill directories.
 
 ## Required User Flows
 
@@ -71,7 +72,9 @@ openclaw skills check --json
 Required behavior:
 
 - dry-run renders writes before applying them
+- dry-run reports `install_mode`, `payload_version`, and `previous_installation` when an existing SynapseOS install is present
 - approved install writes into the OpenClaw adapter target, defaulting to the managed shared skill root
+- approved install updates old grouped-only installs by adding the direct OpenClaw-native entries
 - `synapse-cli verify` checks SynapseOS files and manifest
 - `openclaw skills check --json` confirms OpenClaw's native view
 
@@ -92,9 +95,11 @@ Required behavior:
 - clone or update SynapseOS from GitHub over HTTPS
 - run `synapse-cli doctor --json`
 - run `synapse-cli install --agent openclaw --dry-run --json`
-- install or update SynapseOS under an OpenClaw-compatible group directory only after the plan is safe
+- if an old grouped-only install or old-version payload exists, report the update state and proceed as an update only if the payload markers are present and no direct skill conflicts exist
+- install or update the managed SynapseOS payload and direct OpenClaw skill entries only after the plan is safe
 - run `synapse-cli verify --agent openclaw`
-- run `openclaw skills check --json` when `openclaw` is available
+- run `openclaw skills check --json` and `openclaw skills list --json` when `openclaw` is available
+- confirm the native list includes `xuan_master`, `archon`, `prism`, `synapse_init`, and `optimization`
 - print a first-use learning prompt after successful verification
 
 ### Flow 3: Optional Shell One-Link Installer
@@ -118,7 +123,7 @@ Required behavior for a future shell implementation:
 After verification, the guide should instruct the user to ask OpenClaw:
 
 ```text
-Load SynapseOS. Explain when I should use Xuan Master, Archon, Prism, and Init, then recommend the first skill for my current task.
+Use xuan_master. Explain when I should use Xuan Master, Archon, Prism, and Init, then recommend the first SynapseOS skill for my current task.
 ```
 
 Expected learning output:
@@ -134,10 +139,12 @@ Expected learning output:
 - `install/openclaw-chat-install.md` exists and provides the paste-link chatbox install prompt.
 - The guide references OpenClaw-native commands instead of relying only on SynapseOS self-verification.
 - The spec defines the chatbox installer behavior and shell one-link safety contract before further automation.
-- The OpenClaw install target is described as a multi-skill group, not a single opaque file copy.
+- The OpenClaw install target is described as a managed payload plus direct native skill entries, not a single opaque file copy.
 - Any future shell one-link script supports dry-run and explicit target override.
 - OpenClaw verification includes `openclaw skills check --json` where available.
 - OpenClaw metadata compatibility is verified through OpenClaw itself; if the current source frontmatter does not satisfy the active OpenClaw interface, a future package overlay must provide OpenClaw-compatible aliases without renaming the canonical SynapseOS layers.
+- The installer must block direct skill-root conflicts that do not look like SynapseOS layer entries.
+- The installer must distinguish a safe old grouped-only SynapseOS install from an unrecognized existing `synapseos` directory before applying an update.
 - Installation failures must produce actionable diagnostics for missing OpenClaw, missing Git, target permission failure, existing target conflict, and skill validation failure.
 - The existing `synapse-cli install --agent openclaw` baseline remains valid.
 - The first-use learning prompt is included so users can immediately learn the layered skill system inside OpenClaw.

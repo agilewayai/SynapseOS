@@ -32,7 +32,8 @@
 | --- | --- | --- | --- | --- | --- |
 | `STORY-003A` | As an OpenClaw user, I need a detailed install guide and governed quick-install spec so I can install SynapseOS confidently | Faster onboarding | OpenClaw guide and artifact package exist with current-safe and target chatbox paths | `accepted` | `SPEC-003`, `ARCH-003`, `ADR-0005` |
 | `STORY-003B` | As an OpenClaw user, I need a paste-link chatbox installer so OpenClaw can finish installing the SynapseOS skill family from chat | Low-friction adoption | `install/openclaw-chat-install.md` provides the link prompt, safe dry-run path, install commands, verification, and learning prompt | `accepted` | `ARCH-003`, `ADR-0005` |
-| `STORY-003C` | As an OpenClaw user, I need OpenClaw-native verification so I know the host can actually see SynapseOS | Trustworthy install | `synapse-cli verify --agent openclaw` can include or guide `openclaw skills check --json` evidence | `ready` | `ARCH-003` |
+| `STORY-003C` | As an OpenClaw user, I need OpenClaw-native verification so I know the host can actually see SynapseOS | Trustworthy install | `synapse-cli verify --agent openclaw` checks direct OpenClaw-native skill entries and the guide requires `openclaw skills check/list --json` evidence | `partially implemented` | `ARCH-003` |
+| `STORY-003G` | As an existing OpenClaw user, I need the installer to recognize and update the old grouped-only layout so upgrades do not require manual cleanup | Smooth upgrade | dry-run reports grouped-only or old-version state, approved install writes native entries, and conflicts are blocked | `implemented` | `ARCH-003`, `ADR-0005` |
 | `STORY-003D` | As an OpenClaw user, I need native package/source install compatibility so I can use OpenClaw's own skill installer when possible | Host-native UX | SynapseOS has a package shape compatible with OpenClaw's supported install sources and metadata rules | `planned` | `ARCH-003` |
 | `STORY-003E` | As a maintainer, I need an OpenClaw compatibility check so install drift is caught before support issues | Lower support load | Checklist or test validates SynapseOS payload, `SKILL.md` metadata compatibility, and OpenClaw skill visibility where OpenClaw is installed | `planned` | `ARCH-003` |
 | `STORY-003F` | As an OpenClaw user, I need an optional shell one-link installer so I can install outside chat when appropriate | Low-friction shell setup | `install/openclaw.sh` supports dry-run, target override, conflict checks, install, verify, and learning prompt | `planned` | `ARCH-003`, `ADR-0005` |
@@ -78,15 +79,34 @@
 
 ### Story
 
+- Story ID: `STORY-003G`
+- User story: As an existing OpenClaw user, I need the installer to recognize and update the old grouped-only layout so upgrades do not require manual cleanup
+- Slice type: `implementation`
+- Why this slice matters now: early OpenClaw installs could pass SynapseOS payload verification while remaining invisible to `openclaw skills list`
+- Acceptance criteria:
+  - dry-run reports `install_mode: update` for a previous grouped-only payload
+  - dry-run reports `previous_installation.status: legacy_grouped_only` when direct native entries are missing
+  - dry-run reports `previous_installation.payload.version_status: older` for an old installed payload
+  - approved install writes direct OpenClaw-native skill entries without deleting the managed payload
+  - existing direct skill paths with non-SynapseOS metadata are blocked as conflicts
+  - verification passes after updating the old layout
+- Verification plan: unit test starting from grouped-only payload plus `synapse-cli verify --agent openclaw`
+- Architecture artifacts touched: `ARCH-003`
+- ADR impact: `ADR-0005`
+- Refresh trigger: OpenClaw install layout or native skill-name rules change
+
+### Story
+
 - Story ID: `STORY-003C`
 - User story: As an OpenClaw user, I need OpenClaw-native verification so I know the host can actually see SynapseOS
 - Slice type: `implementation`
 - Why this slice matters now: SynapseOS file verification and OpenClaw skill visibility are different evidence surfaces
 - Acceptance criteria:
-  - `synapse-cli verify --agent openclaw` can detect whether `openclaw` is available
-  - verification can run or instruct `openclaw skills check --json`
-  - output distinguishes `payload_ok` from `openclaw_visible`
-  - missing OpenClaw produces a clear warning instead of a hard failure when payload verification passes
+  - `synapse-cli verify --agent openclaw` can verify the file-level native entry shape without requiring `openclaw` on `PATH`
+  - verification checks direct OpenClaw-native entry files for `xuan_master`, `archon`, `prism`, `synapse_init`, and `optimization`
+  - verification and guide instruct `openclaw skills check --json` plus `openclaw skills list --json`
+  - output distinguishes the grouped payload root from the native skill root
+  - missing OpenClaw does not block file-level verification
 - Verification plan: unit tests plus manual smoke on a host with OpenClaw installed
 - Domain artifacts touched: `DOM-002` may need refresh if verification report fields change
 - Architecture artifacts touched: `ARCH-003`
@@ -96,7 +116,7 @@
 
 ## Follow-On Slices
 
-- Next likely slice: implement OpenClaw-native verification in the adapter
+- Next likely slice: run OpenClaw CLI checks from `synapse-cli verify` when the OpenClaw binary is available
 - Secondary next slice: add the optional shell one-link installer script after safety review
 - Deferred slice: publish or reshape SynapseOS for OpenClaw-native package installation
 
@@ -104,4 +124,5 @@
 
 - Current evidence: `docs/OPENCLAW_INSTALL.md`, `install/openclaw-chat-install.md`, `SPEC-003`, `ARCH-003`, `ADR-0005`
 - Existing related implementation: `synapse-cli`, `init/synapse_cli/adapters.py`, `init/synapse_cli/installer.py`
+- Current implementation evidence: `tests/test_synapse_cli.py` covers direct OpenClaw native entries, old grouped-only update, and conflict blocking
 - Future evidence: one-link script, OpenClaw-native verification output, optional packaging artifacts

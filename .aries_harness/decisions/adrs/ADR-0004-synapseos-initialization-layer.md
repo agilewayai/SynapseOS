@@ -16,7 +16,7 @@
 
 SynapseOS is becoming a multi-agent skills stack. The repository explains the skill layers and now provides a first-class initialization layer plus a stable local command interface for setting up supported agent hosts.
 
-The requested installer must cover prerequisite runtime checking and installation planning, plus host-specific installation for Claude Code, Codex, Cursor, OpenCode, OpenClaw, Hermes, and a generic host path.
+The requested installer must cover prerequisite runtime checking and installation planning, plus host-specific installation for Claude Code, Codex, Cursor, OpenCode, Gemini, Antigravity, OpenClaw, Hermes, and a generic host path.
 
 ## Decision
 
@@ -38,9 +38,14 @@ Supported first-design adapters are:
 - `codex`
 - `cursor`
 - `opencode`
+- `gemini`
+- `antigravity`
+- `antigravity-cli`
 - `openclaw`
 - `hermes`
 - `generic`
+
+Install plans must also report whether they are a fresh install or an update refresh of an existing SynapseOS payload, and they must block unrecognized existing payload directories before writes.
 
 ## Consequences
 

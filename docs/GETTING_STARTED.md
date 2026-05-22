@@ -109,6 +109,8 @@ Use manual context loading or the `synapse-cli` baseline depending on your host:
 | Codex | Work from the repo root so `AGENTS.md` and layer files are available as local context |
 | Cursor | Reference `AGENTS.md` and selected `SKILL.md` files from Cursor rules or project context |
 | OpenCode | Register or load the relevant layer files through OpenCode's local context mechanism |
+| Gemini | Use the `gemini` adapter for `~/.gemini/skills`, or read the relevant local `SKILL.md` files directly |
+| Antigravity | Use the `antigravity` adapter for `~/.gemini/antigravity/skills` or `antigravity-cli` for `~/.gemini/antigravity-cli/skills` |
 | OpenClaw | Paste the prompt from `docs/OPENCLAW_INSTALL.md` into OpenClaw chat, or use the local commands, then verify with `openclaw skills check --json` |
 | Hermes | Install `docs/HERMES_INSTALL.md`'s direct-link installer skill, or use the local commands, then verify with `hermes skills list` |
 | Other hosts | Use `./synapse-cli install --agent generic --target <path>` or read the relevant local `SKILL.md` files directly |

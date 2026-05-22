@@ -30,6 +30,13 @@ def emit(result: dict, as_json: bool) -> None:
         print(f"message: {result['message']}")
     if "install_root" in result:
         print(f"install_root: {result['install_root']}")
+    if "install_mode" in result:
+        print(f"install_mode: {result['install_mode']}")
+    if "native_skill_root" in result and result.get("native_skill_root"):
+        print(f"native_skill_root: {result['native_skill_root']}")
+    if result.get("previous_installation"):
+        previous = result["previous_installation"]
+        print(f"previous_installation: {previous.get('status')} update_required={previous.get('update_required')}")
     if "manifest" in result:
         print(f"manifest: {result['manifest']}")
     for check in result.get("checks", []):
@@ -150,7 +157,7 @@ def build_parser() -> argparse.ArgumentParser:
     install = subcommands.add_parser("install", help="plan or apply installation into an agent host")
     install.add_argument("--json", action="store_true", help="emit machine-readable JSON")
     install.add_argument("--agent", required=True, choices=sorted(ADAPTERS), help="agent host adapter id")
-    install.add_argument("--target", help="host base directory; final install root is <target>/synapseos unless target already ends with synapseos")
+    install.add_argument("--target", help="host base directory; final managed install root is <target>/synapseos unless target already ends with synapseos")
     install.add_argument("--strategy", choices=("copy", "symlink"), default="copy", help="installation strategy")
     install.add_argument("--dry-run", action="store_true", help="show planned writes without applying them")
     install.add_argument("--yes", action="store_true", help="approve applying the install plan")

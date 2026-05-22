@@ -33,9 +33,10 @@
 
 - Current state:
   - `synapse-cli` has an `openclaw` adapter that resolves a default target under `~/.openclaw/skills`
-  - `install --agent openclaw` can copy the SynapseOS payload into an OpenClaw-managed skill root group
+  - `install --agent openclaw` can copy the SynapseOS payload into an OpenClaw-managed payload root and expose direct native skill entries
+  - `install --agent openclaw --dry-run` reports old grouped-only installs and old payload versions through `previous_installation`
   - `verify --agent openclaw` checks SynapseOS payload files and manifest, but does not yet run OpenClaw-native visibility checks
-  - public docs do not yet have a dedicated OpenClaw install guide
+  - public docs have a dedicated OpenClaw install guide and chatbox prompt
 - Target state:
   - public docs expose a copy-paste OpenClaw installation guide
   - OpenClaw chatbox install mode provides one stable raw prompt link plus a simple instruction
@@ -48,10 +49,11 @@
 
 | OpenClaw concept | SynapseOS mapping | Design note |
 | --- | --- | --- |
-| Skill folder containing `SKILL.md` | `xuan-master/`, `archon/`, `prism/`, `init/` | SynapseOS remains a grouped multi-skill install |
+| Skill folder containing `SKILL.md` | `~/.openclaw/skills/xuan-master/` with `name: xuan_master`; `archon/`, `prism/`, `init/` with `name: synapse_init`; `optimization/` | Direct entries make native enumeration work across OpenClaw versions |
 | Required skill metadata | `SKILL.md` frontmatter | Future OpenClaw package surfaces may need OpenClaw-safe aliases while preserving canonical layer names |
 | Shared managed skill root | `~/.openclaw/skills` by default | Adapter target can be overridden |
-| Skill groups or nested local skill directories | `~/.openclaw/skills/synapseos/<layer>/SKILL.md` | Keeps SynapseOS layers together |
+| Managed payload copy | `~/.openclaw/skills/synapseos/<payload>` | Keeps docs, CLI, manifest, and full source payload together |
+| Previous grouped-only or old-version install | `previous_installation.status: legacy_grouped_only` or `previous_installation.payload.version_status: older` | Safe update path when payload markers exist and direct entries have no conflicts |
 | `openclaw skills check --json` | Host-native verification gate | Confirms OpenClaw visibility beyond file presence |
 | `openclaw skills install` | Future native package path | May require an OpenClaw-specific package surface |
 
@@ -78,8 +80,9 @@
 
 | Decision | Why | Tradeoff | Linked ADR |
 | --- | --- | --- | --- |
-| Treat OpenClaw as a grouped multi-skill install target | SynapseOS has multiple loadable layers and should preserve them | Direct single-skill Git install may require an extra package surface | `ADR-0005` |
+| Treat OpenClaw as direct native skills backed by a managed payload | Some OpenClaw versions enumerate direct child skill folders more reliably than grouped family directories | The install writes both grouped payload files and direct entry folders | `ADR-0005` |
 | Keep `synapse-cli` as the safe local baseline | It already owns dry-run, manifest, and verification behavior | One-link mode is a wrapper, not the source of truth | `ADR-0005` |
+| Detect old grouped-only installs and update them in place | Early installs can have a valid payload but no OpenClaw-visible direct entries | Requires extra state in the dry-run output | `ADR-0005` |
 | Require OpenClaw-native check in guide and future adapter hardening | File presence does not prove OpenClaw skill visibility | Requires OpenClaw binary for full validation | `ADR-0005` |
 | Provide chatbox link UX before shell one-link UX | It uses OpenClaw itself to perform visible steps instead of immediately running opaque remote shell | Depends on OpenClaw chat/tool permissions and web access | `ADR-0005` |
 | Provide shell one-link UX only with explicit safety rules | Low friction is valuable but remote shell is trust-sensitive | Slightly more implementation ceremony | `ADR-0005` |

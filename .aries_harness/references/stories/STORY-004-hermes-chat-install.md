@@ -31,6 +31,7 @@
 | --- | --- | --- | --- | --- | --- |
 | `STORY-004A` | As a Hermes user, I need a direct-link installer skill and guide so Hermes can install the SynapseOS skill family from chat | Low-friction adoption | `install/hermes-chat-install/SKILL.md`, `docs/HERMES_INSTALL.md`, and artifact package exist | `accepted` | `SPEC-004`, `ARCH-004`, `ADR-0006` |
 | `STORY-004B` | As a Hermes user, I need Hermes-native verification so I know the host can actually see SynapseOS | Trustworthy install | `synapse-cli verify --agent hermes` can include or guide `hermes skills list/check` evidence | `ready` | `ARCH-004` |
+| `STORY-004E` | As an existing Hermes user, I need the paste-link installer to update an existing grouped install safely | Smooth upgrade | dry-run reports existing grouped or old-version state, approved install refreshes the payload, and unrecognized payloads are blocked | `implemented` | `ARCH-004`, `ADR-0006` |
 | `STORY-004C` | As a Hermes user, I need native package or registry installation so I can install SynapseOS through Hermes' own registry flow when available | Host-native UX | SynapseOS has a Hermes-supported package or registry source | `planned` | `ARCH-004` |
 | `STORY-004D` | As a maintainer, I need Hermes compatibility checks so install drift is caught early | Lower support load | Checklist or test validates payload and Hermes skill visibility where Hermes is installed | `planned` | `ARCH-004` |
 
@@ -55,6 +56,24 @@
 - ADR impact: `ADR-0006`
 - Refresh trigger: Hermes skill interface or install command changes
 - Audit log entry: `AUDIT-001`
+
+### Story
+
+- Story ID: `STORY-004E`
+- User story: As an existing Hermes user, I need the paste-link installer to update an existing grouped install safely
+- Slice type: `implementation`
+- Why this slice matters now: Hermes one-link mode should support both first install and repeat update without asking users to manually remove `~/.hermes/skills/synapseos`
+- Acceptance criteria:
+  - dry-run reports `install_mode: update` for an existing grouped SynapseOS payload
+  - dry-run reports `previous_installation.status: existing_grouped_payload`
+  - dry-run reports `previous_installation.payload.version_status` before refresh
+  - approved install refreshes the grouped payload in place
+  - unrecognized existing `synapseos/` directories are blocked as `conflict_existing_payload`
+  - verification passes after update
+- Verification plan: unit tests for Hermes update and unrecognized payload blocking plus `synapse-cli verify --agent hermes`
+- Architecture artifacts touched: `ARCH-004`
+- ADR impact: `ADR-0006`
+- Refresh trigger: Hermes install target or grouped payload marker changes
 
 ### Story
 
@@ -84,4 +103,5 @@
 
 - Current evidence: `install/hermes-chat-install/SKILL.md`, `docs/HERMES_INSTALL.md`, `SPEC-004`, `ARCH-004`, `ADR-0006`
 - Existing related implementation: `synapse-cli`, `init/synapse_cli/adapters.py`, `init/synapse_cli/installer.py`
+- Current implementation evidence: `tests/test_synapse_cli.py` covers Hermes update mode and unrecognized payload blocking
 - Future evidence: Hermes-native verification output and optional registry/package artifacts

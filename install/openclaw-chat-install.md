@@ -19,7 +19,14 @@ You are OpenClaw. Install SynapseOS as an OpenClaw skill family.
 
 - Repository: `https://github.com/agilewayai/SynapseOS.git`
 - Raw prompt: `https://raw.githubusercontent.com/agilewayai/SynapseOS/main/install/openclaw-chat-install.md`
-- Default OpenClaw target: `~/.openclaw/skills/synapseos`
+- Default OpenClaw skill root: `~/.openclaw/skills`
+- Managed SynapseOS payload root: `~/.openclaw/skills/synapseos`
+- OpenClaw-native skill entries:
+  - `~/.openclaw/skills/xuan-master/SKILL.md` with skill name `xuan_master`
+  - `~/.openclaw/skills/archon/SKILL.md` with skill name `archon`
+  - `~/.openclaw/skills/prism/SKILL.md` with skill name `prism`
+  - `~/.openclaw/skills/init/SKILL.md` with skill name `synapse_init`
+  - `~/.openclaw/skills/optimization/SKILL.md` with skill name `optimization`
 
 ### Safety Policy
 
@@ -65,6 +72,18 @@ cd "$INSTALL_ROOT"
 ./synapse-cli install --agent openclaw --dry-run --json
 ```
 
+Confirm the plan includes:
+
+- `install_root`: `~/.openclaw/skills/synapseos`
+- `install_mode`: `install` for a fresh target or `update` when a previous SynapseOS install exists
+- `payload_version` and `previous_installation.payload.version_status`: use these to identify old installed payloads before refresh
+- `previous_installation.status`: `fresh`, `legacy_grouped_only`, `update_required`, `native_entries_without_payload`, or `current`
+- `native_skill_root`: `~/.openclaw/skills`
+- native skill paths for `xuan-master`, `archon`, `prism`, `init`, and `optimization`
+- native skill names `xuan_master`, `archon`, `prism`, `synapse_init`, and `optimization`
+
+If `previous_installation.status` is `legacy_grouped_only`, this is the old OpenClaw layout where only `~/.openclaw/skills/synapseos` exists. Treat it as a safe SynapseOS update path if the payload markers are present and there are no direct skill conflicts.
+
 5. If the dry-run target is safe, install:
 
 ```sh
@@ -84,19 +103,26 @@ openclaw skills check --json
 openclaw skills list --json
 ```
 
+The native list should include the SynapseOS layer skills by frontmatter name, including `xuan_master`, `archon`, `prism`, `synapse_init`, and `optimization`. If the grouped payload verifies but these names are missing, rerun the installer from the latest checkout so the direct OpenClaw entries are written.
+
+Use the OpenClaw-safe skill names from the list output when invoking a skill.
+
 ### Success Response
 
 After successful verification, explain:
 
-- where SynapseOS was installed
+- where the managed SynapseOS payload was installed
+- where the OpenClaw-native skill entries were installed
+- whether this was a fresh install or an update of a previous install
 - whether `synapse-cli verify` passed
 - whether `openclaw skills check --json` passed
+- whether `openclaw skills list --json` showed the native skill names
 - how to start using the skill family
 
 Then tell the user to try:
 
 ```text
-Load SynapseOS. Explain when I should use Xuan Master, Archon, Prism, and Init, then recommend the first skill for my current task.
+Use xuan_master. Explain when I should use Xuan Master, Archon, Prism, and Init, then recommend the first SynapseOS skill for my current task.
 ```
 
 ### Failure Response
@@ -106,4 +132,5 @@ If any step fails, stop and report:
 - the command that failed
 - the relevant error message
 - whether the failure is prerequisite, checkout, SynapseOS payload verification, or OpenClaw native skill visibility
+- whether the dry-run reported `conflict_existing_payload` or `conflict_existing_path`
 - the safest next command to retry

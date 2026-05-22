@@ -30,6 +30,8 @@ The Hermes installation path has three layers:
 
 SynapseOS should install into Hermes as a grouped skills family containing `xuan-master`, `archon`, `prism`, and `init`, rather than flattening the system into one long instruction file.
 
+The installer should detect an existing grouped SynapseOS payload and update it in place when the payload markers are present. If `~/.hermes/skills/synapseos` exists but does not look like SynapseOS, the dry-run must report a conflict instead of copying over it.
+
 ## Consequences
 
 ### Positive
@@ -37,6 +39,7 @@ SynapseOS should install into Hermes as a grouped skills family containing `xuan
 - Hermes users get a native paste-link installation mode.
 - The installer skill is readable Markdown and uses Hermes' own skill install path.
 - The local baseline remains inspectable and reusable.
+- Repeat paste-link installs can safely update an existing SynapseOS payload.
 - Future registry publication has a stable bootstrap design.
 
 ### Negative

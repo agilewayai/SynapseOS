@@ -34,6 +34,7 @@
 - Current state:
   - `synapse-cli` has a `hermes` adapter that resolves a default target under `~/.hermes/skills`
   - `install --agent hermes` can copy the SynapseOS payload into a Hermes skills target group
+  - `install --agent hermes --dry-run` reports existing grouped installs and old payload versions through `previous_installation`
   - Hermes v0.14.0 in this environment supports `hermes skills install <identifier-or-http-url-to-SKILL.md>`
   - public docs do not yet have a dedicated Hermes install guide
 - Target state:
@@ -51,6 +52,7 @@
 | Skill frontmatter | `name`, `description`, `version`, `platforms`, `metadata.hermes` | Installer skill is Hermes-compatible |
 | Skills root | `~/.hermes/skills` by default | Adapter target can be overridden |
 | Grouped skill family | `~/.hermes/skills/synapseos/<layer>/SKILL.md` | Keeps SynapseOS layers together |
+| Existing grouped or old-version install | `previous_installation.status: existing_grouped_payload` plus payload `version_status` | Safe update path when payload markers exist |
 | `hermes skills list` | Host-native visibility check | Confirms whether Hermes can see installed skills |
 | `hermes skills check` | Host-native update/health check | Complements SynapseOS payload verification |
 
@@ -76,6 +78,7 @@
 | --- | --- | --- | --- |
 | Use a direct `SKILL.md` installer skill for Hermes chatbox install | Hermes natively supports direct URL skill installation | Adds one installer skill artifact to maintain | `ADR-0006` |
 | Keep `synapse-cli` as the write/verify engine | It already owns dry-run, manifest, and adapter target behavior | Installer skill is a wrapper, not a standalone installer | `ADR-0006` |
+| Detect existing grouped installs and update in place | Repeat paste-link runs should upgrade old payloads without manual cleanup | Requires extra state in the dry-run output | `ADR-0006` |
 | Require Hermes-native verification in guide and future adapter hardening | File presence does not prove Hermes skill visibility | Full verification requires Hermes binary | `ADR-0006` |
 | Preserve grouped SynapseOS skill family layout | SynapseOS has multiple canonical layers | Native registry publication may need later package decisions | `ADR-0006` |
 

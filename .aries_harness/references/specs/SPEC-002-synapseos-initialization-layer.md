@@ -19,7 +19,7 @@
 - In scope:
   - a dedicated initialization layer for installation and first-run setup
   - prerequisite runtime detection and optional install planning
-  - host adapters for `claude-code`, `codex`, `cursor`, `opencode`, `openclaw`, `hermes`, and `generic`
+  - host adapters for `claude-code`, `codex`, `cursor`, `opencode`, `gemini`, `antigravity`, `antigravity-cli`, `openclaw`, `hermes`, and `generic`
   - a `synapse-cli` command contract for diagnosis, initialization, installation, listing, verification, and dry-run planning
   - manifest and evidence outputs that make installer actions auditable
   - repo-local verification rules for the first implementation slice
@@ -46,6 +46,7 @@
   - `synapse-cli` exposes at least `doctor`, `init`, `list-agents`, `install`, and `verify`
   - every command supports a machine-readable output mode before release, such as `--json`
   - installer execution is idempotent: re-running the same install does not duplicate content or corrupt existing host config
+  - installer dry-runs report `install_mode`, `payload_version`, and `previous_installation` so first installs, old-version refreshes, safe updates, and unsafe existing targets are distinguishable
   - `install` supports `--dry-run` and reports planned external writes before applying them
   - prerequisite installation is never implicit; actions that install system packages or third-party tools require explicit operator approval or a documented `--yes` mode
   - each named host adapter owns host-specific detection, target resolution, install planning, and verification logic
@@ -96,7 +97,8 @@
 | `STORY-002A` | Maintainers get an auditable initialization-layer design package | `REQ-002`, `SPEC-002`, `STORY-002`, `ARCH-002`, and `ADR-0004` exist and cross-link | `now` | This pass |
 | `STORY-002B` | Operators get a runnable `synapse-cli` skeleton | CLI exposes command parser, help, `doctor`, `list-agents`, and `--json` basics | `next` | First coding slice |
 | `STORY-002C` | Operators can see prerequisite readiness before install | `doctor` reports required, optional, missing, and installable prerequisites | `next` | Must remain read-only by default |
-| `STORY-002D` | Agent users can install into named hosts | Host adapters exist for `claude-code`, `codex`, `cursor`, `opencode`, `openclaw`, and `hermes` | `later` | Implement incrementally by adapter |
+| `STORY-002D` | Agent users can install into named hosts | Host adapters exist for `claude-code`, `codex`, `cursor`, `opencode`, `gemini`, `antigravity`, `antigravity-cli`, `openclaw`, and `hermes` | `later` | Implement incrementally by adapter |
+| `STORY-002G` | Agent users can safely refresh existing installs | dry-run reports install/update state and blocks unrecognized existing payloads | `now` | Covers grouped adapters and OpenClaw native-entry updates |
 | `STORY-002E` | Integrators can install into other agent hosts | Generic adapter supports explicit target path and manifest output | `later` | Keeps non-standard hosts first-class |
 | `STORY-002F` | Maintainers can trust install results | `verify` checks installed entrypoints and reports drift | `later` | Add smoke checks where host tooling permits |
 

@@ -27,7 +27,9 @@ Adopt an OpenClaw-optimized installation path with four layers:
 - specify a future optional shell one-link installer that delegates to the local baseline and includes dry-run, target display, conflict checks, verification, and learning prompt behavior
 - keep future OpenClaw-native package or ClawHub publication as a separate packaging slice
 
-SynapseOS should install into OpenClaw as a grouped multi-skill stack containing `xuan-master`, `archon`, `prism`, and `init`, rather than flattening the system into a single skill.
+SynapseOS should install into OpenClaw as direct native skills named `xuan_master`, `archon`, `prism`, `synapse_init`, and `optimization`, backed by a managed `synapseos/` payload copy. This preserves the multi-skill stack while avoiding reliance on OpenClaw versions that may not enumerate grouped family directories.
+
+The installer should also detect the previous grouped-only layout and update it in place when the existing `synapseos/` directory contains SynapseOS payload markers and there are no conflicting direct skill entries. The dry-run output must distinguish this from an unrecognized existing `synapseos/` directory.
 
 ## Consequences
 
@@ -37,6 +39,7 @@ SynapseOS should install into OpenClaw as a grouped multi-skill stack containing
 - The local baseline remains inspectable and safe.
 - The chatbox mode gives users one link and one short prompt without requiring immediate remote shell execution.
 - OpenClaw-native verification becomes a first-class acceptance signal.
+- Users with the early grouped-only install can upgrade without manual cleanup.
 - Future packaging can build on a stable OpenClaw target shape.
 
 ### Negative

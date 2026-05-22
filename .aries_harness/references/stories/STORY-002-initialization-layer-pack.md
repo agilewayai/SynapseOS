@@ -33,9 +33,10 @@
 | `STORY-002A` | As a maintainer, I need a governed initialization-layer spec so implementation can start from stable acceptance and architecture | Lower implementation drift | `REQ-002`, `SPEC-002`, `STORY-002`, `ARCH-002`, `ADR-0004`, register, trace, and audit rows exist | `accepted` | `ARCH-002`, `ADR-0004` |
 | `STORY-002B` | As an operator, I need a runnable `synapse-cli` skeleton so I can inspect install commands before host-specific logic lands | Clear CLI entrypoint | CLI help, command parser, `doctor`, `list-agents`, and `--json` shape exist | `accepted` | `ARCH-002`, `DOM-002` |
 | `STORY-002C` | As an operator, I need prerequisite checks before installation so I can understand what is missing and what is safe to install | Safer first-run setup | `doctor` reports runtime readiness, missing prerequisites, permissions, and remediation hints | `accepted` | `ARCH-002`, `DOM-002` |
-| `STORY-002D` | As an agent user, I need named host installers so SynapseOS can be installed into my target agent environment | Multi-agent adoption | Adapters exist for `claude-code`, `codex`, `cursor`, `opencode`, `openclaw`, and `hermes` | `accepted-baseline` | `ARCH-002`, `DOM-002` |
+| `STORY-002D` | As an agent user, I need named host installers so SynapseOS can be installed into my target agent environment | Multi-agent adoption | Adapters exist for `claude-code`, `codex`, `cursor`, `opencode`, `gemini`, `antigravity`, `antigravity-cli`, `openclaw`, and `hermes` | `accepted-baseline` | `ARCH-002`, `DOM-002` |
 | `STORY-002E` | As an integrator, I need a generic host installer so non-listed agent hosts can still consume SynapseOS | Open-ended host support | `install --agent generic --target <path>` writes a manifest and places expected entrypoints | `accepted` | `ARCH-002`, `DOM-002` |
 | `STORY-002F` | As a maintainer, I need install verification so support issues can distinguish install drift from skill content issues | Faster diagnosis | `verify --agent <agent>` checks installed entrypoints and reports actionable failures | `accepted-baseline` | `ARCH-002`, `DOM-002` |
+| `STORY-002G` | As an existing user, I need repeat installs to refresh safely instead of overwriting blindly | Safe updates | grouped adapters report update mode, OpenClaw upgrades old grouped installs, and unknown payloads are blocked | `implemented` | `ARCH-002`, `ADR-0004` |
 
 ## Story Details
 
@@ -99,6 +100,24 @@
 - Refresh trigger: when runtime dependency assumptions change
 - Audit log entry: `AUDIT-001`
 
+### Story:
+
+- Story ID: `STORY-002G`
+- User story: As an existing user, I need repeat installs to refresh safely instead of overwriting blindly
+- Slice type: `operability_governance`
+- Why this slice matters now: SynapseOS now supports several host targets, so every adapter needs a common install/update state report before writing
+- Acceptance criteria:
+  - grouped adapters report `install_mode: install` for fresh targets
+  - grouped adapters report `install_mode: update` and `previous_installation.status: existing_grouped_payload` for existing SynapseOS payloads
+  - dry-run reports installed versus source payload version state before refreshing an old payload
+  - unrecognized existing `synapseos/` payload directories are blocked as `conflict_existing_payload`
+  - OpenClaw upgrades old grouped-only installs into its direct-native-entry layout
+  - Gemini and Antigravity adapters are listed and covered by update-mode tests
+- Verification plan: adapter matrix tests in `tests/test_synapse_cli.py`, plus CLI dry-run smoke checks
+- Architecture artifacts touched: `ARCH-002`, `ADR-0004`
+- ADR impact: `ADR-0004`
+- Refresh trigger: when supported hosts, target paths, or install evidence shape changes
+
 ## Follow-on Slices
 
 - Next likely slice: harden named host adapters with host-native smoke checks where available
@@ -110,4 +129,4 @@
 - Code: `synapse-cli`, `init/SKILL.md`, `init/synapse_cli/`
 - Tests: `tests/test_synapse_cli.py`
 - Domain package: `.aries_harness/references/domain/DOM-002-synapseos-initialization-domain.md`
-- Verification: `python3 -m unittest discover -s tests`; `./synapse-cli --help`; `./synapse-cli doctor --json`; generic dry-run, install, and verify smoke checks
+- Verification: `python3 -m unittest discover -s tests`; `./synapse-cli --help`; `./synapse-cli doctor --json`; adapter matrix dry-run/install/update/verify smoke checks

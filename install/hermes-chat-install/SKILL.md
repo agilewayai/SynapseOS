@@ -64,6 +64,15 @@ cd "$INSTALL_ROOT"
 ./synapse-cli install --agent hermes --dry-run --json
 ```
 
+Confirm the plan includes:
+
+- `install_root`: `~/.hermes/skills/synapseos`
+- `install_mode`: `install` for a fresh target or `update` when a previous SynapseOS install exists
+- `payload_version` and `previous_installation.payload.version_status`: use these to identify old installed payloads before refresh
+- `previous_installation.status`: `fresh`, `existing_grouped_payload`, or `existing_unrecognized_payload`
+
+If `previous_installation.status` is `existing_grouped_payload`, this is an existing SynapseOS install. Treat it as a safe update path if the payload markers are present.
+
 5. If the dry-run target is safe, install:
 
 ```sh
@@ -90,6 +99,7 @@ If the newly installed skills do not appear in the current session, tell the use
 After successful verification, explain:
 
 - where SynapseOS was installed
+- whether this was a fresh install or an update of a previous install
 - whether `synapse-cli verify --agent hermes` passed
 - whether Hermes listed the installed skills
 - how to start using the skill family
@@ -107,4 +117,5 @@ If any step fails, stop and report:
 - the command that failed
 - the relevant error message
 - whether the failure is prerequisite, checkout, SynapseOS payload verification, or Hermes skill visibility
+- whether the dry-run reported `conflict_existing_payload`
 - the safest next command to retry

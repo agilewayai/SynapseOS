@@ -107,6 +107,27 @@ ADAPTERS: dict[str, HostAdapter] = {
         default_base_parts=(".opencode", "skills"),
         env_var="SYNAPSE_OPENCODE_TARGET",
     ),
+    "gemini": HostAdapter(
+        adapter_id="gemini",
+        display_name="Gemini CLI",
+        commands=("gemini",),
+        default_base_parts=(".gemini", "skills"),
+        env_var="SYNAPSE_GEMINI_TARGET",
+    ),
+    "antigravity": HostAdapter(
+        adapter_id="antigravity",
+        display_name="Google Antigravity",
+        commands=("antigravity",),
+        default_base_parts=(".gemini", "antigravity", "skills"),
+        env_var="SYNAPSE_ANTIGRAVITY_TARGET",
+    ),
+    "antigravity-cli": HostAdapter(
+        adapter_id="antigravity-cli",
+        display_name="Antigravity CLI",
+        commands=("agy",),
+        default_base_parts=(".gemini", "antigravity-cli", "skills"),
+        env_var="SYNAPSE_ANTIGRAVITY_CLI_TARGET",
+    ),
     "openclaw": HostAdapter(
         adapter_id="openclaw",
         display_name="OpenClaw",

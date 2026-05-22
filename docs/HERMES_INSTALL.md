@@ -97,7 +97,11 @@ From a local SynapseOS checkout:
 ./synapse-cli install --agent hermes --dry-run --json
 ```
 
-Review the planned destination. If it is correct:
+Review the planned destination and install state. A fresh install reports `install_mode: install`. A previous SynapseOS install reports `install_mode: update`. The plan also reports `payload_version` and `previous_installation.payload.version_status` so an older installed payload is visible before applying the refresh.
+
+If the dry-run reports `previous_installation.status: existing_grouped_payload`, the installer found an existing grouped SynapseOS payload under the Hermes target. This is the normal safe update path when the payload markers are present.
+
+If the plan is correct:
 
 ```sh
 ./synapse-cli install --agent hermes --yes --json
@@ -173,6 +177,16 @@ hermes skills list
 hermes skills check
 ```
 
+For an existing grouped install, the dry-run should show:
+
+```text
+install_mode: update
+previous_installation.status: existing_grouped_payload
+previous_installation.update_required: true
+```
+
+The approved update refreshes the managed payload at `~/.hermes/skills/synapseos`.
+
 ## Troubleshooting
 
 ### `hermes: command not found`
@@ -196,6 +210,18 @@ Start a new Hermes session or refresh the current session. If Hermes still does 
 - whether Hermes expects skills under category directories
 - whether any `SKILL.md` frontmatter errors are reported
 - whether your local Hermes configuration disables local skills
+
+### Existing Hermes Install Detected
+
+The current installer handles an existing grouped SynapseOS install as an update:
+
+```text
+~/.hermes/skills/synapseos
+```
+
+Rerun the current installer. The dry-run should report `previous_installation.status: existing_grouped_payload` and `install_mode: update`, then the approved install refreshes the payload in place.
+
+If the dry-run reports `conflict_existing_payload`, the existing `synapseos` directory does not look like a SynapseOS payload. Inspect or move it before rerunning the installer.
 
 ### Target Already Exists
 

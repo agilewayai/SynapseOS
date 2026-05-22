@@ -23,6 +23,9 @@
   - `codex`
   - `cursor`
   - `opencode`
+  - `gemini`
+  - `antigravity`
+  - `antigravity-cli`
   - `openclaw`
   - `hermes`
   - `generic`
@@ -36,6 +39,7 @@
   - `synapse-cli` command expectations are explicit and implemented as a repo-local baseline
   - prerequisite checking and optional installation policy are documented
   - supported agent hosts and the generic host path are listed with acceptance rules
+  - repeat installation reports install/update state and blocks unrecognized existing payloads
   - future hardening slices can point to this artifact set
 - Target quality attributes: `idempotence`, `portability`, `diagnostic clarity`, `explicit operator control`, `host adapter isolation`, `repo-local verification`
 - Scope boundary: define the target initialization layer and CLI contract, then maintain implementation evidence separately from the cognitive skill content
