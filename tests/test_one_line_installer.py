@@ -163,7 +163,64 @@ exec "{sys.executable}" "$@"
             self.assertEqual(0, result.returncode, result.stderr)
             self.assertTrue((target / "synapseos" / "synapse-cli").exists())
             self.assertTrue((target / "synapseos" / "xuan-master" / "SKILL.md").exists())
-            self.assertIn("Verifying skills install for agent: generic", result.stdout)
+            self.assertIn("Plan: fresh install for Generic Agent Host", result.stdout)
+            self.assertIn("Install: complete for Generic Agent Host", result.stdout)
+            self.assertIn("Verify: pass for Generic Agent Host", result.stdout)
+            self.assertIn("Result: SynapseOS skills installed for Generic Agent Host", result.stdout)
+            self.assertNotIn('"operations"', result.stdout)
+            self.assertNotIn('"checks"', result.stdout)
+
+    def test_installer_agent_dry_run_is_compact_and_does_not_write_target(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            install_dir = root / "managed" / "SynapseOS"
+            bin_dir = root / "bin"
+            target = root / "host"
+
+            result = self.run_installer(
+                "--install-dir",
+                str(install_dir),
+                "--bin-dir",
+                str(bin_dir),
+                "--agent",
+                "generic",
+                "--target",
+                str(target),
+                "--dry-run",
+                home=root,
+            )
+
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertFalse((target / "synapseos").exists())
+            self.assertIn("Plan: fresh install for Generic Agent Host", result.stdout)
+            self.assertIn("Dry-run complete. Re-run with --yes", result.stdout)
+            self.assertNotIn('"operations"', result.stdout)
+            self.assertNotIn('"checks"', result.stdout)
+
+    def test_installer_verbose_agent_dry_run_keeps_raw_json_available(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            install_dir = root / "managed" / "SynapseOS"
+            bin_dir = root / "bin"
+            target = root / "host"
+
+            result = self.run_installer(
+                "--install-dir",
+                str(install_dir),
+                "--bin-dir",
+                str(bin_dir),
+                "--agent",
+                "generic",
+                "--target",
+                str(target),
+                "--dry-run",
+                "--verbose",
+                home=root,
+            )
+
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertIn('"operations"', result.stdout)
+            self.assertIn("Plan: fresh install for Generic Agent Host", result.stdout)
 
 
 if __name__ == "__main__":

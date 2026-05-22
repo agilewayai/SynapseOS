@@ -51,6 +51,22 @@ log() {
     printf '%s\n' "synapseos-install: $*"
 }
 
+agent_label() {
+    case "$1" in
+        claude-code) printf '%s\n' "Claude Code" ;;
+        codex) printf '%s\n' "Codex" ;;
+        cursor) printf '%s\n' "Cursor" ;;
+        opencode) printf '%s\n' "OpenCode" ;;
+        gemini) printf '%s\n' "Gemini CLI" ;;
+        antigravity) printf '%s\n' "Google Antigravity" ;;
+        antigravity-cli) printf '%s\n' "Antigravity CLI" ;;
+        openclaw) printf '%s\n' "OpenClaw" ;;
+        hermes) printf '%s\n' "Hermes" ;;
+        generic) printf '%s\n' "Generic Agent Host" ;;
+        *) printf '%s\n' "$1" ;;
+    esac
+}
+
 die() {
     printf '%s\n' "synapseos-install: error: $*" >&2
     exit 1
@@ -159,16 +175,20 @@ if [ -d "$install_dir/.git" ]; then
     if [ -n "$(git -C "$install_dir" status --porcelain)" ]; then
         die "$install_dir has local changes; refusing to overwrite them"
     fi
-    git -C "$install_dir" fetch --depth 1 origin "$ref"
-    git -C "$install_dir" checkout --detach FETCH_HEAD >/dev/null
+    git -C "$install_dir" fetch --quiet --depth 1 origin "$ref"
+    git -C "$install_dir" checkout --quiet --detach FETCH_HEAD >/dev/null
 elif [ -e "$install_dir" ]; then
     die "$install_dir exists but is not a git checkout; choose another --install-dir"
 else
     log "Installing managed checkout at $install_dir"
-    git clone --depth 1 "$repo" "$install_dir"
+    if [ -d "$repo/.git" ]; then
+        git clone --quiet --no-local --depth 1 "$repo" "$install_dir"
+    else
+        git clone --quiet --depth 1 "$repo" "$install_dir"
+    fi
     if [ -n "$ref" ]; then
-        git -C "$install_dir" fetch --depth 1 origin "$ref" >/dev/null 2>&1 || true
-        git -C "$install_dir" checkout --detach FETCH_HEAD >/dev/null 2>&1 || git -C "$install_dir" checkout "$ref" >/dev/null
+        git -C "$install_dir" fetch --quiet --depth 1 origin "$ref" >/dev/null 2>&1 || true
+        git -C "$install_dir" checkout --quiet --detach FETCH_HEAD >/dev/null 2>&1 || git -C "$install_dir" checkout --quiet "$ref" >/dev/null
     fi
 fi
 
@@ -258,6 +278,129 @@ log(f"Next: run {launcher} doctor --json for details after fixing prerequisites"
 PY
 }
 
+summarize_agent_result() {
+    python3 - "$1" "$2" <<'PY'
+import json
+import sys
+
+result_path, stage = sys.argv[1:3]
+
+def log(message):
+    print(f"synapseos-install: {message}")
+
+try:
+    with open(result_path, "r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+except Exception:
+    log(f"{stage}: output could not be parsed")
+    sys.exit(0)
+
+DISPLAY_NAMES = {
+    "claude-code": "Claude Code",
+    "codex": "Codex",
+    "cursor": "Cursor",
+    "opencode": "OpenCode",
+    "gemini": "Gemini CLI",
+    "antigravity": "Google Antigravity",
+    "antigravity-cli": "Antigravity CLI",
+    "openclaw": "OpenClaw",
+    "hermes": "Hermes",
+    "generic": "Generic Agent Host",
+}
+
+adapter = payload.get("adapter", "agent")
+name = payload.get("display_name") or DISPLAY_NAMES.get(adapter, adapter)
+status = payload.get("status", "unknown")
+target = payload.get("install_root")
+version = payload.get("payload_version")
+previous = payload.get("previous_installation") or {}
+previous_status = previous.get("status")
+payload_state = previous.get("payload") or {}
+version_status = payload_state.get("version_status")
+
+if stage == "plan":
+    if status != "planned":
+        log(f"Plan: blocked for {name}")
+        errors = [op for op in payload.get("operations", []) if op.get("status") == "error"]
+        for operation in errors[:3]:
+            action = operation.get("action", "error")
+            destination = operation.get("destination")
+            if destination:
+                log(f"Reason: {action} at {destination}")
+            else:
+                log(f"Reason: {action}")
+    else:
+        mode = payload.get("install_mode", "install")
+        if previous_status in {"existing_grouped_payload", "legacy_grouped_only", "update_required", "current"}:
+            description = "refresh"
+        elif previous_status == "native_entries_without_payload":
+            description = "repair"
+        else:
+            description = "fresh install" if mode == "install" else "refresh"
+        log(f"Plan: {description} for {name}")
+        if target:
+            log(f"Target: {target}")
+        if version:
+            log(f"Version: {version}")
+        if version_status == "older":
+            installed_version = payload_state.get("installed_payload_version")
+            if installed_version:
+                log(f"Existing version: {installed_version} -> {version}")
+        if payload.get("native_skill_root"):
+            log(f"Native skill entries: {payload.get('native_skill_root')}")
+        actions = {op.get("action") for op in payload.get("operations", []) if op.get("status") == "planned"}
+        changes = []
+        if "copy" in actions:
+            changes.append("copy SynapseOS payload")
+        if "symlink" in actions:
+            changes.append("link SynapseOS payload")
+        if "copy_openclaw_skill" in actions:
+            changes.append("refresh OpenClaw-native skill entries")
+        if "write_manifest" in actions:
+            changes.append("write install manifest")
+        if changes:
+            log("Planned changes: " + ", ".join(changes))
+    sys.exit(0)
+
+if stage == "apply":
+    if status == "installed":
+        log(f"Install: complete for {name}")
+        if target:
+            log(f"Target: {target}")
+        manifest = payload.get("manifest")
+        if manifest:
+            log(f"Manifest: {manifest}")
+    else:
+        log(f"Install: failed for {name}")
+        message = payload.get("message")
+        if message:
+            log(f"Reason: {message}")
+    sys.exit(0)
+
+if stage == "verify":
+    checks = payload.get("checks", [])
+    failed = [check for check in checks if check.get("status") != "pass"]
+    if status == "pass":
+        log(f"Verify: pass for {name} ({len(checks)} checks)")
+        if target:
+            log(f"Installed at: {target}")
+    else:
+        log(f"Verify: failed for {name}")
+        for check in failed[:5]:
+            check_id = check.get("id", "unknown")
+            log(f"Failed check: {check_id}")
+    sys.exit(0)
+
+log(f"{stage}: {status}")
+PY
+}
+
+show_json_if_verbose() {
+    if [ "$verbose" = "1" ] && [ -s "$1" ]; then
+        cat "$1"
+    fi
+}
+
 doctor_status="skipped"
 if [ "$skip_doctor" != "1" ]; then
     doctor_out="${TMPDIR:-/tmp}/synapseos-doctor-$$.json"
@@ -304,23 +447,64 @@ run_verify() {
 }
 
 if [ -n "$agent" ]; then
+    agent_name="$(agent_label "$agent")"
+
     if [ "$doctor_status" = "fail" ]; then
         log "Result: CLI installed, skills install not started"
         die "fix readiness issues first, then rerun with --agent $agent --yes"
     fi
 
-    log "Planning skills install for agent: $agent"
-    run_install_plan
+    log "Planning skills install for $agent_name"
+    plan_out="${TMPDIR:-/tmp}/synapseos-plan-$$.json"
+    if run_install_plan >"$plan_out"; then
+        plan_status="pass"
+    else
+        plan_status="fail"
+    fi
+    show_json_if_verbose "$plan_out"
+    summarize_agent_result "$plan_out" "plan"
+    if [ "$plan_status" != "pass" ]; then
+        rm -f "$plan_out"
+        die "skills install plan failed"
+    fi
 
     if [ "$dry_run" = "1" ] || [ "$yes" != "1" ]; then
+        rm -f "$plan_out"
         log "Dry-run complete. Re-run with --yes to apply the skills install."
         exit 0
     fi
+    rm -f "$plan_out"
 
-    log "Applying skills install for agent: $agent"
-    run_install_apply
-    log "Verifying skills install for agent: $agent"
-    run_verify
+    log "Applying skills install for $agent_name"
+    apply_out="${TMPDIR:-/tmp}/synapseos-apply-$$.json"
+    if run_install_apply >"$apply_out"; then
+        apply_status="pass"
+    else
+        apply_status="fail"
+    fi
+    show_json_if_verbose "$apply_out"
+    summarize_agent_result "$apply_out" "apply"
+    if [ "$apply_status" != "pass" ]; then
+        rm -f "$apply_out"
+        die "skills install failed"
+    fi
+    rm -f "$apply_out"
+
+    log "Verifying skills install for $agent_name"
+    verify_out="${TMPDIR:-/tmp}/synapseos-verify-$$.json"
+    if run_verify >"$verify_out"; then
+        verify_status="pass"
+    else
+        verify_status="fail"
+    fi
+    show_json_if_verbose "$verify_out"
+    summarize_agent_result "$verify_out" "verify"
+    if [ "$verify_status" != "pass" ]; then
+        rm -f "$verify_out"
+        die "skills verification failed"
+    fi
+    rm -f "$verify_out"
+    log "Result: SynapseOS skills installed for $agent_name"
 else
     if [ "$doctor_status" = "fail" ]; then
         log "Result: CLI installed with readiness issues"
