@@ -49,6 +49,7 @@ synapse-cli list-agents --json
 ```
 
 The installer writes the launcher to `~/.local/bin/synapse-cli`; use that full path if `~/.local/bin` is not on your `PATH`.
+If readiness checks fail, the installer prints a short summary by default. Add `--verbose` to show the full `doctor` JSON.
 
 To install the CLI and the skills stack into an agent host in one flow, pass the target adapter to the installer:
 

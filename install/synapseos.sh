@@ -16,6 +16,7 @@ strategy="${SYNAPSEOS_STRATEGY:-copy}"
 yes="${SYNAPSEOS_YES:-0}"
 dry_run="${SYNAPSEOS_DRY_RUN:-0}"
 skip_doctor="${SYNAPSEOS_SKIP_DOCTOR:-0}"
+verbose="${SYNAPSEOS_VERBOSE:-0}"
 
 usage() {
     cat <<'EOF'
@@ -37,11 +38,12 @@ Options:
   --install-dir <path> Managed checkout path. Default: ~/.synapseos/SynapseOS.
   --bin-dir <path>     Directory for the synapse-cli launcher. Default: ~/.local/bin.
   --skip-doctor        Skip the post-install doctor check.
+  --verbose            Show full doctor JSON and command details.
   -h, --help           Show this help.
 
 Environment variables mirror the option names:
   SYNAPSEOS_AGENT, SYNAPSEOS_TARGET, SYNAPSEOS_YES, SYNAPSEOS_REPO,
-  SYNAPSEOS_REF, SYNAPSEOS_INSTALL_DIR, SYNAPSEOS_BIN_DIR.
+  SYNAPSEOS_REF, SYNAPSEOS_INSTALL_DIR, SYNAPSEOS_BIN_DIR, SYNAPSEOS_VERBOSE.
 EOF
 }
 
@@ -121,6 +123,10 @@ while [ "$#" -gt 0 ]; do
             skip_doctor="1"
             shift
             ;;
+        --verbose)
+            verbose="1"
+            shift
+            ;;
         -h|--help)
             usage
             exit 0
@@ -186,9 +192,90 @@ case ":$PATH:" in
         ;;
 esac
 
+summarize_doctor() {
+    python3 - "$1" "$2" "$3" <<'PY'
+import json
+import sys
+
+doctor_path, err_path, launcher = sys.argv[1:4]
+
+def log(message):
+    print(f"synapseos-install: {message}")
+
+try:
+    with open(doctor_path, "r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+except Exception:
+    log("Readiness: failed")
+    log("Reason: doctor output could not be parsed")
+    try:
+        with open(err_path, "r", encoding="utf-8") as handle:
+            first_error = handle.read().strip().splitlines()[0]
+    except Exception:
+        first_error = ""
+    if first_error:
+        log(f"Detail: {first_error}")
+    log(f"Next: run {launcher} doctor --json for details")
+    sys.exit(0)
+
+status = payload.get("status", "unknown")
+checks = payload.get("checks", [])
+hosts = payload.get("hosts", [])
+
+if status == "pass":
+    detected_hosts = [host.get("adapter_id") for host in hosts if host.get("detected")]
+    log("Readiness: pass")
+    if detected_hosts:
+        log("Detected hosts: " + ", ".join(detected_hosts))
+    sys.exit(0)
+
+log("Readiness: failed")
+
+required_failures = [
+    check for check in checks
+    if check.get("required") and check.get("status") == "fail"
+]
+
+if not required_failures:
+    log(f"Reason: doctor status is {status}")
+else:
+    for check in required_failures:
+        check_id = check.get("id", "unknown")
+        detected = check.get("detected")
+        hint = check.get("hint")
+        if check_id == "python":
+            if detected:
+                log(f"Required action: install Python 3.9 or newer (detected {detected})")
+            else:
+                log("Required action: install Python 3.9 or newer")
+        elif hint:
+            log(f"Required action: {hint}")
+        else:
+            log(f"Required action: fix failed check '{check_id}'")
+
+log(f"Next: run {launcher} doctor --json for details after fixing prerequisites")
+PY
+}
+
+doctor_status="skipped"
 if [ "$skip_doctor" != "1" ]; then
-    log "Running synapse-cli doctor"
-    "$launcher" doctor --json || log "doctor reported issues; inspect the JSON above"
+    doctor_out="${TMPDIR:-/tmp}/synapseos-doctor-$$.json"
+    doctor_err="${TMPDIR:-/tmp}/synapseos-doctor-$$.err"
+
+    log "Checking readiness"
+    if "$launcher" doctor --json >"$doctor_out" 2>"$doctor_err"; then
+        doctor_status="pass"
+    else
+        doctor_status="fail"
+    fi
+
+    if [ "$verbose" = "1" ]; then
+        [ ! -s "$doctor_out" ] || cat "$doctor_out"
+        [ ! -s "$doctor_err" ] || cat "$doctor_err" >&2
+    fi
+
+    summarize_doctor "$doctor_out" "$doctor_err" "$launcher"
+    rm -f "$doctor_out" "$doctor_err"
 fi
 
 run_install_plan() {
@@ -216,6 +303,11 @@ run_verify() {
 }
 
 if [ -n "$agent" ]; then
+    if [ "$doctor_status" = "fail" ]; then
+        log "Result: CLI installed, skills install not started"
+        die "fix readiness issues first, then rerun with --agent $agent --yes"
+    fi
+
     log "Planning skills install for agent: $agent"
     run_install_plan
 
@@ -229,6 +321,10 @@ if [ -n "$agent" ]; then
     log "Verifying skills install for agent: $agent"
     run_verify
 else
-    log "synapse-cli is ready"
+    if [ "$doctor_status" = "fail" ]; then
+        log "Result: CLI installed with readiness issues"
+    else
+        log "Result: CLI installed"
+    fi
     log "Install skills with: curl -fsSL https://raw.githubusercontent.com/agilewayai/SynapseOS/main/install/synapseos.sh | bash -s -- --agent codex --yes"
 fi

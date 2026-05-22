@@ -24,6 +24,7 @@ curl -fsSL https://raw.githubusercontent.com/agilewayai/SynapseOS/main/install/s
 
 The installer creates or updates a managed checkout at `~/.synapseos/SynapseOS` and writes a `synapse-cli` launcher to `~/.local/bin`.
 Use `~/.local/bin/synapse-cli` directly if that directory is not on your `PATH`.
+Readiness failures are summarized by default; add `--verbose` to the installer command when you need the full `doctor` JSON.
 
 You can also clone manually:
 
